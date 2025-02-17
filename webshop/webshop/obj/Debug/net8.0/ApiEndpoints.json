@@ -85,6 +85,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "webshop.Controllers.LogoutController",
+    "Method": "Logout",
+    "RelativePath": "api/Logout/{token}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "token",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "webshop.Controllers.RegistrationController",
     "Method": "GenerateNewSalt",
     "RelativePath": "api/Registration/GetNewSalt",

@@ -129,6 +129,28 @@
         }
       }
     },
+    "/api/Logout/{token}": {
+      "post": {
+        "tags": [
+          "Logout"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/Termekek/GetProducts": {
       "get": {
         "tags": [
