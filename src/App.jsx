@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
+import axios from "axios";
 
 const App = () => {
   const [products, setProducts] = useState([]);
@@ -11,6 +12,8 @@ const App = () => {
   const [showLogin, setShowLogin] = useState(false); // Bejelentkezési modal megjelenítése
   const [showRegistration, setShowRegistration] = useState(false); // Bejelentkezési modal megjelenítése
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Új állapot a bejelentkezéshez
+  const [isLoggedOut, setIsLoggedOut] = useState(false); // Új állapot a kijelentkezéshez
+  const [showLogout, setShowLogout] = useState(false);
 
   useEffect(() => {
     fetch("https://localhost:7117/Termekek/GetProducts")
@@ -45,31 +48,50 @@ const App = () => {
     setSelectedCategory(categoryTitle); // 🔹 Kategória címének frissítése
   };
 
-  const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
-  };
-
   const handleLoginSuccess = () => {
     setIsLoggedIn(true); // Sikeres bejelentkezés után beállítjuk, hogy be van jelentkezve
     setShowLogin(false);  // Bezárjuk a bejelentkezési modalt
   };
 
+  const handleLogoutSuccess = () => {
+    setIsLoggedOut(true); // Sikeres bejelentkezés után beállítjuk, hogy be van jelentkezve
+    setShowLogout(false);  // Bezárjuk a bejelentkezési modalt
+  };
+
   return (
     <div>
-      <Navbar cartSize={cart.length} setCategory={setCategory} setSearchQuery={setSearchQuery} handleCategoryChange={handleCategoryChange} setShowCart={setShowCart} setShowLogin={setShowLogin}  isLoggedIn={isLoggedIn} />
+      <Navbar cartSize={cart.length} setCategory={setCategory} setSearchQuery={setSearchQuery} handleCategoryChange={handleCategoryChange} setShowCart={setShowCart} setShowLogin={setShowLogin}  isLoggedIn={isLoggedIn}  setShowLogout={setShowLogout}  isLoggedOut={isLoggedOut} setIsLoggedIn={setIsLoggedIn}/>
       <Banner />
       <ProductGrid products={products} category={category} selectedCategory={selectedCategory} searchQuery={searchQuery} addToCart={addToCart} />
       {showCart && <Cart cart={cart} removeFromCart={removeFromCart} setShowCart={setShowCart} />}
       {showLogin && <LoginModal setShowLogin={setShowLogin} setShowRegistration={setShowRegistration} onLoginSuccess={handleLoginSuccess} />} {/* 🔹 Bejelentkezési modal */}
       {showRegistration && <RegistrationModal setShowRegistration={setShowRegistration} />} {/* 🔹 Bejelentkezési modal */}
+      {showLogout && <LogoutModal setShowLogout={setShowLogout} onLogoutSuccess={handleLogoutSuccess} />}
     </div>
   );
 };
 
 //Navigációs sáv
-const Navbar = ({ cartSize, setCategory, setSearchQuery, handleCategoryChange, setShowCart, setShowLogin, isLoggedIn }) => {
+const Navbar = ({ cartSize,setIsLoggedIn, setSearchQuery, handleCategoryChange, setShowCart, setShowLogin, isLoggedIn,searchQuery }) => {
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
+  };
+  const handleLogout = async () => {
+    try {
+      await fetch(`https://localhost:7117/api/Logout/${localStorage.getItem("token").replace(/"/g, "")}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      // Kijelentkezés után eltávolítjuk a felhasználói adatokat és frissítjük az állapotot
+      localStorage.removeItem("token");
+      setIsLoggedIn(false);
+      alert("Sikeres kijelentkezés!");
+    } catch (error) {
+      console.error("Nem sikerült kijelentkezni!", error);
+    }
   };
 
   return (
@@ -90,12 +112,17 @@ const Navbar = ({ cartSize, setCategory, setSearchQuery, handleCategoryChange, s
         </li>
       </ul>
       <div className="search-bar">
-        <input className="search-input" type="text" placeholder="Keresés..." onChange={handleSearchChange} />
+        <input className="search-input" type="text" placeholder="Keresés..." value={searchQuery} onChange={handleSearchChange} />
       </div>
       {isLoggedIn && (
-      <div className="cart-link" onClick={() => setShowCart(true)} style={{ cursor: "pointer" }}>
-        Kosár: {cartSize}
-      </div>
+       <>
+       <div className="cart-link" onClick={() => setShowCart(true)} style={{ cursor: "pointer" }}>
+         Kosár: {cartSize}
+       </div>
+       <div className="logout-link" onClick={handleLogout} style={{ cursor: "pointer", color: "red", marginLeft: "15px" }}>
+            Kijelentkezés
+          </div>
+     </>
       )}
       {!isLoggedIn && (
       <div className="login-link" onClick={() => setShowLogin(true)} style={{ cursor: "pointer" }}>
@@ -116,6 +143,8 @@ const Banner = () => {
   );
 };
 
+
+
 //Termékek
 const ProductGrid = ({ products, category, selectedCategory, searchQuery, addToCart }) => {
   const filteredProducts = products.filter(
@@ -130,7 +159,7 @@ const ProductGrid = ({ products, category, selectedCategory, searchQuery, addToC
       <div className="product-grid">
         {filteredProducts.map((product) => (
           <div key={product.id} className="product-item">
-            <img src={product.kep} alt={product.termekNeve} />
+            <img src={`https://localhost:7117/api/Image/ProductImages/GetImageByName/${product.kep}`} alt={product.termekNeve} />
             <h3>{product.termekNeve}</h3>
             <p>{product.ar.toLocaleString()} Ft</p>
             <div className="product-options">
@@ -179,7 +208,7 @@ const Cart = ({ cart, removeFromCart, setShowCart }) => {
             <div className="cart-items">
               {cart.map((item, index) => (
                 <div key={index} className="cart-item">
-                  <img src={item.product.kep} alt={item.product.termekNeve} />
+                  <img src={`https://localhost:7117/api/Image/ProductImages/GetImageByName/${item.product.kep}`} alt={item.product.termekNeve} />
                   <div className="cart-item-details">
                     <p>{item.product.termekNeve}</p>
                     <p>Ár: {formatPrice(item.product.ar)}</p>
@@ -205,8 +234,37 @@ const Cart = ({ cart, removeFromCart, setShowCart }) => {
   );
 };
 
+//Kijelentkezés
+const LogoutModal = ({ setShowLogout, onLogoutSuccess, setIsLoggedIn }) => {
+  const handleLogout = async () => {
+    try {
+      await fetch(`https://localhost:7117/api/Logout/${localStorage.getItem("token")}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      setShowLogout(false);
+      onLogoutSuccess();
+    } catch (error) {
+      console.error("Nem sikerült kijelentkezni!", error);
+    }
+  };
+//write a function that will be called when the user logs out
+  return (
+    <div className="logout-modal">
+      <div className="logout-modal-content">
+        <span className="close-logout" onClick={() => setShowLogout(false)}>×</span>
+        <h2>Kijelentkezés</h2>
+        <button onClick={handleLogout}>Kijelentkezés</button>
+      </div>
+    </div>
+  );
+};
+
+
 //Bejelentkezés
-const LoginModal = ({ setShowLogin, setShowRegistration, onLoginSuccess, setIsLoggedIn }) => {
+const LoginModal = ({ setShowLogin, setShowRegistration, onLoginSuccess, token}) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -229,10 +287,6 @@ const LoginModal = ({ setShowLogin, setShowRegistration, onLoginSuccess, setIsLo
           "Content-Type": "application/json",
         },
       });
-
-      if (!saltResponse.ok) {
-        throw new Error("Nem sikerült lekérni a sót!");
-      }
 
       const salt = await saltResponse.text(); // A válasz szöveges formában
 
@@ -268,13 +322,13 @@ const LoginModal = ({ setShowLogin, setShowRegistration, onLoginSuccess, setIsLo
         throw new Error(data.message || "Hibás bejelentkezési adatok!");
       }
 
-      // Sikeres bejelentkezés esetén elmentjük az adatokat
-      localStorage.setItem("user", JSON.stringify(data.user));
+      // Sikeres bejelentkezés esetén elmentjük a tokent.
+      localStorage.setItem("token", JSON.stringify(data.token));
       
       setShowLogin(false);
       onLoginSuccess();
-      alert("Sikeres bejelentkezés!"+setIsLoggedIn);
-      
+      alert("Sikeres bejelentkezés!");
+      console.log(localStorage.getItem("token"));
 
     } catch (err) {
       setError(err.message); // A hibát jelenítjük meg
