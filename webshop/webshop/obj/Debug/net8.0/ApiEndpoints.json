@@ -102,6 +102,27 @@
   },
   {
     "ContainingType": "webshop.Controllers.RegistrationController",
+    "Method": "EndOfRegistration",
+    "RelativePath": "api/Registration/FinishRegistration",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "loginName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "webshop.Controllers.RegistrationController",
     "Method": "GenerateNewSalt",
     "RelativePath": "api/Registration/GetNewSalt",
     "HttpMethod": "GET",

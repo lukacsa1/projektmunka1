@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using webshop.Models;
 
 namespace webshop.Controllers
@@ -31,12 +32,46 @@ namespace webshop.Controllers
                     await context.SaveChangesAsync();
 
                     //TODO: send Email
+                    Manager.SendEmail(user.Email, "Regisztráció", $"https://localhost:7117/api/Registration/FinishRegistration?loginName={user.LoginName}&email={user.Email}");
 
                     return Ok("A regisztráció véglegesítéséhez ellenőrizd az Emailjeid!");
                 }
                 catch (Exception ex)
                 {
-                    return BadRequest("Valami nagyon nem jó :((( " + ex.Message);
+                    return BadRequest("Nem sikerült a regisztráció! " + ex.Message);
+                }
+            }
+        }
+
+        [HttpPost("FinishRegistration")]
+        public async Task<IActionResult> EndOfRegistration(string loginName, string email)
+        {
+            using (var context = new WebshopContext())
+            {
+                try
+                {
+                    User user = await context.Users.FirstOrDefaultAsync(u => u.LoginName == loginName && u.Email == email);
+
+
+                    if(user is null)
+                    {
+                        return BadRequest("Sikertelen regisztráció! A felhasználó nem regésztrált!");
+                    }
+
+                    if(user.Active == 1)
+                    {
+                        return BadRequest("A felhasználó már regisztrálva van!");
+                    }
+
+                    user.Active = 1;
+                    context.Users.Update(user);
+                    await context.SaveChangesAsync();
+
+                    return Ok("A felhasználó sikeresen regisztrálva!");
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest("Sikertelen regisztráció! " + ex.Message);
                 }
             }
         }

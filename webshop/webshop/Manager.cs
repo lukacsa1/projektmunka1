@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System.Net.Mail;
+using System.Security.Cryptography;
 using System.Text;
 using webshop.Models;
 
@@ -36,10 +37,24 @@ namespace webshop
 
         public static bool CheckPermission(string token, int requiredPermissionLevel)
         {
-            if(LoggedInUsers.ContainsKey(token) && LoggedInUsers[token].PermissionLevel >= requiredPermissionLevel)
+            if (LoggedInUsers.ContainsKey(token) && LoggedInUsers[token].PermissionLevel >= requiredPermissionLevel)
                 return true;
             else
                 return false;
+        }
+
+        public static async Task SendEmail(string mailAddressTo, string subject, string body)
+        {
+            MailMessage mail = new MailMessage();
+            SmtpClient smtpServer = new SmtpClient("smtp.gmail.com");
+            mail.From = new MailAddress("email");
+            mail.To.Add(mailAddressTo);
+            mail.Subject = subject;
+            mail.Body = body;
+            smtpServer.Port = 587;
+            smtpServer.Credentials = new System.Net.NetworkCredential("email", "password");
+            smtpServer.EnableSsl = true;
+            await smtpServer.SendMailAsync(mail);
         }
     }
 }
