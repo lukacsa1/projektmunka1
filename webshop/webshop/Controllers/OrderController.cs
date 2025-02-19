@@ -9,19 +9,26 @@ namespace webshop.Controllers
     public class OrderController : ControllerBase
     {
         [HttpPost]
-        public IActionResult NewOrder(string token, int productId, int amount, string size)
+        public async Task<IActionResult> NewOrder(OrderDetails orderDetails)
         {
-            if(Manager.CheckPermission(token, 1))
+            if(Manager.CheckPermission(orderDetails.token, 1))
             {
                 using (var context = new WebshopContext())
                 {
                     try
                     {
-                        Termekek product = context.Termekeks.FirstOrDefault(p => p.Id == productId)!;
+                        Termekek product = context.Termekeks.FirstOrDefault(p => p.Id == orderDetails.productId)!;
                         User user = null;
-                        if(Manager.LoggedInUsers.TryGetValue(token, out User tempUser))
+                        
+
+                        if (Manager.LoggedInUsers.TryGetValue(orderDetails.token, out User tempUser))
                         {
                             user = tempUser;
+                        }
+
+                        if(user is null)
+                        {
+                            return NotFound(Manager.UserNotExistingMessage);
                         }
 
                         if(product is null)
@@ -29,17 +36,31 @@ namespace webshop.Controllers
                             return NotFound("A termék nem található!");
                         }
 
-                        if(!product.Meret.Contains(size))
+                        if(!product.Meret.Contains(orderDetails.size))
                         {
                             return NotFound("A termék nem található ebben a méretben!");
                         }
 
-                        if(amount > 1000)
+                        if(orderDetails.amount > 1000)
                         {
                             return BadRequest("Túl sok megrendelt termék!");
                         }
 
-                        return Ok(user.LoginName + "\n" + product.TermekNeve);
+                        Order order = new Order
+                        {
+                            FelhasznaloId = user.Id,
+                            Status = 0
+                        };
+
+                        Orderitem orderItem = new Orderitem
+                        {
+
+                        };
+
+                        await context.Orders.AddAsync(order);
+                        await context.SaveChangesAsync();
+
+                        return Ok("Sikeres mentés!");
                     }
                     catch (Exception ex)
                     {

@@ -5,11 +5,11 @@ namespace webshop.Models;
 
 public partial class Order
 {
-    public int Id { get; set; }
+    public int? Id { get; set; }
 
     public int FelhasznaloId { get; set; }
 
-    public DateTime Datum { get; set; }
+    public DateTime? Datum { get; set; }
 
     public int Status { get; set; }
 

@@ -109,24 +109,9 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "token",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "productId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "amount",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "size",
-        "Type": "System.String",
-        "IsRequired": false
+        "Name": "orderDetails",
+        "Type": "webshop.Models.OrderDetails",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
