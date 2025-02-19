@@ -9,7 +9,11 @@ namespace webshop
     {
         public static int SaltLength = 64;
         public static Dictionary<string, User> LoggedInUsers = new Dictionary<string, User>();
+
+
         public static string UserNotEligableMessage = "Nem megfelelő jogkör!";
+        public static string UserNotExistingMessage = "A felhasználó nincs bejelentkezve!";
+
         public static string GenerateSalt()
         {
             Random random = new Random();

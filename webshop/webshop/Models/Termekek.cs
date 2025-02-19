@@ -16,4 +16,6 @@ public partial class Termekek
     public string Kep { get; set; } = null!;
 
     public string Kategoria { get; set; } = null!;
+
+    public virtual ICollection<Orderitem> Orderitems { get; set; } = new List<Orderitem>();
 }

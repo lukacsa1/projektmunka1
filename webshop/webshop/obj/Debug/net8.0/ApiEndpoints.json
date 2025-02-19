@@ -101,6 +101,37 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "webshop.Controllers.OrderController",
+    "Method": "NewOrder",
+    "RelativePath": "api/Order",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "token",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "productId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "amount",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "size",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "webshop.Controllers.RegistrationController",
     "Method": "EndOfRegistration",
     "RelativePath": "api/Registration/FinishRegistration",

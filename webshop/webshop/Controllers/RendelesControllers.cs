@@ -15,16 +15,15 @@ namespace webshop.Controllers
             {
                 try
                 {
-                    List<Rendelesek> response = context.Rendeleseks.ToList();
+                    List<Order> response = context.Orders.ToList();
                     return Ok(response);
                 }
                 catch (Exception ex)
                 {
-                    List<Rendelesek> hiba = new List<Rendelesek>();
-                    hiba.Add(new Rendelesek()
+                    List<Order> hiba = new List<Order>();
+                    hiba.Add(new Order()
                     {
-                        RendelesSzam = -1,
-                        Statusz = ex.Message
+                        Id = -1,
                     });
                     return BadRequest(hiba);
                 }

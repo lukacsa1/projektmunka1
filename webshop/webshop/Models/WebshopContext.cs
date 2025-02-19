@@ -15,7 +15,9 @@ public partial class WebshopContext : DbContext
     {
     }
 
-    public virtual DbSet<Rendelesek> Rendeleseks { get; set; }
+    public virtual DbSet<Order> Orders { get; set; }
+
+    public virtual DbSet<Orderitem> Orderitems { get; set; }
 
     public virtual DbSet<Szamlazasicimek> Szamlazasicimeks { get; set; }
 
@@ -29,25 +31,43 @@ public partial class WebshopContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Rendelesek>(entity =>
+        modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.RendelesSzam).HasName("PRIMARY");
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
 
-            entity.ToTable("rendelesek");
+            entity.ToTable("orders");
 
-            entity.HasIndex(e => e.FelhasznaloId, "fk_felhasznalo");
+            entity.Property(e => e.Id).HasColumnType("int(11)");
+            entity.Property(e => e.Datum)
+                .HasDefaultValueSql("'current_timestamp()'")
+                .HasColumnType("timestamp");
+            entity.Property(e => e.FelhasznaloId).HasColumnType("int(11)");
+            entity.Property(e => e.Status).HasColumnType("int(1)");
+        });
 
-            entity.Property(e => e.RendelesSzam).HasColumnType("int(32)");
-            entity.Property(e => e.FelhasznaloId)
-                .HasDefaultValueSql("'NULL'")
-                .HasColumnType("int(32)")
-                .HasColumnName("felhasznaloId");
-            entity.Property(e => e.Statusz).HasMaxLength(32);
+        modelBuilder.Entity<Orderitem>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
 
-            entity.HasOne(d => d.Felhasznalo).WithMany(p => p.Rendeleseks)
-                .HasForeignKey(d => d.FelhasznaloId)
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("fk_felhasznalo");
+            entity.ToTable("orderitems");
+
+            entity.HasIndex(e => e.RendelésId, "RendelésId");
+
+            entity.HasIndex(e => e.TermekId, "TermekId");
+
+            entity.Property(e => e.Id).HasColumnType("int(11)");
+            entity.Property(e => e.Darabszam).HasColumnType("int(11)");
+            entity.Property(e => e.Meret).HasColumnType("enum('S','M','L','XL','XXL','XXXL')");
+            entity.Property(e => e.RendelésId).HasColumnType("int(11)");
+            entity.Property(e => e.TermekId).HasColumnType("int(11)");
+
+            entity.HasOne(d => d.Rendelés).WithMany(p => p.Orderitems)
+                .HasForeignKey(d => d.RendelésId)
+                .HasConstraintName("orderitems_ibfk_1");
+
+            entity.HasOne(d => d.Termek).WithMany(p => p.Orderitems)
+                .HasForeignKey(d => d.TermekId)
+                .HasConstraintName("orderitems_ibfk_2");
         });
 
         modelBuilder.Entity<Szamlazasicimek>(entity =>
