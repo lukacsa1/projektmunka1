@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using webshop.Models;
 
 namespace webshop.Controllers
@@ -17,7 +18,6 @@ namespace webshop.Controllers
                 {
                     try
                     {
-                        Termekek product = context.Termekeks.FirstOrDefault(p => p.Id == orderDetails.productId)!;
                         User user = null;
                         
 
@@ -31,34 +31,46 @@ namespace webshop.Controllers
                             return NotFound(Manager.UserNotExistingMessage);
                         }
 
-                        if(product is null)
-                        {
-                            return NotFound("A termék nem található!");
-                        }
-
-                        if(!product.Meret.Contains(orderDetails.size))
-                        {
-                            return NotFound("A termék nem található ebben a méretben!");
-                        }
-
-                        if(orderDetails.amount > 1000)
-                        {
-                            return BadRequest("Túl sok megrendelt termék!");
-                        }
-
+                        
                         Order order = new Order
                         {
                             FelhasznaloId = user.Id,
                             Status = 0
                         };
 
-                        Orderitem orderItem = new Orderitem
-                        {
-
-                        };
-
                         await context.Orders.AddAsync(order);
                         await context.SaveChangesAsync();
+
+
+                        foreach (var products in orderDetails.product)
+                        {
+
+                            Termekek product = context.Termekeks.FirstOrDefault(p => p.Id == products.Id)!;
+
+
+                            if (product is null)
+                            {
+                                return NotFound($"A {product.TermekNeve} termék nem található!");
+                            }
+
+                            if (!product.Meret.Contains(product.Meret))
+                            {
+                                return NotFound($"A {product.TermekNeve} termék nem található ebben a méretben!");
+                            }
+
+                            if (products.amount > 1000)
+                            {
+                                return BadRequest("Túl sok megrendelt termék!");
+                            }
+
+                            Orderitem orderitem = new Orderitem
+                            {
+                                RendelésId = 0,
+                                TermekId = product.Id,
+                                Meret = product.Meret,
+                                Darabszam = products.amount,
+                            };
+                        }
 
                         return Ok("Sikeres mentés!");
                     }
