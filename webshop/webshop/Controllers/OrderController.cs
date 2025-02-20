@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using webshop.Models;
 
@@ -9,6 +10,27 @@ namespace webshop.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
+        [HttpGet("GetOrderByOrderNumber")]
+        //public IActionResult GetOrderByOrderNumber(string orderNumber)
+        //{
+        //    using (var context = new WebshopContext())
+        //    {
+        //        try
+        //        {
+
+        //            if(order is null)
+        //            {
+        //                return NotFound("Rendelés nem található ilyen rendelés számmal!");
+        //            }
+
+        //            return Ok(order);
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            return BadRequest("Nem sikerült lekérni a rendelést! " + ex.Message);
+        //        }
+        //    }
+        //}
         [HttpPost("NewOrder")]
         public async Task<IActionResult> NewOrder(OrderDetails orderDetails)
         {

@@ -124,6 +124,22 @@
   {
     "ContainingType": "webshop.Controllers.OrderController",
     "Method": "NewOrder",
+    "RelativePath": "api/Order/GetOrderByOrderNumber",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "orderDetails",
+        "Type": "webshop.Models.OrderDetails",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "webshop.Controllers.OrderController",
+    "Method": "NewOrder",
     "RelativePath": "api/Order/NewOrder",
     "HttpMethod": "POST",
     "IsController": true,
@@ -277,16 +293,6 @@
     "ContainingType": "webshop.Controllers.UsersController",
     "Method": "Get",
     "RelativePath": "felhasznalok",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "webshop.Controllers.RendelesControllers",
-    "Method": "Get",
-    "RelativePath": "Rendeles",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

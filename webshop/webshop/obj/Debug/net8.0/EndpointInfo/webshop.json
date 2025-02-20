@@ -151,6 +151,37 @@
         }
       }
     },
+    "/api/Order/GetOrderByOrderNumber": {
+      "get": {
+        "tags": [
+          "Order"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderDetails"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderDetails"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderDetails"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Order/NewOrder": {
       "post": {
         "tags": [
@@ -418,18 +449,6 @@
       "get": {
         "tags": [
           "Registration"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
-    "/Rendeles": {
-      "get": {
-        "tags": [
-          "RendelesControllers"
         ],
         "responses": {
           "200": {
