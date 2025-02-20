@@ -9,7 +9,7 @@ namespace webshop.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
-        [HttpPost]
+        [HttpPost("NewOrder")]
         public async Task<IActionResult> NewOrder(OrderDetails orderDetails)
         {
             if (Manager.CheckPermission(orderDetails.token, 1))
@@ -81,11 +81,69 @@ namespace webshop.Controllers
 
                         await context.SaveChangesAsync();
 
-                        return Ok("Sikeres mentés!");
+                        return Ok("Sikeres mentés! Rendelés szám: " + orderNumber);
                     }
                     catch (Exception ex)
                     {
                         return BadRequest("Sikertelen megrendelés! " + ex.Message);
+                    }
+                }
+            }
+            else
+            {
+                return Unauthorized(Manager.UserNotExistingMessage);
+            }
+        }
+
+        [HttpDelete("DeleteOrder")]
+        public async Task<IActionResult> DeleteOrder(string token, string orderNumber)
+        {
+            if(Manager.CheckPermission(token, 1))
+            {
+                using (var context = new WebshopContext())
+                {
+                    try
+                    {
+                        User user = null;
+
+                        if (Manager.LoggedInUsers.TryGetValue(token, out User tempUser))
+                        {
+                            user = tempUser;
+                        }
+
+                        if (user is null)
+                        {
+                            return NotFound(Manager.UserNotExistingMessage);
+                        }
+
+                        Order order = context.Orders.FirstOrDefault(o => o.OrderNumber == orderNumber);
+                        
+                        if(order is null)
+                        {
+                            return NotFound("Megrendelés nem található!");
+                        }
+
+                        List<Orderitem> orderitems = context.Orderitems.Where(o => o.RendelésId == order.Id).ToList();
+
+                        //if(orderitems.Count == 0)
+                        //{
+                        //    return NotFound("A megrendelés tárgyai nem találhatóak!");
+                        //}
+
+                        foreach (var item in orderitems)
+                        {
+                            context.Orderitems.Remove(item);
+                        }
+
+                        context.Orders.Remove(order);
+
+                        await context.SaveChangesAsync();
+                        return Ok("Rendelés sikeresen törölve!");
+
+                    }
+                    catch (Exception ex)
+                    {
+                        return BadRequest("Sikertelen megrendelés törlés! " + ex.Message);
                     }
                 }
             }

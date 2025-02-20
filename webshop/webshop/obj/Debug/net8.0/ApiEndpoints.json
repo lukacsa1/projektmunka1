@@ -102,8 +102,29 @@
   },
   {
     "ContainingType": "webshop.Controllers.OrderController",
+    "Method": "DeleteOrder",
+    "RelativePath": "api/Order/DeleteOrder",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "token",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "orderNumber",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "webshop.Controllers.OrderController",
     "Method": "NewOrder",
-    "RelativePath": "api/Order",
+    "RelativePath": "api/Order/NewOrder",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -111,6 +132,95 @@
       {
         "Name": "orderDetails",
         "Type": "webshop.Models.OrderDetails",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "webshop.Controllers.ProductsController",
+    "Method": "CreateNewProduct",
+    "RelativePath": "api/Products/CreateNewProduct",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "token",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "termek",
+        "Type": "webshop.Models.Termekek",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "webshop.Controllers.ProductsController",
+    "Method": "DeleteProduct",
+    "RelativePath": "api/Products/DeleteProduct/{Id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "token",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "webshop.Controllers.ProductsController",
+    "Method": "GetProductById",
+    "RelativePath": "api/Products/GetById/{Id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "webshop.Controllers.ProductsController",
+    "Method": "GetProducts",
+    "RelativePath": "api/Products/GetProducts",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "webshop.Controllers.ProductsController",
+    "Method": "UpdateProduct",
+    "RelativePath": "api/Products/UpdateProduct",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "token",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "product",
+        "Type": "webshop.Models.Termekek",
         "IsRequired": true
       }
     ],
@@ -191,95 +301,6 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "webshop.Controllers.ProductsController",
-    "Method": "CreateNewProduct",
-    "RelativePath": "Termekek/CreateNewProduct",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "token",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "termek",
-        "Type": "webshop.Models.Termekek",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "webshop.Controllers.ProductsController",
-    "Method": "DeleteProduct",
-    "RelativePath": "Termekek/DeleteProduct/{Id}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "token",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "webshop.Controllers.ProductsController",
-    "Method": "GetProductById",
-    "RelativePath": "Termekek/GetById/{Id}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "Id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "webshop.Controllers.ProductsController",
-    "Method": "GetProducts",
-    "RelativePath": "Termekek/GetProducts",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "webshop.Controllers.ProductsController",
-    "Method": "UpdateProduct",
-    "RelativePath": "Termekek/UpdateProduct",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "token",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "product",
-        "Type": "webshop.Models.Termekek",
-        "IsRequired": true
-      }
-    ],
     "ReturnTypes": []
   }
 ]

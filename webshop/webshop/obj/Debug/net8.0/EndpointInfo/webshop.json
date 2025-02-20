@@ -151,7 +151,7 @@
         }
       }
     },
-    "/api/Order": {
+    "/api/Order/NewOrder": {
       "post": {
         "tags": [
           "Order"
@@ -182,7 +182,35 @@
         }
       }
     },
-    "/Termekek/GetProducts": {
+    "/api/Order/DeleteOrder": {
+      "delete": {
+        "tags": [
+          "Order"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "orderNumber",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Products/GetProducts": {
       "get": {
         "tags": [
           "Products"
@@ -194,7 +222,7 @@
         }
       }
     },
-    "/Termekek/GetById/{Id}": {
+    "/api/Products/GetById/{Id}": {
       "get": {
         "tags": [
           "Products"
@@ -217,7 +245,7 @@
         }
       }
     },
-    "/Termekek/CreateNewProduct": {
+    "/api/Products/CreateNewProduct": {
       "post": {
         "tags": [
           "Products"
@@ -257,7 +285,7 @@
         }
       }
     },
-    "/Termekek/UpdateProduct": {
+    "/api/Products/UpdateProduct": {
       "put": {
         "tags": [
           "Products"
@@ -297,7 +325,7 @@
         }
       }
     },
-    "/Termekek/DeleteProduct/{Id}": {
+    "/api/Products/DeleteProduct/{Id}": {
       "delete": {
         "tags": [
           "Products"

@@ -6,7 +6,7 @@ using webshop.Models;
 namespace webshop.Controllers
 {
 
-    [Route("Termekek")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ProductsController : ControllerBase
     {
