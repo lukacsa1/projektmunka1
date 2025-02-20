@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 namespace webshop.Models;
 
 public partial class Orderitem
 {
-    public int? Id { get; set; }
+    public int Id { get; set; }
 
     public int RendelésId { get; set; }
 
@@ -15,6 +14,8 @@ public partial class Orderitem
     public string Meret { get; set; } = null!;
 
     public int Darabszam { get; set; }
-    public virtual Order? Rendelés { get; set; } = null!;
-    public virtual Termekek? Termek { get; set; } = null!;
+
+    public virtual Order Rendelés { get; set; } = null!;
+
+    public virtual Termekek Termek { get; set; } = null!;
 }

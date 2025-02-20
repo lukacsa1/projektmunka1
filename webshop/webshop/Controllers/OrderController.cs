@@ -12,34 +12,39 @@ namespace webshop.Controllers
         [HttpPost]
         public async Task<IActionResult> NewOrder(OrderDetails orderDetails)
         {
-            if(Manager.CheckPermission(orderDetails.token, 1))
+            if (Manager.CheckPermission(orderDetails.token, 1))
             {
                 using (var context = new WebshopContext())
                 {
                     try
                     {
                         User user = null;
-                        
+
+                        string orderNumber = Manager.GenerateOrderNumber();
+
 
                         if (Manager.LoggedInUsers.TryGetValue(orderDetails.token, out User tempUser))
                         {
                             user = tempUser;
                         }
 
-                        if(user is null)
+                        if (user is null)
                         {
                             return NotFound(Manager.UserNotExistingMessage);
                         }
 
-                        
+
                         Order order = new Order
                         {
                             FelhasznaloId = user.Id,
-                            Status = 0
+                            Status = 0,
+                            OrderNumber = orderNumber
                         };
 
                         await context.Orders.AddAsync(order);
                         await context.SaveChangesAsync();
+
+                        int orderId = context.Orders.FirstOrDefault(o => o.OrderNumber == orderNumber).Id;
 
 
                         foreach (var products in orderDetails.product)
@@ -65,12 +70,16 @@ namespace webshop.Controllers
 
                             Orderitem orderitem = new Orderitem
                             {
-                                RendelésId = 0,
+                                RendelésId = orderId,
                                 TermekId = product.Id,
-                                Meret = product.Meret,
+                                Meret = products.size,
                                 Darabszam = products.amount,
                             };
+
+                            await context.Orderitems.AddAsync(orderitem);
                         }
+
+                        await context.SaveChangesAsync();
 
                         return Ok("Sikeres mentés!");
                     }

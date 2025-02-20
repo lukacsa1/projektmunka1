@@ -42,6 +42,7 @@ public partial class WebshopContext : DbContext
                 .HasDefaultValueSql("'current_timestamp()'")
                 .HasColumnType("timestamp");
             entity.Property(e => e.FelhasznaloId).HasColumnType("int(11)");
+            entity.Property(e => e.OrderNumber).HasMaxLength(8);
             entity.Property(e => e.Status).HasColumnType("int(1)");
         });
 

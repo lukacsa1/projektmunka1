@@ -60,5 +60,18 @@ namespace webshop
             smtpServer.EnableSsl = true;
             await smtpServer.SendMailAsync(mail);
         }
+
+        public static string GenerateOrderNumber()
+        {
+            Random random = new Random();
+            string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            string orderNumber = "";
+            for (int i = 0; i < 8; i++)
+            {
+                orderNumber += characters[random.Next(characters.Length)];
+            }
+
+            return orderNumber;
+        }
     }
 }
