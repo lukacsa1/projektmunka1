@@ -30,6 +30,9 @@ namespace webshop.Controllers
                 }
             }
         }
+
+        
+
         [HttpPost("NewOrder")]
         public async Task<IActionResult> NewOrder(OrderDetails orderDetails)
         {

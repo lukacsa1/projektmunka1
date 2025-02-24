@@ -37,6 +37,8 @@ public partial class WebshopContext : DbContext
 
             entity.ToTable("orders");
 
+            entity.HasIndex(e => e.FelhasznaloId, "FelhasznaloId");
+
             entity.Property(e => e.Id).HasColumnType("int(11)");
             entity.Property(e => e.Datum)
                 .HasDefaultValueSql("'current_timestamp()'")
@@ -44,6 +46,10 @@ public partial class WebshopContext : DbContext
             entity.Property(e => e.FelhasznaloId).HasColumnType("int(11)");
             entity.Property(e => e.OrderNumber).HasMaxLength(8);
             entity.Property(e => e.Status).HasColumnType("int(1)");
+
+            entity.HasOne(d => d.Felhasznalo).WithMany(p => p.Orders)
+                .HasForeignKey(d => d.FelhasznaloId)
+                .HasConstraintName("orders_ibfk_1");
         });
 
         modelBuilder.Entity<Orderitem>(entity =>
