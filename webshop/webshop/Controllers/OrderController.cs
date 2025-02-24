@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using webshop.Models;
 
 namespace webshop.Controllers
@@ -11,26 +9,27 @@ namespace webshop.Controllers
     public class OrderController : ControllerBase
     {
         [HttpGet("GetOrderByOrderNumber")]
-        //public IActionResult GetOrderByOrderNumber(string orderNumber)
-        //{
-        //    using (var context = new WebshopContext())
-        //    {
-        //        try
-        //        {
+        public async Task<IActionResult> GetOrderByOrderNumber(string orderNumber)
+        {
+            using (var context = new WebshopContext())
+            {
+                try
+                {
+                    Order order = await context.Orders.Include(o => o.Orderitems).FirstOrDefaultAsync(o => o.OrderNumber == orderNumber);
 
-        //            if(order is null)
-        //            {
-        //                return NotFound("Rendelés nem található ilyen rendelés számmal!");
-        //            }
+                    if (order is null)
+                    {
+                        return NotFound("Rendelés nem található ilyen rendelés számmal!");
+                    }
 
-        //            return Ok(order);
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            return BadRequest("Nem sikerült lekérni a rendelést! " + ex.Message);
-        //        }
-        //    }
-        //}
+                    return Ok(order);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest("Nem sikerült lekérni a rendelést! " + ex.Message);
+                }
+            }
+        }
         [HttpPost("NewOrder")]
         public async Task<IActionResult> NewOrder(OrderDetails orderDetails)
         {
@@ -120,7 +119,7 @@ namespace webshop.Controllers
         [HttpDelete("DeleteOrder")]
         public async Task<IActionResult> DeleteOrder(string token, string orderNumber)
         {
-            if(Manager.CheckPermission(token, 1))
+            if (Manager.CheckPermission(token, 1))
             {
                 using (var context = new WebshopContext())
                 {
@@ -139,8 +138,8 @@ namespace webshop.Controllers
                         }
 
                         Order order = context.Orders.FirstOrDefault(o => o.OrderNumber == orderNumber);
-                        
-                        if(order is null)
+
+                        if (order is null)
                         {
                             return NotFound("Megrendelés nem található!");
                         }

@@ -123,16 +123,16 @@
   },
   {
     "ContainingType": "webshop.Controllers.OrderController",
-    "Method": "NewOrder",
+    "Method": "GetOrderByOrderNumber",
     "RelativePath": "api/Order/GetOrderByOrderNumber",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "orderDetails",
-        "Type": "webshop.Models.OrderDetails",
-        "IsRequired": true
+        "Name": "orderNumber",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

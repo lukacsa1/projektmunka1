@@ -156,25 +156,15 @@
         "tags": [
           "Order"
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/OrderDetails"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/OrderDetails"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/OrderDetails"
-              }
+        "parameters": [
+          {
+            "name": "orderNumber",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           }
-        },
+        ],
         "responses": {
           "200": {
             "description": "Success"
@@ -498,39 +488,6 @@
         },
         "additionalProperties": false
       },
-      "Order": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "felhasznaloId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "datum": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "status": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "orderNumber": {
-            "type": "string",
-            "nullable": true
-          },
-          "orderitems": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Orderitem"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "OrderDetails": {
         "type": "object",
         "properties": {
@@ -588,9 +545,6 @@
           "darabszam": {
             "type": "integer",
             "format": "int32"
-          },
-          "rendelés": {
-            "$ref": "#/components/schemas/Order"
           },
           "termek": {
             "$ref": "#/components/schemas/Termekek"
