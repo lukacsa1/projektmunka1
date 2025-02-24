@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using webshop.Models;
 
 namespace webshop.Controllers
@@ -8,8 +9,8 @@ namespace webshop.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
-        [HttpGet("GetOrderByOrderNumber")]
-        public async Task<IActionResult> GetOrderByOrderNumber(string orderNumber)
+        [HttpGet("GetOrdersByOrderNumber")]
+        public async Task<IActionResult> GetOrdersByOrderNumber(string orderNumber)
         {
             using (var context = new WebshopContext())
             {
@@ -31,7 +32,46 @@ namespace webshop.Controllers
             }
         }
 
-        
+        [HttpGet("GetOrderByUser")]
+        public async Task<IActionResult> GetOrderByUser(string token)
+        {
+            if (Manager.CheckPermission(token, 1))
+            {
+                using (var context = new WebshopContext())
+                {
+                    try
+                    {
+                        User user = null;
+
+                        if (Manager.LoggedInUsers.TryGetValue(token, out User tempUser))
+                        {
+                            user = tempUser;
+                        }
+                        else
+                        {
+                            return NotFound("Felhasználó nem található!");
+                        }
+
+                        List<Order> orders = await context.Orders.Where(o => o.FelhasznaloId == user.Id).Include(o => o.Orderitems).ToListAsync();
+
+                        if(orders.Count == 0)
+                        {
+                            return NotFound("A felhasználónak nincsenek rendelései!");
+                        }
+
+                        return Ok(orders);
+                    }
+                    catch (Exception ex)
+                    {
+                        return BadRequest("Nem sikerült lekérni a rendeléseket! " + ex.Message);
+                    }
+                }
+            }
+            else
+            {
+                return Unauthorized(Manager.UserNotExistingMessage);
+            }
+        }
 
         [HttpPost("NewOrder")]
         public async Task<IActionResult> NewOrder(OrderDetails orderDetails)

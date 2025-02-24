@@ -139,6 +139,22 @@
   },
   {
     "ContainingType": "webshop.Controllers.OrderController",
+    "Method": "GetOrderByUser",
+    "RelativePath": "api/Order/GetOrderByUser",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "token",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "webshop.Controllers.OrderController",
     "Method": "NewOrder",
     "RelativePath": "api/Order/NewOrder",
     "HttpMethod": "POST",
