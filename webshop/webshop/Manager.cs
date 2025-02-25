@@ -1,4 +1,5 @@
-﻿using System.Net.Mail;
+﻿using System;
+using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
 using webshop.Models;
@@ -9,6 +10,7 @@ namespace webshop
     {
         public static int SaltLength = 64;
         public static Dictionary<string, User> LoggedInUsers = new Dictionary<string, User>();
+        public static Dictionary<User, string> PasswordRecoveryCodes = new Dictionary<User, string>();
 
 
         public static string UserNotEligableMessage = "Nem megfelelő jogkör!";
@@ -72,6 +74,19 @@ namespace webshop
             }
 
             return orderNumber;
+        }
+
+        public static string GenerateAuthCode()
+        {
+            Random random = new Random();
+            string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            string authCode = "";
+            for (int i = 0; i < 16; i++)
+            {
+                authCode += characters[random.Next(characters.Length)];
+            }
+
+            return authCode;
         }
     }
 }

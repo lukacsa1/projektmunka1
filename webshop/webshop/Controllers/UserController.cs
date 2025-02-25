@@ -152,5 +152,28 @@ namespace webshop.Controllers
                 return Unauthorized(Manager.UserNotEligableMessage);
             }
         }
+
+        [HttpPost("RequestChangePassword")]
+        public IActionResult UserRequestChangePassword(string email, string username)
+        {
+            using (var context = new WebshopContext())
+            {
+                try
+                {
+                    User user = context.Users.FirstOrDefault(u => u.Email == email && u.LoginName == username);
+
+                    if(user is null)
+                    {
+                        return NotFound("Felhasználó nem található ilyen e-mail címmel vagy felhasználónévvel!");
+                    }
+
+                    Manager.SendEmail(email, "Jelszó visszaállítás", $"https://localhost:7117/api/User/RecoverPassword?loginName={user.LoginName}&email={user.Email}");
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest("Nem sikerült elküldeni a kérelmet! " + ex.Message);
+                }
+            }
+        }
     }
 }
