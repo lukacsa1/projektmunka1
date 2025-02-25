@@ -32,5 +32,31 @@ namespace webshop.Controllers
                 return Unauthorized(Manager.UserNotEligableMessage);
             }
         }
+
+        [HttpGet("GetByToken")]
+        public IActionResult GetUserByToken(string token)
+        {
+            using (var context = new WebshopContext())
+            {
+                try
+                {
+                    User user = null;
+                    if (Manager.LoggedInUsers.TryGetValue(token, out User tempUser))
+                    {
+                        user = tempUser;
+                    }
+                    else
+                    {
+                        return NotFound("A felhasznaló nem található!");
+                    }
+
+                    return Ok(user);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest("Nem sikerült lekérni a felhasználót! " + ex.Message);
+                }
+            }
+        }
     }
 }
