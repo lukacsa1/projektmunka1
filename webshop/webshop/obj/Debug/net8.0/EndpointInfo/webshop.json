@@ -151,7 +151,7 @@
         }
       }
     },
-    "/api/Order/GetOrderByOrderNumber": {
+    "/api/Order/GetOrdersByOrderNumber": {
       "get": {
         "tags": [
           "Order"
@@ -532,9 +532,6 @@
             "type": "string",
             "nullable": true
           },
-          "felhasznalo": {
-            "$ref": "#/components/schemas/User"
-          },
           "orderitems": {
             "type": "array",
             "items": {
@@ -668,13 +665,6 @@
           },
           "kategoria": {
             "type": "string",
-            "nullable": true
-          },
-          "orderitems": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Orderitem"
-            },
             "nullable": true
           }
         },

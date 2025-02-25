@@ -123,22 +123,6 @@
   },
   {
     "ContainingType": "webshop.Controllers.OrderController",
-    "Method": "GetOrderByOrderNumber",
-    "RelativePath": "api/Order/GetOrderByOrderNumber",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "orderNumber",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "webshop.Controllers.OrderController",
     "Method": "GetOrderByUser",
     "RelativePath": "api/Order/GetOrderByUser",
     "HttpMethod": "GET",
@@ -147,6 +131,22 @@
     "Parameters": [
       {
         "Name": "token",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "webshop.Controllers.OrderController",
+    "Method": "GetOrdersByOrderNumber",
+    "RelativePath": "api/Order/GetOrdersByOrderNumber",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "orderNumber",
         "Type": "System.String",
         "IsRequired": false
       }
