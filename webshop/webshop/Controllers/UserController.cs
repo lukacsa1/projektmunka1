@@ -9,7 +9,7 @@ namespace webshop.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        [HttpGet("GetAll")]
+        [HttpGet("Admin/GetAll")]
         public IActionResult GetAllUsers(string token)
         {
             if (Manager.CheckPermission(token, 9))
@@ -59,7 +59,7 @@ namespace webshop.Controllers
             }
         }
 
-        [HttpGet("GetById")]
+        [HttpGet("Admin/GetById")]
         public IActionResult GetUserById(string token, int id)
         {
             if (Manager.CheckPermission(token, 9))
@@ -83,6 +83,64 @@ namespace webshop.Controllers
                     }
                 }
 
+            }
+            else
+            {
+                return Unauthorized(Manager.UserNotEligableMessage);
+            }
+        }
+
+        [HttpGet("Admin/GetByPermission")]
+        public IActionResult GetUsersByPermission(string token, int permission)
+        {
+            if(Manager.CheckPermission(token, 9))
+            {
+                using (var context = new WebshopContext())
+                {
+                    try
+                    {
+                        List<User> users = context.Users.Where(u => u.PermissionLevel == permission).ToList();
+
+                        if(users.Count == 0)
+                        {
+                            return NotFound("Nem található felhasználó ezzel a jogosultsági szinttel!");
+                        }
+
+                        return Ok(users);
+                    }
+                    catch (Exception ex)
+                    {
+                        return BadRequest("Nem sikerült lekérni a felhasználókat!");
+                    }
+                }
+            }
+            else
+            {
+                return Unauthorized(Manager.UserNotEligableMessage);
+            }
+        }
+
+        [HttpDelete("Admin/Delete")]
+        public IActionResult DeleteUser(string token, int DeleteUserId)
+        {
+            if(Manager.CheckPermission(token, 9))
+            {
+                using (var context = new WebshopContext())
+                {
+                    try
+                    {
+                        User user = context.Users.FirstOrDefault(u => u.Id == DeleteUserId);
+
+                        if(user is null)
+                        {
+                            return NotFound("Nem található felhasználó ilyen azonosítóval");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        return BadRequest("Nem sikerült törölni a felhasználót! " + ex.Message);
+                    }
+                }
             }
             else
             {
