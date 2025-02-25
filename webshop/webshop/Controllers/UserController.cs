@@ -179,9 +179,9 @@ namespace webshop.Controllers
         }
 
         [HttpPost("RecoverPassword")]
-        public IActionResult RecoverPassword(string loginName, string email, string authCode, string tmpHash)
+        public async Task<IActionResult> RecoverPassword(string loginName, string email, string authCode, string tmpHash)
         {
-            using (var context = new WebshopContext)
+            using (var context = new WebshopContext())
             {
                 try
                 {
@@ -194,8 +194,19 @@ namespace webshop.Controllers
 
                     if(Manager.CheckAuthCode(user, authCode))
                     {
+                        Manager.PasswordRecoveryCodes.Remove(user);
 
+                        user.Salt = Manager.GenerateSalt();
+                        user.Hash = Manager.CreateSHA256(tmpHash);
+
+                        context.Users.Update(user);
+                        await context.SaveChangesAsync();
+
+                        Manager.SendEmail(email, "Jelszó visszaállítás", "Jelszavad sikeresen visszaállítva!");
+
+                        return Ok("Jelszó sikeresen módosítva!");
                     }
+                    return BadRequest("A felhasználó nem kért jelszó visszaállítást!");
                 }
                 catch (Exception ex)
                 {
