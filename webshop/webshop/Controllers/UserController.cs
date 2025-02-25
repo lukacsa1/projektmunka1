@@ -12,7 +12,7 @@ namespace webshop.Controllers
         [HttpGet("GetAll")]
         public IActionResult GetAllUsers(string token)
         {
-            if(Manager.CheckPermission(token, 9))
+            if (Manager.CheckPermission(token, 9))
             {
                 using (var context = new WebshopContext())
                 {
@@ -56,6 +56,37 @@ namespace webshop.Controllers
                 {
                     return BadRequest("Nem sikerült lekérni a felhasználót! " + ex.Message);
                 }
+            }
+        }
+
+        [HttpGet("GetById")]
+        public IActionResult GetUserById(string token, int id)
+        {
+            if (Manager.CheckPermission(token, 9))
+            {
+                using (var context = new WebshopContext())
+                {
+
+                    try
+                    {
+                        User user = context.Users.FirstOrDefault(u => u.Id == id);
+                        if(user is null)
+                        {
+                            return NotFound("Nem található felhasználó ilyen azonosítóval!");
+                        }
+
+                        return Ok(user);
+                    }
+                    catch (Exception ex)
+                    {
+                        return BadRequest("Nem sikerült lekérni a felhaszanálót! " + ex.Message);
+                    }
+                }
+
+            }
+            else
+            {
+                return Unauthorized(Manager.UserNotEligableMessage);
             }
         }
     }
