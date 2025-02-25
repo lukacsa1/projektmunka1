@@ -121,7 +121,7 @@ namespace webshop.Controllers
         }
 
         [HttpDelete("Admin/Delete")]
-        public IActionResult DeleteUser(string token, int DeleteUserId)
+        public async Task<IActionResult> DeleteUser(string token, int DeleteUserId)
         {
             if(Manager.CheckPermission(token, 9))
             {
@@ -135,6 +135,11 @@ namespace webshop.Controllers
                         {
                             return NotFound("Nem található felhasználó ilyen azonosítóval");
                         }
+
+                        context.Remove(user);
+                        await context.SaveChangesAsync();
+
+                        return Ok("Felhasználó sikeresen törölve!");
                     }
                     catch (Exception ex)
                     {
