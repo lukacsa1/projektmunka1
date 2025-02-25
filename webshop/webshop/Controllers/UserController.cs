@@ -167,11 +167,39 @@ namespace webshop.Controllers
                         return NotFound("Felhasználó nem található ilyen e-mail címmel vagy felhasználónévvel!");
                     }
 
-                    Manager.SendEmail(email, "Jelszó visszaállítás", $"https://localhost:7117/api/User/RecoverPassword?loginName={user.LoginName}&email={user.Email}");
+                    Manager.SendEmail(email, "Jelszó visszaállítás", $"https://localhost:7117/api/User/RecoverPassword?loginName={user.LoginName}&email={user.Email}&authCode={Manager.GenerateAuthCode()}");
+
+                    return Ok("Jelszó váltási kérelem feldolgozva, ellenőrizze az emailjeit!");
                 }
                 catch (Exception ex)
                 {
                     return BadRequest("Nem sikerült elküldeni a kérelmet! " + ex.Message);
+                }
+            }
+        }
+
+        [HttpPost("RecoverPassword")]
+        public IActionResult RecoverPassword(string loginName, string email, string authCode, string tmpHash)
+        {
+            using (var context = new WebshopContext)
+            {
+                try
+                {
+                    User user = context.Users.FirstOrDefault(u => u.LoginName == loginName && u.Email == email);
+
+                    if(user is null)
+                    {
+                        return NotFound("Nincs ilyen felhasználó!");
+                    }
+
+                    if(Manager.CheckAuthCode(user, authCode))
+                    {
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest("Nem sikerült visszaállítani a jelszót! " + ex.Message);
                 }
             }
         }

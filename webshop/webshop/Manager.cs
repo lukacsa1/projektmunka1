@@ -88,5 +88,31 @@ namespace webshop
 
             return authCode;
         }
+
+        public static bool CheckAuthCode(User user, string authCode)
+        {
+            if (PasswordRecoveryCodes.ContainsKey(user))
+            {
+                if (PasswordRecoveryCodes.TryGetValue(user, out string tempAuthCode))
+                {
+                    if (tempAuthCode == authCode)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
