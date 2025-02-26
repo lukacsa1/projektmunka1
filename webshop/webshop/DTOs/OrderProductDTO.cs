@@ -1,9 +1,9 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
 
-namespace webshop.Models
+namespace webshop.DTOs
 {
-    public class OrderProduct
+    public class OrderProductDTO
     {
         public int Id { get; set; }
         public string size { get; set; }

@@ -153,8 +153,8 @@ namespace webshop.Controllers
             }
         }
 
-        [HttpPost("RequestChangePassword")]
-        public IActionResult UserRequestChangePassword(string email, string username)
+        [HttpPost("RequestRecoverPassword")]
+        public IActionResult UserRequestRecoverPassword(string email, string username)
         {
             using (var context = new WebshopContext())
             {
@@ -178,7 +178,7 @@ namespace webshop.Controllers
             }
         }
 
-        [HttpPost("RecoverPassword")]
+        [HttpPut("RecoverPassword")]
         public async Task<IActionResult> RecoverPassword(string loginName, string email, string authCode, string tmpHash)
         {
             using (var context = new WebshopContext())
@@ -212,6 +212,85 @@ namespace webshop.Controllers
                 {
                     return BadRequest("Nem sikerült visszaállítani a jelszót! " + ex.Message);
                 }
+            }
+        }
+
+        [HttpPut("ChangeUserName")]
+        public async Task<IActionResult> ChangeUserName(string token, string newUserName)
+        {
+            if(Manager.CheckPermission(token, 1))
+            {
+                using (var context = new WebshopContext())
+                {
+                    try
+                    {
+                        User user = null;
+                        if(Manager.LoggedInUsers.TryGetValue(token, out User tempUser))
+                        {
+                            user = tempUser;
+                        }
+                        else
+                        {
+                            return NotFound("Felhasználó nem található!");
+                        }
+
+                        if(context.Users.FirstOrDefault(u => u.LoginName == newUserName) is not null)
+                        {
+                            return BadRequest("Ez a felhasználónév már foglalt!");
+                        }
+
+                        user.LoginName = newUserName;
+                        context.Users.Update(user);
+                        await context.SaveChangesAsync();
+
+                        return Ok("Felhasználónév sikeresen módosítva!");
+                    }
+                    catch (Exception ex)
+                    {
+                        return BadRequest("Nem sikerült módosítani a felhasználónevet! " + ex.Message);
+                    }
+                }
+            }
+            else
+            {
+                return Unauthorized(Manager.UserNotExistingMessage);
+            }
+        }
+
+        [HttpPut("RequestChangePassword")]
+        
+        public IActionResult RequestChangePassword(string token)
+        {
+            if(Manager.CheckPermission(token, 1))
+            {
+                using (var context = new WebshopContext())
+                {
+                    try
+                    {
+                        User user = null;
+
+                        if(Manager.LoggedInUsers.TryGetValue(token, out User tempUser))
+                        {
+                            user = tempUser;
+                        }
+                        else
+                        {
+                            return NotFound("A felhasználó nem található!");
+                        }
+
+                        Manager.PasswordChangeSalts.Add(user, Manager.GenerateSalt());
+
+                        return Ok(Manager.PasswordChangeSalts.TryGetValue(user, out string newSalt) ? newSalt : "");
+                    }
+                    catch (Exception ex)
+                    {
+                        return BadRequest("Nem sikerült elküldeni a jelszóváltási kérelmet! " + ex.Message);
+                    }
+                }
+            }
+            else
+            {
+                return Unauthorized(Manager.UserNotExistingMessage);
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+using webshop.DTOs;
 using webshop.Models;
 
 namespace webshop.Controllers
@@ -74,7 +75,7 @@ namespace webshop.Controllers
         }
 
         [HttpPost("NewOrder")]
-        public async Task<IActionResult> NewOrder(OrderDetails orderDetails)
+        public async Task<IActionResult> NewOrder(OrderDetailsDTO orderDetails)
         {
             if (Manager.CheckPermission(orderDetails.token, 1))
             {

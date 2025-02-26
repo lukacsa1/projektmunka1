@@ -11,7 +11,7 @@ namespace webshop
         public static int SaltLength = 64;
         public static Dictionary<string, User> LoggedInUsers = new Dictionary<string, User>();
         public static Dictionary<User, string> PasswordRecoveryCodes = new Dictionary<User, string>();
-
+        public static Dictionary<User, string> PasswordChangeSalts = new Dictionary<User, string>();
 
         public static string UserNotEligableMessage = "Nem megfelelő jogkör!";
         public static string UserNotExistingMessage = "A felhasználó nincs bejelentkezve!";
