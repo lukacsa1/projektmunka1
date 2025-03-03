@@ -14,9 +14,10 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Új állapot a bejelentkezéshez
   const [isLoggedOut, setIsLoggedOut] = useState(false); // Új állapot a kijelentkezéshez
   const [showLogout, setShowLogout] = useState(false);
+  const [showProfile, setShowProfile] = useState(false); // Profil modal
 
   useEffect(() => {
-    fetch("https://localhost:7117/Termekek/GetProducts")
+    fetch("https://localhost:7117/api/Products/GetProducts")
       .then((response) => response.json())
       .then((data) => setProducts(data))
       .catch((error) => console.error("Hiba a fetch kérés során:", error));
@@ -42,40 +43,66 @@ const App = () => {
     setCart((prevCart) => prevCart.filter((item) => !(item.product.id === productId && item.size === size)));
   };
 
-  const handleCategoryChange = (e, categoryName, categoryTitle) => {
-    e.preventDefault();
-    setCategory(categoryName);
-    setSelectedCategory(categoryTitle); // 🔹 Kategória címének frissítése
-  };
-
   const handleLoginSuccess = () => {
-    setIsLoggedIn(true); // Sikeres bejelentkezés után beállítjuk, hogy be van jelentkezve
-    setShowLogin(false);  // Bezárjuk a bejelentkezési modalt
+    setIsLoggedIn(true);
+    setShowLogin(false);
   };
 
   const handleLogoutSuccess = () => {
-    setIsLoggedOut(true); // Sikeres bejelentkezés után beállítjuk, hogy be van jelentkezve
-    setShowLogout(false);  // Bezárjuk a bejelentkezési modalt
+    setIsLoggedIn(false);
+    setShowLogout(false);
   };
 
   return (
     <div>
-      <Navbar cartSize={cart.length} setCategory={setCategory} setSearchQuery={setSearchQuery} handleCategoryChange={handleCategoryChange} setShowCart={setShowCart} setShowLogin={setShowLogin}  isLoggedIn={isLoggedIn}  setShowLogout={setShowLogout}  isLoggedOut={isLoggedOut} setIsLoggedIn={setIsLoggedIn}/>
-      <Banner />
-      <ProductGrid products={products} category={category} selectedCategory={selectedCategory} searchQuery={searchQuery} addToCart={addToCart} />
+      <Navbar
+        cartSize={cart.length}
+        setCategory={setCategory}
+        setSearchQuery={setSearchQuery}
+        searchQuery={searchQuery}
+        setShowCart={setShowCart}
+        setShowLogin={setShowLogin}
+        isLoggedIn={isLoggedIn}
+        setShowLogout={setShowLogout}
+        setIsLoggedIn={setIsLoggedIn}
+        setShowProfile={setShowProfile} // Itt átadjuk a setShowProfile-t
+      />
+      <section className="banner">
+        <h2>Fedezd fel a legújabb pólóinkat!</h2>
+        <p>Válassz a legfrissebb trendek közül és vásárolj online.</p>
+      </section>
+      <ProductGrid
+        products={products}
+        category={category}
+        selectedCategory={selectedCategory}
+        searchQuery={searchQuery}
+        addToCart={addToCart}
+      />
       {showCart && <Cart cart={cart} removeFromCart={removeFromCart} setShowCart={setShowCart} />}
-      {showLogin && <LoginModal setShowLogin={setShowLogin} setShowRegistration={setShowRegistration} onLoginSuccess={handleLoginSuccess} />} {/* 🔹 Bejelentkezési modal */}
-      {showRegistration && <RegistrationModal setShowRegistration={setShowRegistration} />} {/* 🔹 Bejelentkezési modal */}
+      {showLogin && <LoginModal setShowLogin={setShowLogin} setShowRegistration={setShowRegistration} onLoginSuccess={handleLoginSuccess} />}
+      {showRegistration && <RegistrationModal setShowRegistration={setShowRegistration} />}
       {showLogout && <LogoutModal setShowLogout={setShowLogout} onLogoutSuccess={handleLogoutSuccess} />}
+      {showProfile && <ProfileModal setShowProfile={setShowProfile} />}
     </div>
   );
 };
 
-//Navigációs sáv
-const Navbar = ({ cartSize,setIsLoggedIn, setSearchQuery, handleCategoryChange, setShowCart, setShowLogin, isLoggedIn,searchQuery }) => {
+const Navbar = ({
+  cartSize,
+  setCategory,
+  setSearchQuery,
+  searchQuery,
+  setShowCart,
+  setShowLogin,
+  isLoggedIn,
+  setShowLogout,
+  setIsLoggedIn,
+  setShowProfile // Itt is hozzáadjuk a setShowProfile-t
+}) => {
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
+
   const handleLogout = async () => {
     try {
       await fetch(`https://localhost:7117/api/Logout/${localStorage.getItem("token").replace(/"/g, "")}`, {
@@ -85,7 +112,6 @@ const Navbar = ({ cartSize,setIsLoggedIn, setSearchQuery, handleCategoryChange, 
         },
       });
 
-      // Kijelentkezés után eltávolítjuk a felhasználói adatokat és frissítjük az állapotot
       localStorage.removeItem("token");
       setIsLoggedIn(false);
       alert("Sikeres kijelentkezés!");
@@ -99,49 +125,138 @@ const Navbar = ({ cartSize,setIsLoggedIn, setSearchQuery, handleCategoryChange, 
       <div className="logo">Pólók</div>
       <ul className="nav-links">
         <li>
-          <a href="#" onClick={(e) => handleCategoryChange(e, "none", "Összes póló")}>Összes</a>
+          <a href="#" onClick={(e) => setCategory("none")}>Összes</a>
         </li>
         <li>
-          <a href="#" onClick={(e) => handleCategoryChange(e, "Női", "Női pólók")}>Női</a>
+          <a href="#" onClick={(e) => setCategory("Női")}>Női</a>
         </li>
         <li>
-          <a href="#" onClick={(e) => handleCategoryChange(e, "Férfi", "Férfi pólók")}>Férfi</a>
+          <a href="#" onClick={(e) => setCategory("Férfi")}>Férfi</a>
         </li>
         <li>
-          <a href="#" onClick={(e) => handleCategoryChange(e, "Unisex", "Unisex pólók")}>Unisex</a>
+          <a href="#" onClick={(e) => setCategory("Unisex")}>Unisex</a>
         </li>
       </ul>
       <div className="search-bar">
         <input className="search-input" type="text" placeholder="Keresés..." value={searchQuery} onChange={handleSearchChange} />
       </div>
       {isLoggedIn && (
-       <>
-       <div className="cart-link" onClick={() => setShowCart(true)} style={{ cursor: "pointer" }}>
-         Kosár: {cartSize}
-       </div>
-       <div className="logout-link" onClick={handleLogout} style={{ cursor: "pointer", color: "red", marginLeft: "15px" }}>
+        <>
+          <div className="cart-link" onClick={() => setShowCart(true)} style={{ cursor: "pointer" }}>
+            Kosár: {cartSize}
+          </div>
+          <div className="profile-link" onClick={() => setShowProfile(true)} style={{ cursor: "pointer", marginLeft: "15px" }}>
+            Profil
+          </div>
+          <div className="logout-link" onClick={handleLogout} style={{ cursor: "pointer", color: "red", marginLeft: "15px" }}>
             Kijelentkezés
           </div>
-     </>
+        </>
       )}
       {!isLoggedIn && (
-      <div className="login-link" onClick={() => setShowLogin(true)} style={{ cursor: "pointer" }}>
-        Bejelentkezés
-      </div>
+        <div className="login-link" onClick={() => setShowLogin(true)} style={{ cursor: "pointer" }}>
+          Bejelentkezés
+        </div>
       )}
     </nav>
   );
 };
 
-//Felirat
-const Banner = () => {
+//profil
+const ProfileModal = ({ setShowProfile }) => {
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [activeSection, setActiveSection] = useState("data"); // Aktív szekció kezelése
+
+  useEffect(() => {
+    axios
+      .get(`https://localhost:7117/api/User/GetByToken?token=${localStorage.getItem("token").replace(/"/g, "")}`)
+      .then((response) => {
+        setUserData(response.data); // A rendeléseket itt tároljuk
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError("Nem sikerült betölteni az adatokat.");
+        setLoading(false);
+      });
+  }, []);
+
+  const handleSectionChange = (section) => {
+    setActiveSection(section);
+  };
+
+  if (loading) {
+    return <div>Betöltés...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
   return (
-    <section className="banner">
-      <h2>Fedezd fel a legújabb pólóinkat!</h2>
-      <p>Válassz a legfrissebb trendek közül és vásárolj online.</p>
-    </section>
+    <div className="profile-modal">
+      <h2>Profil</h2>
+
+      {/* Gombok a szekciók közötti váltáshoz */}
+      <div className="profile-buttons">
+        <button onClick={() => handleSectionChange("data")}>Adataim</button>
+        <button onClick={() => handleSectionChange("orders")}>Előző rendeléseim</button>
+        <button onClick={() => handleSectionChange("password")}>Jelszó módosítása</button>
+        <button onClick={() => handleSectionChange("address")}>Számlázási cím módosítása</button>
+      </div>
+
+      {/* Adataim szekció */}
+      {activeSection === "data" && (
+        <div className="section">
+          <p><strong>Felhasználó neve:</strong> {userData.loginName}</p>
+          <p><strong>Email:</strong> {userData.email}</p>
+        </div>
+      )}
+
+      {/* Rendelések szekció */}
+      {activeSection === "orders" && (
+        <div className="section">
+          <h3>Előző rendeléseim</h3>
+          {userData.Orders && userData.Orders.length > 0 ? (
+            userData.Orders.map((order) => (
+              <div key={order.id}>
+                <p><strong>Rendelés ID:</strong> {order.id}</p>
+                <p><strong>Dátum:</strong> {new Date(order.date).toLocaleDateString()}</p>
+                <p><strong>Összeg:</strong> {order.totalPrice} Ft</p>
+                <button>Rendelés részletei</button>
+              </div>
+            ))
+          ) : (
+            <p>Még nem rendeltek.</p>
+          )}
+        </div>
+      )}
+
+      {/* Jelszó módosítása szekció */}
+      {activeSection === "password" && (
+        <div className="section">
+          <p>Jelszó módosítása</p>
+          <button>Jelszó megváltoztatása</button>
+        </div>
+      )}
+
+      {/* Számlázási cím módosítása szekció */}
+      {activeSection === "address" && (
+        <div className="section">
+          <p>Számlázási cím módosítása</p>
+          <button>Szállítási cím módosítása</button>
+        </div>
+      )}
+
+      {/* Bezárás gomb */}
+      <button onClick={() => setShowProfile(false)} style={{ marginTop: "10px" }}>Bezárás</button>
+    </div>
   );
 };
+
+
+
 
 
 
