@@ -386,27 +386,6 @@
   },
   {
     "ContainingType": "webshop.Controllers.UserController",
-    "Method": "ChangeUserName",
-    "RelativePath": "api/User/ChangeUserName",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "token",
-        "Type": "System.String",
-        "IsRequired": true
-      },
-      {
-        "Name": "newUserName",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "webshop.Controllers.UserController",
     "Method": "GetUserByToken",
     "RelativePath": "api/User/GetByToken",
     "HttpMethod": "GET",
@@ -430,24 +409,9 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "loginName",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "email",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "authCode",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "tmpHash",
-        "Type": "System.String",
-        "IsRequired": false
+        "Name": "param",
+        "Type": "webshop.DTOs.RecoverPasswordDTO",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -485,6 +449,27 @@
         "Name": "username",
         "Type": "System.String",
         "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "webshop.Controllers.UserController",
+    "Method": "UpdateUserDetails",
+    "RelativePath": "api/User/UpdateUserDetails",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "token",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "updateUser",
+        "Type": "webshop.DTOs.ChangeUserDetailsDTO",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
