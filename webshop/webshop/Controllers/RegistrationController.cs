@@ -45,7 +45,7 @@ namespace webshop.Controllers
                     //TODO: send Email
                     Manager.SendEmail(registrationUser.Email, "Regisztráció", $"https://localhost:7117/api/Registration/FinishRegistration?loginName={registrationUser.LoginName}&email={registrationUser.Email}");
 
-                    return Ok("A regisztráció véglegesítéséhez ellenőrizd az Emailjeid!");
+                    return Ok(user);
                 }
                 catch (Exception ex)
                 {

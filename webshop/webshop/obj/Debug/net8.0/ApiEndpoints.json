@@ -298,8 +298,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "user",
-        "Type": "webshop.Models.User",
+        "Name": "registrationUser",
+        "Type": "webshop.DTOs.RegistrationDTO",
         "IsRequired": true
       }
     ],

@@ -120,6 +120,38 @@ namespace webshop.Controllers
                 return Unauthorized(Manager.UserNotEligableMessage);
             }
         }
+        [HttpPut("Admin/UpdateUser")]
+        public async Task<IActionResult> UpdateUser(string token,int userId, User updateUser)
+        {
+            if(Manager.CheckPermission(token, 9))
+            {
+                using (var context = new WebshopContext())
+                {
+                    try
+                    {
+                        User user = context.Users.FirstOrDefault(u => u.Id == userId);
+                        if(user is null)
+                        {
+                            return NotFound("Nem található felhasználó ilyen azonosítóval!");
+                        }
+
+                        user = updateUser;
+                        context.Users.Update(user);
+                        await context.SaveChangesAsync();
+
+                        return Ok("Felhasználó sikeresen módosítva!");
+                    }
+                    catch (Exception ex)
+                    {
+                        return BadRequest("Nem sikerült módosítani a felhasználó adatait! " + ex.Message);
+                    }
+                }
+            }
+            else
+            {
+                return Unauthorized(Manager.UserNotExistingMessage);
+            }
+        }
 
         [HttpDelete("Admin/Delete")]
         public async Task<IActionResult> DeleteUser(string token, int DeleteUserId)

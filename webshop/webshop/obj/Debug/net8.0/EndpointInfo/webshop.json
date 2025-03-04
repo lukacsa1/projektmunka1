@@ -406,17 +406,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/RegistrationDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/RegistrationDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/RegistrationDTO"
               }
             }
           }
@@ -825,32 +825,32 @@
         },
         "additionalProperties": false
       },
-      "Szamlazasicimek": {
+      "RegistrationDTO": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "orszag": {
+          "loginName": {
             "type": "string",
             "nullable": true
           },
-          "varos": {
+          "firstName": {
             "type": "string",
             "nullable": true
           },
-          "utca": {
+          "lastName": {
             "type": "string",
             "nullable": true
           },
-          "hazszam": {
-            "type": "integer",
-            "format": "int32"
+          "email": {
+            "type": "string",
+            "nullable": true
           },
-          "iranyitoszam": {
-            "type": "integer",
-            "format": "int32"
+          "tempHash": {
+            "type": "string",
+            "nullable": true
+          },
+          "salt": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -881,64 +881,6 @@
           "kategoria": {
             "type": "string",
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "User": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "lastName": {
-            "type": "string",
-            "nullable": true
-          },
-          "firstName": {
-            "type": "string",
-            "nullable": true
-          },
-          "phoneNumber": {
-            "type": "string",
-            "nullable": true
-          },
-          "loginName": {
-            "type": "string",
-            "nullable": true
-          },
-          "email": {
-            "type": "string",
-            "nullable": true
-          },
-          "szamlazasiCimId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "salt": {
-            "type": "string",
-            "nullable": true
-          },
-          "hash": {
-            "type": "string",
-            "nullable": true
-          },
-          "active": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "registarionDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "permissionLevel": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "szamlazasiCim": {
-            "$ref": "#/components/schemas/Szamlazasicimek"
           }
         },
         "additionalProperties": false

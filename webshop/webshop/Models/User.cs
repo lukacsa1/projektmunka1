@@ -30,7 +30,7 @@ public partial class User
 
     public int PermissionLevel { get; set; }
     [JsonIgnore]
-    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+    public virtual ICollection<Order>? Orders { get; set; } = new List<Order>();
 
     public virtual Szamlazasicimek? SzamlazasiCim { get; set; }
 }
