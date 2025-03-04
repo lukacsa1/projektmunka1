@@ -180,30 +180,30 @@ namespace webshop.Controllers
         }
 
         [HttpPut("RecoverPassword")]
-        public async Task<IActionResult> RecoverPassword(string loginName, string email, string authCode, string tmpHash)
+        public async Task<IActionResult> RecoverPassword(RecoverPasswordDTO param)
         {
             using (var context = new WebshopContext())
             {
                 try
                 {
-                    User user = context.Users.FirstOrDefault(u => u.LoginName == loginName && u.Email == email);
+                    User user = context.Users.FirstOrDefault(u => u.LoginName == param.loginName && u.Email == param.email);
 
                     if(user is null)
                     {
                         return NotFound("Nincs ilyen felhasználó!");
                     }
 
-                    if(Manager.CheckAuthCode(user, authCode))
+                    if(Manager.CheckAuthCode(user, param.authCode))
                     {
                         Manager.PasswordRecoveryCodes.Remove(user);
 
                         user.Salt = Manager.GenerateSalt();
-                        user.Hash = Manager.CreateSHA256(tmpHash);
+                        user.Hash = Manager.CreateSHA256(param.tmpHash);
 
                         context.Users.Update(user);
                         await context.SaveChangesAsync();
 
-                        Manager.SendEmail(email, "Jelszó visszaállítás", "Jelszavad sikeresen visszaállítva!");
+                        Manager.SendEmail(param.email, "Jelszó visszaállítás", "Jelszavad sikeresen visszaállítva!");
 
                         return Ok("Jelszó sikeresen módosítva!");
                     }
