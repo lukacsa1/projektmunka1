@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Feb 24. 11:38
+-- Létrehozás ideje: 2025. Már 04. 10:02
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -158,6 +158,9 @@ INSERT INTO `termekek` (`Id`, `TermekNeve`, `meret`, `ar`, `kep`, `kategoria`) V
 
 CREATE TABLE `user` (
   `Id` int(32) NOT NULL,
+  `LastName` varchar(32) NOT NULL,
+  `FirstName` varchar(32) NOT NULL,
+  `PhoneNumber` varchar(32) NOT NULL,
   `LoginName` varchar(32) NOT NULL,
   `Email` varchar(64) NOT NULL,
   `szamlazasiCimId` int(32) DEFAULT NULL,
@@ -172,13 +175,13 @@ CREATE TABLE `user` (
 -- A tábla adatainak kiíratása `user`
 --
 
-INSERT INTO `user` (`Id`, `LoginName`, `Email`, `szamlazasiCimId`, `SALT`, `HASH`, `Active`, `RegistarionDate`, `PermissionLevel`) VALUES
-(1, 'user1', 'user1@example.com', NULL, 'sp8i4p6c5m0WwrtVD6xz3LqUIwLlGAdk8ZD73OUaVCGE4zZzBCd16c7J0nMam3Do', 'e518622febbb65115dd1ad163ffaa7e333ac002db2537a37aaad4293081e9384', 0, '2025-02-19 09:51:13', 1),
-(2, 'user2', 'user2@example.com', NULL, 'sp8i4p6c5m0WwrtVD6xz3LqUIwLlGAdk8ZD73OUaVCGE4zZzBCd16c7J0nMam3Do', 'e518622febbb65115dd1ad163ffaa7e333ac002db2537a37aaad4293081e9384', 0, '2025-02-09 17:38:04', 0),
-(3, 'admin', 'admin@example.com', NULL, 'sp8i4p6c5m0WwrtVD6xz3LqUIwLlGAdk8ZD73OUaVCGE4zZzBCd16c7J0nMam3Do', 'e518622febbb65115dd1ad163ffaa7e333ac002db2537a37aaad4293081e9384', 0, '2025-02-09 17:38:04', 0),
-(4, 'user1', 'user1@example.com', 1, 'sp8i4p6c5m0WwrtVD6xz3LqUIwLlGAdk8ZD73OUaVCGE4zZzBCd16c7J0nMam3Do', 'e518622febbb65115dd1ad163ffaa7e333ac002db2537a37aaad4293081e9384', 0, '2025-02-09 17:38:04', 0),
-(5, 'user2', 'user2@example.com', 2, 'sp8i4p6c5m0WwrtVD6xz3LqUIwLlGAdk8ZD73OUaVCGE4zZzBCd16c7J0nMam3Do', 'e518622febbb65115dd1ad163ffaa7e333ac002db2537a37aaad4293081e9384', 0, '2025-02-09 17:38:04', 0),
-(6, 'user3', 'user3@example.com', 3, 'sp8i4p6c5m0WwrtVD6xz3LqUIwLlGAdk8ZD73OUaVCGE4zZzBCd16c7J0nMam3Do', 'e518622febbb65115dd1ad163ffaa7e333ac002db2537a37aaad4293081e9384', 0, '2025-02-09 17:38:04', 0);
+INSERT INTO `user` (`Id`, `LastName`, `FirstName`, `PhoneNumber`, `LoginName`, `Email`, `szamlazasiCimId`, `SALT`, `HASH`, `Active`, `RegistarionDate`, `PermissionLevel`) VALUES
+(1, 'Benedek', 'Kiss', '+36704322123', 'user1', 'user1@example.com', NULL, 'sp8i4p6c5m0WwrtVD6xz3LqUIwLlGAdk8ZD73OUaVCGE4zZzBCd16c7J0nMam3Do', 'e518622febbb65115dd1ad163ffaa7e333ac002db2537a37aaad4293081e9384', 0, '2025-03-04 08:57:35', 1),
+(2, 'Kristof', 'Edelényi', '+36308583123', 'user2', 'user2@example.com', NULL, 'sp8i4p6c5m0WwrtVD6xz3LqUIwLlGAdk8ZD73OUaVCGE4zZzBCd16c7J0nMam3Do', 'e518622febbb65115dd1ad163ffaa7e333ac002db2537a37aaad4293081e9384', 0, '2025-03-04 08:57:58', 0),
+(3, 'Ákos', 'Zábonyi', '+361233112', 'admin', 'admin@example.com', NULL, 'sp8i4p6c5m0WwrtVD6xz3LqUIwLlGAdk8ZD73OUaVCGE4zZzBCd16c7J0nMam3Do', 'e518622febbb65115dd1ad163ffaa7e333ac002db2537a37aaad4293081e9384', 0, '2025-03-04 08:58:21', 0),
+(4, 'Brendon', 'Lakatos', '+36201111934', 'user1', 'user1@example.com', 1, 'sp8i4p6c5m0WwrtVD6xz3LqUIwLlGAdk8ZD73OUaVCGE4zZzBCd16c7J0nMam3Do', 'e518622febbb65115dd1ad163ffaa7e333ac002db2537a37aaad4293081e9384', 0, '2025-03-04 08:58:43', 0),
+(5, 'Ali', 'Abdul-Aziz', '+42872322222', 'user2', 'user2@example.com', 2, 'sp8i4p6c5m0WwrtVD6xz3LqUIwLlGAdk8ZD73OUaVCGE4zZzBCd16c7J0nMam3Do', 'e518622febbb65115dd1ad163ffaa7e333ac002db2537a37aaad4293081e9384', 0, '2025-03-04 08:59:14', 0),
+(6, 'István', 'Köröskéni', '+365501221', 'user3', 'user3@example.com', 3, 'sp8i4p6c5m0WwrtVD6xz3LqUIwLlGAdk8ZD73OUaVCGE4zZzBCd16c7J0nMam3Do', 'e518622febbb65115dd1ad163ffaa7e333ac002db2537a37aaad4293081e9384', 0, '2025-03-04 08:59:53', 0);
 
 --
 -- Indexek a kiírt táblákhoz
