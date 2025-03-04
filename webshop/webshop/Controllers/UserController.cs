@@ -216,48 +216,6 @@ namespace webshop.Controllers
             }
         }
 
-        [HttpPut("ChangeUserName")]
-        public async Task<IActionResult> ChangeUserName(ChangeUserNameDTO param)
-        {
-            if(Manager.CheckIfUserLoggedIn(param.token))
-            {
-                using (var context = new WebshopContext())
-                {
-                    try
-                    {
-                        User user = null;
-                        if(Manager.LoggedInUsers.TryGetValue(param.token, out User tempUser))
-                        {
-                            user = tempUser;
-                        }
-                        else
-                        {
-                            return NotFound("Felhasználó nem található!");
-                        }
-
-                        if(context.Users.FirstOrDefault(u => u.LoginName == param.newUserName) is not null)
-                        {
-                            return BadRequest("Ez a felhasználónév már foglalt!");
-                        }
-
-                        user.LoginName = param.newUserName;
-                        context.Users.Update(user);
-                        await context.SaveChangesAsync();
-
-                        return Ok("Felhasználónév sikeresen módosítva!");
-                    }
-                    catch (Exception ex)
-                    {
-                        return BadRequest("Nem sikerült módosítani a felhasználónevet! " + ex.Message);
-                    }
-                }
-            }
-            else
-            {
-                return Unauthorized(Manager.UserNotExistingMessage);
-            }
-        }
-
         [HttpPut("RequestChangePassword")]
         
         public IActionResult RequestChangePassword(string token)
@@ -279,6 +237,11 @@ namespace webshop.Controllers
                             return NotFound("A felhasználó nem található!");
                         }
 
+                        if (context.Users.FirstOrDefault(u => u.LoginName == tempUser.LoginName) is not null)
+                        {
+                            return BadRequest("Ez a felhasználónév már foglalt!");
+                        }
+
                         Manager.PasswordChangeSalts.Add(user, Manager.GenerateSalt());
 
                         return Ok(Manager.PasswordChangeSalts.TryGetValue(user, out string newSalt) ? newSalt : "");
@@ -286,6 +249,46 @@ namespace webshop.Controllers
                     catch (Exception ex)
                     {
                         return BadRequest("Nem sikerült elküldeni a jelszóváltási kérelmet! " + ex.Message);
+                    }
+                }
+            }
+            else
+            {
+                return Unauthorized(Manager.UserNotExistingMessage);
+            }
+        }
+
+        [HttpPut("UpdateUserDetails")]
+        public async Task<IActionResult> UpdateUserDetails(string token, ChangeUserDetailsDTO updateUser)
+        {
+            if(Manager.CheckIfUserLoggedIn(token))
+            {
+                using (var context = new WebshopContext())
+                {
+                    try
+                    {
+                        User user = null;
+                        if(Manager.LoggedInUsers.TryGetValue(token, out User tempUser))
+                        {
+                            user = tempUser;
+                        }
+                        else
+                        {
+                            return NotFound("Felhasználó nem található!");
+                        }
+
+                        user.LoginName = updateUser.loginName;
+                        user.LastName = updateUser.lastName;
+                        user.FirstName = updateUser.firstName;
+                        user.PhoneNumber = updateUser.phoneNumber;
+
+                        context.Users.Update(user);
+                        await context.SaveChangesAsync();
+                        return Ok("Felhasználó adatok sikeresen módosítva!");
+                    }
+                    catch (Exception ex)
+                    {
+                        return BadRequest("Nem sikerült módosítani a felhasználó adatait! " + ex.Message);
                     }
                 }
             }
