@@ -132,11 +132,14 @@ public partial class WebshopContext : DbContext
             entity.Property(e => e.Id).HasColumnType("int(32)");
             entity.Property(e => e.Active).HasColumnType("int(1)");
             entity.Property(e => e.Email).HasMaxLength(64);
+            entity.Property(e => e.FirstName).HasMaxLength(32);
             entity.Property(e => e.Hash)
                 .HasMaxLength(64)
                 .HasColumnName("HASH");
+            entity.Property(e => e.LastName).HasMaxLength(32);
             entity.Property(e => e.LoginName).HasMaxLength(32);
             entity.Property(e => e.PermissionLevel).HasColumnType("int(11)");
+            entity.Property(e => e.PhoneNumber).HasMaxLength(32);
             entity.Property(e => e.RegistarionDate)
                 .ValueGeneratedOnAddOrUpdate()
                 .HasDefaultValueSql("'current_timestamp()'")

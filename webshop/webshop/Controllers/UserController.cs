@@ -218,7 +218,7 @@ namespace webshop.Controllers
         [HttpPut("ChangeUserName")]
         public async Task<IActionResult> ChangeUserName(string token, string newUserName)
         {
-            if(Manager.CheckPermission(token, 1))
+            if(Manager.CheckIfUserLoggedIn(token))
             {
                 using (var context = new WebshopContext())
                 {
@@ -261,7 +261,7 @@ namespace webshop.Controllers
         
         public IActionResult RequestChangePassword(string token)
         {
-            if(Manager.CheckPermission(token, 1))
+            if(Manager.CheckIfUserLoggedIn(token))
             {
                 using (var context = new WebshopContext())
                 {

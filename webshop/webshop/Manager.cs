@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Primitives;
+using System;
 using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
@@ -44,6 +45,14 @@ namespace webshop
         public static bool CheckPermission(string token, int requiredPermissionLevel)
         {
             if (LoggedInUsers.ContainsKey(token) && LoggedInUsers[token].PermissionLevel >= requiredPermissionLevel)
+                return true;
+            else
+                return false;
+        }
+
+        public static bool CheckIfUserLoggedIn(string token)
+        {
+            if(LoggedInUsers.ContainsKey(token))
                 return true;
             else
                 return false;
