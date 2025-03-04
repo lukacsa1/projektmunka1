@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
+using webshop.DTOs;
 using webshop.Models;
 
 namespace webshop.Controllers
@@ -216,16 +217,16 @@ namespace webshop.Controllers
         }
 
         [HttpPut("ChangeUserName")]
-        public async Task<IActionResult> ChangeUserName(string token, string newUserName)
+        public async Task<IActionResult> ChangeUserName(ChangeUserNameDTO param)
         {
-            if(Manager.CheckIfUserLoggedIn(token))
+            if(Manager.CheckIfUserLoggedIn(param.token))
             {
                 using (var context = new WebshopContext())
                 {
                     try
                     {
                         User user = null;
-                        if(Manager.LoggedInUsers.TryGetValue(token, out User tempUser))
+                        if(Manager.LoggedInUsers.TryGetValue(param.token, out User tempUser))
                         {
                             user = tempUser;
                         }
@@ -234,12 +235,12 @@ namespace webshop.Controllers
                             return NotFound("Felhasználó nem található!");
                         }
 
-                        if(context.Users.FirstOrDefault(u => u.LoginName == newUserName) is not null)
+                        if(context.Users.FirstOrDefault(u => u.LoginName == param.newUserName) is not null)
                         {
                             return BadRequest("Ez a felhasználónév már foglalt!");
                         }
 
-                        user.LoginName = newUserName;
+                        user.LoginName = param.newUserName;
                         context.Users.Update(user);
                         await context.SaveChangesAsync();
 

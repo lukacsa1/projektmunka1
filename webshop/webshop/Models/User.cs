@@ -12,7 +12,7 @@ public partial class User
 
     public string FirstName { get; set; } = null!;
 
-    public string PhoneNumber { get; set; } = null!;
+    public string? PhoneNumber { get; set; } = null!;
 
     public string LoginName { get; set; } = null!;
 
