@@ -326,7 +326,8 @@ header {
   cursor: pointer;
 }
 
-/* Bejelentkezési modal */
+/* Regisztracio modal */
+
 .registration-modal {
   display: flex;
   position: fixed;
@@ -345,32 +346,42 @@ header {
   background: white;
   padding: 20px;
   border-radius: 10px;
-  width: 300px;
-  text-align: center;
+  width: 600px;
+  text-align: left;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.registration-modal-content h2 {
+h2 {
   margin-bottom: 15px;
+  text-align: center;
 }
 
-.registration-modal-content label {
-  display: block;
-  margin: 10px 0 5px;
-  text-align: left;
+/* 2 oszlopos elrendezés a form-ban */
+.registration-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px; /* Távolság az oszlopok között */
 }
 
-.registration-modal-content input {
-  width: 100%;
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+}
+
+.form-group input {
   padding: 8px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 
-.registration-modal-content button {
-  margin-top: 10px;
-  width: 100%;
+
+button {
+  grid-column: span 2; /* A gomb átfedi mindkét oszlopot */
   padding: 10px;
   background-color: #ff6f61;
   border: none;
@@ -380,19 +391,19 @@ header {
   cursor: pointer;
 }
 
-.registration-modal-content button:hover {
+button:hover {
   background-color: #e65a4f;
 }
 
-.close-registration {
+.close-reg {
   position: relative;
   color:black;
-  right: -130px;
+  right: -550px;
   top: -15px;
   font-size: 24px;
   cursor: pointer;
-  
 }
+
 
 /* Lábjegyzet */
 footer {

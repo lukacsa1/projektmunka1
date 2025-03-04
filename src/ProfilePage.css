@@ -16,7 +16,7 @@
   /* Oldalsáv */
   .sidebar {
     width: 25%;
-    background-color: #d32f2f; /* Piros háttér */
+    background-color: #ff6f61; /* Piros háttér */
     color: white;
     padding: 20px;
     box-sizing: border-box;
@@ -40,11 +40,11 @@
   }
   
   .sidebar li:hover {
-    background-color: #b71c1c; /* Sötétebb piros hover állapot */
+    background-color: #ff6f61; /* Sötétebb piros hover állapot */
   }
   
   .sidebar li.active {
-    background-color: #9c1d1d; /* Aktív elem színe */
+    background-color: #ff6f61; /* Aktív elem színe */
   }
   
   /* Tartalom */
@@ -57,7 +57,7 @@
   
   .content h2 {
     font-size: 28px;
-    color: #d32f2f; /* Piros szín a címeknek */
+    color: #ff6f61; /* Piros szín a címeknek */
     margin-bottom: 20px;
   }
   
@@ -83,12 +83,12 @@
   
   input[type="text"]:focus,
   input[type="email"]:focus {
-    border-color: #d32f2f; /* Piros fókuszállapot */
+    border-color: #ff6f61; /* Piros fókuszállapot */
   }
   
   /* Hivatkozások */
   a {
-    color: #d32f2f;
+    color: #ff6f61;
     text-decoration: none;
     font-size: 16px;
   }
@@ -99,7 +99,7 @@
   
   /* Mentés gomb */
   .save-button {
-    background-color: #d32f2f;
+    background-color: #ff6f61;
     color: white;
     border: none;
     padding: 15px 30px;
@@ -111,7 +111,7 @@
   }
   
   .save-button:hover {
-    background-color: #b71c1c;
+    background-color: #ff6f61;
   }
   
   /* Általános reszponzivitás */
