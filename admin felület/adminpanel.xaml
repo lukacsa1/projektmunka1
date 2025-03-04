@@ -1,10 +1,40 @@
 ﻿<Window x:Class="admin_felület.adminpanel"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Admin Panel" Height="450" Width="800">
+        Title="Admin Panel" Height="500" Width="800">
     <Grid>
-        <Button Content="Load Products" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Height="30" Click="LoadProductsButton_Click"/>
-        <DataGrid x:Name="TermekekDataGrid" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,50,0,0" />
-        <TextBox x:Name="ErrorTextBox" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="100" Margin="0,0,0,10" IsReadOnly="True" Background="LightGray" />
+        <Menu VerticalAlignment="Top">
+            <MenuItem Header="Termékek">
+                <MenuItem Header="Termékek betöltése" Click="LoadProductsMenuItem_Click"/>
+                <MenuItem Header="Termékek törlése" Click="DeleteProductsMenuItem_Click"/>
+                <MenuItem Header="Termékek hozzáadása" Click="AddProductsMenuItem_Click"/>
+                <MenuItem Header="Termékek szerkesztése" Click="EditProductsMenuItem_Click"/>
+            </MenuItem>
+        </Menu>
+
+        <!-- Termékek DataGrid -->
+        <DataGrid x:Name="TermekekDataGrid" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,30,0,0" Height="250"/>
+
+        <!-- Termék hozzáadási űrlap (alapból elrejtve) -->
+        <StackPanel x:Name="TermekHozzaadasPanel" Visibility="Collapsed" Margin="10">
+            <Label Content="Termék neve:"/>
+            <TextBox x:Name="TermekNeveTextBox"/>
+
+            <Label Content="Méret:"/>
+            <TextBox x:Name="MeretTextBox"/>
+
+            <Label Content="Ár:"/>
+            <TextBox x:Name="ArTextBox"/>
+
+            <Label Content="Kép URL:"/>
+            <TextBox x:Name="KepTextBox"/>
+
+            <Label Content="Kategória:"/>
+            <TextBox x:Name="KategoriaTextBox"/>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="Hozzáadás" Click="HozzaadButton_Click" Margin="10"/>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>

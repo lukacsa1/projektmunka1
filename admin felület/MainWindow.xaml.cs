@@ -59,11 +59,20 @@ namespace YourNamespace
 
                 var responseData = JsonSerializer.Deserialize<LoginResponse>(loginResponseText);
 
+
+                // MessageBox.Show("Sikeres bejelentkezés!", "Bejelentkezés", MessageBoxButton.OK, MessageBoxImage.Information);
+                //this.Close();
+
+                // Ellenőrizd a jogosultsági szintet
+                if (responseData.PermissionLevel == 9)
+                {
+                    throw new Exception("Nincs megfelelő jogosultság a bejelentkezéshez!");
+                }
+
                 // Token mentése UserSession osztályba
                 UserSession.Token = responseData.Token;
 
-               // MessageBox.Show("Sikeres bejelentkezés!", "Bejelentkezés", MessageBoxButton.OK, MessageBoxImage.Information);
-               //this.Close();
+                // Bejelentkezés sikeres -> adminpanel megnyitása
                 adminpanel adminpanel = new adminpanel();
                 adminpanel.Show();
                 this.Close();
@@ -89,6 +98,7 @@ namespace YourNamespace
         private class LoginResponse
         {
             public string Token { get; set; }
+            public double PermissionLevel { get; set; }
         }
     }
 }
