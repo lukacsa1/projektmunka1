@@ -130,3 +130,66 @@
     }
   }
   
+  /* Jelszó változtatás szekció */
+.password-change-section {
+    padding: 30px;
+    background: linear-gradient(145deg, #e65a4f, #000);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    margin: 40px auto;
+    transition: all 0.3s ease;
+  }
+  
+  .password-change-title {
+    font-size: 1.8rem;
+    color: #000;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .password-label {
+    display: block;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #000;
+  }
+  
+  .password-input {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    margin-top: 8px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .password-input:focus {
+    border-color: #66bb6a;
+    box-shadow: 0 0 8px rgba(102, 187, 106, 0.5);
+  }
+  
+  .password-change-button {
+    width: 100%;
+    padding: 14px;
+    background-color: #66bb6a;
+    color: #fff;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .password-change-button:hover {
+    background-color: #4caf50;
+  }
+  
+  .password-change-button:focus {
+    outline: none;
+  }
+  

@@ -9,10 +9,13 @@ const ProfileModal = ({ setShowProfile }) => {
     phoneNumber: "",
     email: "",
     Orders: [], // Adding the Orders array here
+    loginName: "", // Login name for the user
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeSection, setActiveSection] = useState("data");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("token")?.replace(/"/g, "");
@@ -42,8 +45,76 @@ const ProfileModal = ({ setShowProfile }) => {
   };
 
   const handleSave = () => {
-    alert("Adatok mentése...");
-    // Itt lehetne egy PUT kérés az adatok mentéséhez
+    const token = localStorage.getItem("token")?.replace(/"/g, "");
+    if (token) {
+      axios
+        .put(
+          `https://localhost:7117/api/User/UpdateUserDetails?token=${token}`,
+          {
+            loginName: userData.loginName, // Az eredeti felhasználónév
+            firstName: userData.firstName,
+            lastName: userData.lastName,
+            phoneNumber: userData.phoneNumber,
+          },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              'accept': '*/*',
+            },
+          }
+        )
+        .then((response) => {
+          alert("Adatok sikeresen mentve!");
+        })
+        .catch((error) => {
+          alert("Hiba történt az adatok mentésekor.");
+          console.error(error);
+        });
+    } else {
+      alert("Nincs érvényes token.");
+    }
+  };
+
+  const hashPassword = async (password, salt) => {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(password + salt);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", data); // Hashing
+    const hashArray = Array.from(new Uint8Array(hashBuffer)); // Array from buffer
+    return hashArray.map(byte => byte.toString(16).padStart(2, '0')).join(''); // Hex formátum
+  };
+
+  const handleChangePassword = async () => {
+    if (newPassword !== confirmPassword) {
+      alert("A két jelszó nem egyezik.");
+      return;
+    }
+
+    const salt = "a_random_salt"; // Használj egy erős sót a titkosításhoz
+    const hashedPassword = await hashPassword(newPassword, salt); // Jelszó hash-elése
+
+    const token = localStorage.getItem("token")?.replace(/"/g, "");
+    if (token) {
+      axios
+        .post(
+          `https://localhost:7117/api/User/RequestChangePassword?token=${token}`,
+          { newPassword: hashedPassword }, // A hash-elt jelszó küldése
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              'accept': '*/*',
+            },
+          }
+        )
+        .then((response) => {
+          alert("Jelszó sikeresen megváltoztatva!");
+        })
+        .catch((error) => {
+          alert("Hiba történt a jelszó változtatásakor.");
+          console.error(error);
+        });
+    } else {
+      alert("Nincs érvényes token.");
+    }
   };
 
   const handleClose = () => {
@@ -93,7 +164,7 @@ const ProfileModal = ({ setShowProfile }) => {
                 <input type="email" name="email" value={userData.email} onChange={handleInputChange} />
               </label>
             </form>
-            <p><a href="#change-password">Jelszó megváltoztatása</a></p>
+            <p><a href="#change-password" onClick={() => setActiveSection("change-password")}>Jelszó megváltoztatása</a></p>
           </>
         )}
 
@@ -117,6 +188,33 @@ const ProfileModal = ({ setShowProfile }) => {
             )}
           </div>
         )}
+
+        {/* Jelszó változtatása */}
+{activeSection === "change-password" && (
+  <div className="password-change-section">
+    <h3 className="password-change-title">Jelszó megváltoztatása</h3>
+    <label className="password-label">
+      Új jelszó:
+      <input 
+        type="password" 
+        value={newPassword} 
+        onChange={(e) => setNewPassword(e.target.value)} 
+        className="password-input" 
+      />
+    </label>
+    <label className="password-label">
+      Új jelszó megerősítése:
+      <input 
+        type="password" 
+        value={confirmPassword} 
+        onChange={(e) => setConfirmPassword(e.target.value)} 
+        className="password-input" 
+      />
+    </label>
+    <button className="password-change-button" onClick={handleChangePassword}>Jelszó változtatása</button>
+  </div>
+)}
+
       </div>
 
       {/* Mentés gomb */}

@@ -3,7 +3,9 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // Komponensek importálása
-import Navbar from "./components/Navbar";
+
+
+import Navbar from "./components/Nav";
 import ProductGrid from "./components/ProductGrid";
 import Cart from "./components/Cart";
 import LoginModal from "./components/LoginModal";
