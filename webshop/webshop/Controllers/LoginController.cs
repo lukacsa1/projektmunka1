@@ -53,6 +53,7 @@ namespace webshop.Controllers
                         {
                             LoginName = loginDTO.LoginName,
                             Email = loggedUser.Email,
+                            PermissionLevel = loggedUser.PermissionLevel,
                             Token = token
                         });
                     }
