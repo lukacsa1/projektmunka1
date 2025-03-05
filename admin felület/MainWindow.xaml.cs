@@ -71,6 +71,7 @@ namespace YourNamespace
 
                 // Token mentése UserSession osztályba
                 UserSession.Token = responseData.token;
+                MessageBox.Show(UserSession.Token);
 
                 // Bejelentkezés sikeres -> adminpanel megnyitása
                 adminpanel adminpanel = new adminpanel();

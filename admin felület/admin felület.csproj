@@ -101,8 +101,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="classok\Felhasznalo.cs" />
     <Compile Include="classok\ProductService.cs" />
     <Compile Include="classok\Termek.cs" />
+    <Compile Include="classok\UserService.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
