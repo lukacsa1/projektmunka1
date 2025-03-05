@@ -129,13 +129,15 @@ const ProfileModal = ({ setShowProfile }) => {
       {/* Oldalsáv */}
       <div className="sidebar">
         <h3>Szia <br /> {userData.loginName}!</h3>
-       
         <ul>
           <li onClick={() => setActiveSection("data")} className={activeSection === "data" ? "active" : ""}>
             Adataim
           </li>
           <li onClick={() => setActiveSection("orders")} className={activeSection === "orders" ? "active" : ""}>
             Vásárlásaim
+          </li>
+          <li onClick={() => setActiveSection("change-password")} className={activeSection === "change-password" ? "active" : ""}>
+            Jelszó megváltoztatása
           </li>
           <li onClick={handleClose}>Bezárás</li> {/* Bezárás gomb */}
         </ul>
@@ -146,25 +148,30 @@ const ProfileModal = ({ setShowProfile }) => {
         {activeSection === "data" && (
           <>
             <h2>Személyes adataim</h2>
-            <form>
-              <label>
-                Vezetéknév:
+            <form >
+              <label >
+              <h4>Vezetéknév:</h4>  
                 <input type="text" name="lastName" value={userData.lastName} onChange={handleInputChange} />
               </label>
               <label>
-                Keresztnév:
+              <h4>  Keresztnév:</h4>
                 <input type="text" name="firstName" value={userData.firstName} onChange={handleInputChange} />
               </label>
               <label>
-                Telefonszám:
+              <h4> Telefonszám:</h4>
                 <input type="text" name="phoneNumber" value={userData.phoneNumber} onChange={handleInputChange} />
               </label>
               <label>
-                E-mail:
+              <h4> E-mail:</h4>
                 <input type="email" name="email" value={userData.email} onChange={handleInputChange} />
               </label>
+              {/* Mentés gomb */}
+      {activeSection === "data" && (
+        <button className="save-button" onClick={handleSave}>
+          Adatok mentése
+        </button>
+      )}
             </form>
-            <p><a href="#change-password" onClick={() => setActiveSection("change-password")}>Jelszó megváltoztatása</a></p>
           </>
         )}
 
@@ -190,39 +197,33 @@ const ProfileModal = ({ setShowProfile }) => {
         )}
 
         {/* Jelszó változtatása */}
-{activeSection === "change-password" && (
-  <div className="password-change-section">
-    <h3 className="password-change-title">Jelszó megváltoztatása</h3>
-    <label className="password-label">
-      Új jelszó:
-      <input 
-        type="password" 
-        value={newPassword} 
-        onChange={(e) => setNewPassword(e.target.value)} 
-        className="password-input" 
-      />
-    </label>
-    <label className="password-label">
-      Új jelszó megerősítése:
-      <input 
-        type="password" 
-        value={confirmPassword} 
-        onChange={(e) => setConfirmPassword(e.target.value)} 
-        className="password-input" 
-      />
-    </label>
-    <button className="password-change-button" onClick={handleChangePassword}>Jelszó változtatása</button>
-  </div>
-)}
-
+        {activeSection === "change-password" && (
+          <div className="password-change-section">
+            <h3 className="password-change-title">Jelszó megváltoztatása</h3>
+            <label className="password-label">
+              Új jelszó:
+              <input 
+                type="password" 
+                value={newPassword} 
+                onChange={(e) => setNewPassword(e.target.value)} 
+                className="password-input" 
+              />
+            </label>
+            <label className="password-label">
+              Új jelszó megerősítése:
+              <input 
+                type="password" 
+                value={confirmPassword} 
+                onChange={(e) => setConfirmPassword(e.target.value)} 
+                className="password-input" 
+              />
+            </label>
+            <button className="password-change-button" onClick={handleChangePassword}>Jelszó változtatása</button>
+          </div>
+        )}
       </div>
 
-      {/* Mentés gomb */}
-      {activeSection === "data" && (
-        <button className="save-button" onClick={handleSave}>
-          Adatok mentése
-        </button>
-      )}
+      
     </div>
   );
 };
