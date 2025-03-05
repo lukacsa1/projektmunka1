@@ -64,13 +64,13 @@ namespace YourNamespace
                 //this.Close();
 
                 // Ellenőrizd a jogosultsági szintet
-                if (responseData.PermissionLevel == 9)
+                if (responseData.permissionLevel <= 8)
                 {
                     throw new Exception("Nincs megfelelő jogosultság a bejelentkezéshez!");
                 }
 
                 // Token mentése UserSession osztályba
-                UserSession.Token = responseData.Token;
+                UserSession.Token = responseData.token;
 
                 // Bejelentkezés sikeres -> adminpanel megnyitása
                 adminpanel adminpanel = new adminpanel();
@@ -97,8 +97,8 @@ namespace YourNamespace
 
         private class LoginResponse
         {
-            public string Token { get; set; }
-            public double PermissionLevel { get; set; }
+            public string token { get; set; } = "";
+            public int permissionLevel { get; set; }
         }
     }
 }

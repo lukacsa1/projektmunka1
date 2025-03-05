@@ -3,27 +3,35 @@
   "WorkspaceRootPath": "C:\\Users\\Lukacsa\\source\\repos\\projektwpf\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|C:\\Users\\Lukacsa\\source\\repos\\projektwpf\\admin fel\u00FClet\\adminpanel.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|solutionrelative:admin fel\u00FClet\\adminpanel.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|c:\\users\\lukacsa\\source\\repos\\projektwpf\\admin fel\u00FClet\\adminpanel.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|solutionrelative:admin fel\u00FClet\\adminpanel.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|c:\\users\\lukacsa\\source\\repos\\projektwpf\\admin fel\u00FClet\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|c:\\users\\lukacsa\\source\\repos\\projektwpf\\admin fel\u00FClet\\classok\\productservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|solutionrelative:admin fel\u00FClet\\classok\\productservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|c:\\users\\lukacsa\\source\\repos\\projektwpf\\admin fel\u00FClet\\classok\\termek.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|solutionrelative:admin fel\u00FClet\\classok\\termek.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|C:\\Users\\Lukacsa\\source\\repos\\projektwpf\\admin fel\u00FClet\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|solutionrelative:admin fel\u00FClet\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|c:\\users\\lukacsa\\source\\repos\\projektwpf\\admin fel\u00FClet\\adminpanel.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|solutionrelative:admin fel\u00FClet\\adminpanel.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|c:\\users\\lukacsa\\source\\repos\\projektwpf\\admin fel\u00FClet\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|solutionrelative:admin fel\u00FClet\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|c:\\users\\lukacsa\\source\\repos\\projektwpf\\admin fel\u00FClet\\packages.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "AbsoluteMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|C:\\Users\\Lukacsa\\source\\repos\\projektwpf\\admin fel\u00FClet\\packages.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
       "RelativeMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|solutionrelative:admin fel\u00FClet\\packages.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|c:\\users\\lukacsa\\source\\repos\\projektwpf\\admin fel\u00FClet\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|C:\\Users\\Lukacsa\\source\\repos\\projektwpf\\admin fel\u00FClet\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|solutionrelative:admin fel\u00FClet\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|C:\\Users\\Lukacsa\\source\\repos\\projektwpf\\admin fel\u00FClet\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|solutionrelative:admin fel\u00FClet\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     }
   ],
@@ -34,7 +42,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 11,
+          "SelectedChildIndex": 12,
           "Children": [
             {
               "$type": "Bookmark",
@@ -70,7 +78,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 3,
+              "Title": "Termek.cs",
+              "DocumentMoniker": "C:\\Users\\Lukacsa\\source\\repos\\projektwpf\\admin fel\u00FClet\\classok\\Termek.cs",
+              "RelativeDocumentMoniker": "admin fel\u00FClet\\classok\\Termek.cs",
+              "ToolTip": "C:\\Users\\Lukacsa\\source\\repos\\projektwpf\\admin fel\u00FClet\\classok\\Termek.cs",
+              "RelativeToolTip": "admin fel\u00FClet\\classok\\Termek.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-04T11:39:11.961Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "App.xaml",
               "DocumentMoniker": "C:\\Users\\Lukacsa\\source\\repos\\projektwpf\\admin fel\u00FClet\\App.xaml",
               "RelativeDocumentMoniker": "admin fel\u00FClet\\App.xaml",
@@ -82,7 +103,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "C:\\Users\\Lukacsa\\source\\repos\\projektwpf\\admin fel\u00FClet\\MainWindow.xaml",
               "RelativeDocumentMoniker": "admin fel\u00FClet\\MainWindow.xaml",
@@ -94,7 +115,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "packages.config",
               "DocumentMoniker": "C:\\Users\\Lukacsa\\source\\repos\\projektwpf\\admin fel\u00FClet\\packages.config",
               "RelativeDocumentMoniker": "admin fel\u00FClet\\packages.config",
@@ -108,19 +129,6 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "adminpanel.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\Lukacsa\\source\\repos\\projektwpf\\admin fel\u00FClet\\adminpanel.xaml.cs",
-              "RelativeDocumentMoniker": "admin fel\u00FClet\\adminpanel.xaml.cs",
-              "ToolTip": "C:\\Users\\Lukacsa\\source\\repos\\projektwpf\\admin fel\u00FClet\\adminpanel.xaml.cs",
-              "RelativeToolTip": "admin fel\u00FClet\\adminpanel.xaml.cs",
-              "ViewState": "AgIAAD4AAAAAAAAAAAAkwEsAAAAxAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-04T07:43:16.217Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
               "Title": "adminpanel.xaml",
               "DocumentMoniker": "C:\\Users\\Lukacsa\\source\\repos\\projektwpf\\admin fel\u00FClet\\adminpanel.xaml",
               "RelativeDocumentMoniker": "admin fel\u00FClet\\adminpanel.xaml",
@@ -133,12 +141,38 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "adminpanel.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\Lukacsa\\source\\repos\\projektwpf\\admin fel\u00FClet\\adminpanel.xaml.cs",
+              "RelativeDocumentMoniker": "admin fel\u00FClet\\adminpanel.xaml.cs",
+              "ToolTip": "C:\\Users\\Lukacsa\\source\\repos\\projektwpf\\admin fel\u00FClet\\adminpanel.xaml.cs",
+              "RelativeToolTip": "admin fel\u00FClet\\adminpanel.xaml.cs",
+              "ViewState": "AgIAAEcAAAAAAAAAAAAUwCIAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-04T07:43:16.217Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ProductService.cs",
+              "DocumentMoniker": "C:\\Users\\Lukacsa\\source\\repos\\projektwpf\\admin fel\u00FClet\\classok\\ProductService.cs",
+              "RelativeDocumentMoniker": "admin fel\u00FClet\\classok\\ProductService.cs",
+              "ToolTip": "C:\\Users\\Lukacsa\\source\\repos\\projektwpf\\admin fel\u00FClet\\classok\\ProductService.cs",
+              "RelativeToolTip": "admin fel\u00FClet\\classok\\ProductService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACwAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-04T12:15:44.041Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "MainWindow.xaml.cs",
               "DocumentMoniker": "C:\\Users\\Lukacsa\\source\\repos\\projektwpf\\admin fel\u00FClet\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "admin fel\u00FClet\\MainWindow.xaml.cs",
               "ToolTip": "C:\\Users\\Lukacsa\\source\\repos\\projektwpf\\admin fel\u00FClet\\MainWindow.xaml.cs",
               "RelativeToolTip": "admin fel\u00FClet\\MainWindow.xaml.cs",
-              "ViewState": "AgIAADYAAAAAAAAAAAAIwEgAAAA3AAAAAAAAAA==",
+              "ViewState": "AgIAAD0AAAAAAAAAAAAkwEMAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-04T07:42:56.31Z",
               "EditorCaption": ""

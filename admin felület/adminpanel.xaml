@@ -4,16 +4,22 @@
         Title="Admin Panel" Height="500" Width="800">
     <Grid>
         <Menu VerticalAlignment="Top">
-            <MenuItem Header="Termékek">
-                <MenuItem Header="Termékek betöltése" Click="LoadProductsMenuItem_Click"/>
-                <MenuItem Header="Termékek törlése" Click="DeleteProductsMenuItem_Click"/>
+            <MenuItem Header="Termékek" Click="MenuItem_Click_1">
+                <MenuItem Header="Termékek adatai" Click="LoadProductsMenuItem_Click"/>
                 <MenuItem Header="Termékek hozzáadása" Click="AddProductsMenuItem_Click"/>
-                <MenuItem Header="Termékek szerkesztése" Click="EditProductsMenuItem_Click"/>
+            </MenuItem>
+            <MenuItem Header="Felhasználók" Click="MenuItem_Click">
+                <MenuItem Header="Felhasználók adatai" Click="LoadUsersMenuItem_Click"/>
+                <MenuItem Header="Felhasználók hozzáadása" Click="AddUsersMenuItem_Click"/>
             </MenuItem>
         </Menu>
 
         <!-- Termékek DataGrid -->
-        <DataGrid x:Name="TermekekDataGrid" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,30,0,0" Height="250"/>
+        <StackPanel x:Name="TermekekMegjelenitese" Margin="10">
+            <DataGrid x:Name="TermekekDataGrid" SelectionChanged="TermekekDataGrid_SelectionChanged" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,30,0,0" Height="250"/>
+            <Button x:Name="EditProductButton" Content="Szerkesztés" Click="EditProductButton_Click" Width="70" Height="20" Visibility="Collapsed"/>
+            <Button x:Name="DeleteProductButton" Content="Törlés" Click="DeleteProductButton_Click" Height="20" Width="60" Visibility="Collapsed"/>
+        </StackPanel>
 
         <!-- Termék hozzáadási űrlap (alapból elrejtve) -->
         <StackPanel x:Name="TermekHozzaadasPanel" Visibility="Collapsed" Margin="10">
@@ -33,7 +39,10 @@
             <TextBox x:Name="KategoriaTextBox"/>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Content="Hozzáadás" Click="HozzaadButton_Click" Margin="10"/>
+                <!-- Hozzáadási gomb -->
+                <Button x:Name="HozzaadButton" Content="Hozzáadás" Click="HozzaadButton_Click" Margin="10"/>
+                <!-- Mentés gomb (csak a szerkesztéshez) -->
+                <Button x:Name="SaveButton" Content="Mentés" Click="SaveProductButton_Click" Margin="10" Visibility="Collapsed"/>
             </StackPanel>
         </StackPanel>
     </Grid>
