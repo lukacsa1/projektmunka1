@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using YourNamespace; // Az UserSession és Termek osztály helye
 using admin_felület.classok;
 using System.ComponentModel;
+using System.Windows.Input;
 
 namespace admin_felület
 {
@@ -59,28 +60,29 @@ namespace admin_felület
         // Menü kattintások
         private void LoadProductsMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            FelhasznaloHozzaadasPanel.Visibility = Visibility.Collapsed;
-            FelhasznalokMegjelenitese.Visibility = Visibility.Collapsed;
-            TermekHozzaadasPanel.Visibility = Visibility.Collapsed;
+            Hide();
             TermekekMegjelenitese.Visibility = Visibility.Visible;
             LoadProducts();
         }
 
         private void AddProductsMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            // Termék hozzáadás panel megjelenítése, és a másik panel elrejtése
+            Hide();
             TermekHozzaadasPanel.Visibility = Visibility.Visible;
-            TermekekMegjelenitese.Visibility = Visibility.Collapsed;
-
-            // Törlés és szerkesztés gombok elrejtése
-            HideEditAndDeleteButtons();
+            HozzaadButton.Visibility = Visibility.Visible;
         }
 
         // Törlés és szerkesztés gombok elrejtése
-        private void HideEditAndDeleteButtons()
+        private void Hide()
         {
+            FelhasznaloHozzaadasPanel.Visibility = Visibility.Collapsed;
+            FelhasznalokMegjelenitese.Visibility = Visibility.Collapsed;
+            TermekHozzaadasPanel.Visibility = Visibility.Collapsed;
+            TermekekMegjelenitese.Visibility = Visibility.Collapsed;
             EditProductButton.Visibility = Visibility.Collapsed;
             DeleteProductButton.Visibility = Visibility.Collapsed;
+            HozzaadButton.Visibility = Visibility.Collapsed;
+            SaveButton.Visibility = Visibility.Collapsed;
         }
 
         // Kiválasztott termék kezelése
@@ -96,7 +98,8 @@ namespace admin_felület
             }
             else
             {
-                HideEditAndDeleteButtons();
+                Hide();
+                TermekekMegjelenitese.Visibility = Visibility.Visible;
             }
         }
 
@@ -149,6 +152,11 @@ namespace admin_felület
             {
                 MessageBox.Show($"Hiba történt: {ex.Message}", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            TermekNeveTextBox.Text = "";
+            MeretTextBox.Text = "";
+            ArTextBox.Text= "";
+            KepTextBox.Text = "";
+            KategoriaTextBox.Text = "";
         }
 
         // Szerkesztés
@@ -160,9 +168,8 @@ namespace admin_felület
                 MessageBox.Show("Kérjük, válasszon ki egy terméket a szerkesztéshez!");
                 return;
             }
-
+            Hide();
             TermekHozzaadasPanel.Visibility = Visibility.Visible;
-            TermekekDataGrid.Visibility = Visibility.Collapsed;
 
             // A kiválasztott termék adatainak kitöltése
             TermekNeveTextBox.Text = _selectedTermek.TermekNeve;
@@ -171,11 +178,8 @@ namespace admin_felület
             KepTextBox.Text = _selectedTermek.Kep;
             KategoriaTextBox.Text = _selectedTermek.Kategoria;
 
-            // A mentés gombot láthatóvá tesszük, a hozzáadás gombot elrejtjük
-            HozzaadButton.Visibility = Visibility.Collapsed;
+            // A mentés gombot láthatóvá tesszük
             SaveButton.Visibility = Visibility.Visible;
-            EditProductButton.Visibility = Visibility.Collapsed;
-            DeleteProductButton.Visibility = Visibility.Collapsed;
         }
 
         // Mentés gomb eseménykezelője
@@ -237,12 +241,17 @@ namespace admin_felület
                 }
 
                 // A nézet visszaállítása a termékek listájára
-                TermekekDataGrid.Visibility = Visibility.Visible;
-                TermekHozzaadasPanel.Visibility = Visibility.Collapsed;
+                Hide();
+               
+                TermekNeveTextBox.Text = "";
+                MeretTextBox.Text = "";
+                ArTextBox.Text = "";
+                KepTextBox.Text = "";
+                KategoriaTextBox.Text = "";
 
-                // A gombok láthatóságának kezelése
+                TermekekMegjelenitese.Visibility = Visibility.Visible;
                 HozzaadButton.Visibility = Visibility.Visible;
-                SaveButton.Visibility = Visibility.Collapsed;
+                TermekekDataGrid.Visibility = Visibility.Visible;
             }
             catch (Exception ex)
             {
