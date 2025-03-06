@@ -59,14 +59,41 @@
 
         <!-- Felhasználó hozzáadás panel -->
         <StackPanel x:Name="FelhasznaloHozzaadasPanel" Visibility="Collapsed" Margin="10">
-            <Label Content="Felhasználónév:"/>
-            <TextBox x:Name="FelhasznaloNevTextBox"/>
+            <Label Content="Last Name:"/>
+            <TextBox x:Name="LastNameTextBox"/>
+
+            <Label Content="First Name:"/>
+            <TextBox x:Name="FirstNameTextBox"/>
+
+            <Label Content="Phone Number:"/>
+            <TextBox x:Name="PhoneNumberTextBox"/>
+
+            <Label Content="Login Name:"/>
+            <TextBox x:Name="LoginNameTextBox"/>
 
             <Label Content="Email:"/>
             <TextBox x:Name="EmailTextBox"/>
 
-            <Label Content="Szerepkör:"/>
-            <TextBox x:Name="SzerepkorTextBox"/>
+            <Label Content="SzamlazasiCimId:"/>
+            <TextBox x:Name="SzamlazasiCimIdTextBox"/>
+
+            <Label Content="Salt:"/>
+            <TextBox x:Name="SaltTextBox"/>
+
+            <Label Content="Hash:"/>
+            <TextBox x:Name="HashTextBox"/>
+
+            <Label Content="Active:"/>
+            <TextBox x:Name="ActiveTextBox"/>
+
+            <Label Content="RegistrationDate:"/>
+            <TextBox x:Name="RegistrationDateTextBox"/>
+
+            <Label Content="PermissionLevel:"/>
+            <TextBox x:Name="PermissionLevelTextBox"/>
+
+            <Label Content="SzamlazasiCim:"/>
+            <TextBox x:Name="SzamlazasiCimTextBox"/>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button x:Name="HozzaadUserButton" Content="Hozzáadás" Click="HozzaadUserButton_Click" Margin="10"/>

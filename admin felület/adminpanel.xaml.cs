@@ -75,6 +75,10 @@ namespace admin_felület
         // Törlés és szerkesztés gombok elrejtése
         private void Hide()
         {
+            SaveUserButton.Visibility = Visibility.Collapsed;
+            HozzaadUserButton.Visibility = Visibility.Collapsed;
+            DeleteUserButton.Visibility = Visibility.Collapsed;
+            EditUserButton.Visibility = Visibility.Collapsed;
             FelhasznaloHozzaadasPanel.Visibility = Visibility.Collapsed;
             FelhasznalokMegjelenitese.Visibility = Visibility.Collapsed;
             TermekHozzaadasPanel.Visibility = Visibility.Collapsed;
@@ -299,7 +303,19 @@ namespace admin_felület
         }
         private void FelhasznalokDataGrid_SelectionChanged(object sender, RoutedEventArgs e)
         {
+            _selectedFelhasznalo = FelhasznalokDataGrid.SelectedItem as Felhasznalo;
 
+            // Ha nincs kiválasztott termék, akkor elrejtjük a szerkesztés és törlés gombokat
+            if (_selectedFelhasznalo != null)
+            {
+                EditUserButton.Visibility = Visibility.Visible;
+                DeleteUserButton.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                Hide();
+                FelhasznalokMegjelenitese.Visibility = Visibility.Visible;
+            }
         }
         private void EditUserButton_Click(object sender, RoutedEventArgs e)
         {
@@ -320,15 +336,15 @@ namespace admin_felület
 
         private void LoadUsersMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            FelhasznaloHozzaadasPanel.Visibility = Visibility.Collapsed;
+            Hide();
             FelhasznalokMegjelenitese.Visibility = Visibility.Visible;
-            TermekHozzaadasPanel.Visibility = Visibility.Collapsed;
-            TermekekMegjelenitese.Visibility = Visibility.Collapsed;
             LoadUsers();
         }
         private void AddUsersMenuItem_Click(object sender, RoutedEventArgs e)
         {
-
+            Hide();
+            FelhasznaloHozzaadasPanel.Visibility = Visibility.Visible;
+            HozzaadUserButton.Visibility = Visibility.Visible;
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
