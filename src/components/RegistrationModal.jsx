@@ -81,13 +81,16 @@ const hashPassword = async (password, salt) => {
 
             const registerTextData = await registerResponse.text();
 
+            console.log(registerTextData);
             const contentType = registerResponse.headers.get("Content-Type");
             let data = {};
 
             if (contentType && contentType.includes("application/json")) {
-                data = await registerResponse.json();
+                data = JSON.stringify(registerTextData)//await registerResponse.json();
+              
             } else {
                 data.message = registerTextData;
+                
             }
 
             if (!registerResponse.ok) {
@@ -100,7 +103,7 @@ const hashPassword = async (password, salt) => {
             setShowRegistration(false);
             window.location.reload();
         } catch (err) {
-            setError(err.message); // Hibát jelenítünk meg
+            setError("itt keresuk"+err.message); // Hibát jelenítünk meg
         }
     };
 
