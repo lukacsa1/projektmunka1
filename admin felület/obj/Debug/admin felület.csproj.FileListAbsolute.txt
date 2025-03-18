@@ -146,3 +146,40 @@ C:\Users\Lukacsa\source\repos\projtektwp\admin felület\obj\Debug\admin felület
 C:\Users\Lukacsa\source\repos\projtektwp\admin felület\obj\Debug\admin fe.960FAE35.Up2Date
 C:\Users\Lukacsa\source\repos\projtektwp\admin felület\obj\Debug\admin felület.exe
 C:\Users\Lukacsa\source\repos\projtektwp\admin felület\obj\Debug\admin felület.pdb
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\bin\Debug\admin felület.exe.config
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\bin\Debug\admin felület.exe
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\bin\Debug\admin felület.pdb
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\bin\Debug\System.Buffers.dll
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\bin\Debug\System.IO.Pipelines.dll
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\bin\Debug\System.Memory.dll
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\bin\Debug\System.Text.Encodings.Web.dll
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\bin\Debug\System.Text.Json.dll
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\bin\Debug\System.ValueTuple.dll
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\bin\Debug\System.Buffers.xml
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\bin\Debug\System.IO.Pipelines.xml
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\bin\Debug\System.Memory.xml
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\bin\Debug\System.Text.Encodings.Web.xml
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\bin\Debug\System.Text.Json.xml
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\bin\Debug\System.ValueTuple.xml
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\obj\Debug\admin felület.csproj.AssemblyReference.cache
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\obj\Debug\adminpanel.baml
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\obj\Debug\MainWindow.baml
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\obj\Debug\adminpanel.g.cs
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\obj\Debug\MainWindow.g.cs
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\obj\Debug\App.g.cs
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\obj\Debug\admin felület_MarkupCompile.cache
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\obj\Debug\admin felület.g.resources
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\obj\Debug\admin_felület.Properties.Resources.resources
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\obj\Debug\admin felület.csproj.GenerateResource.cache
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\obj\Debug\admin felület.csproj.CoreCompileInputs.cache
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\obj\Debug\admin fe.960FAE35.Up2Date
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\obj\Debug\admin felület.exe
+C:\Users\Lukacsa\Source\Repos\projektmunka1\admin felület\obj\Debug\admin felület.pdb

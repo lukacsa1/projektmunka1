@@ -4,10 +4,10 @@
         Title="Bejelentkezés" Height="300" Width="400" WindowStartupLocation="CenterScreen">
     <Grid>
         <TextBlock Text="Felhasználónév:" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <TextBox Name="UsernameTextBox" Width="250" Height="25" Margin="10,30,0,0" VerticalAlignment="Top"/>
+        <TextBox Text="user1" Name="UsernameTextBox" Width="250" Height="25" Margin="10,30,0,0" VerticalAlignment="Top"/>
 
         <TextBlock Text="Jelszó:" Margin="10,70,0,0" VerticalAlignment="Top"/>
-        <PasswordBox Name="PasswordBox" Width="250" Height="25" Margin="10,90,0,0" VerticalAlignment="Top"/>
+        <PasswordBox Password="Titkos1"  Name="PasswordBox" Width="250" Height="25" Margin="10,90,0,0" VerticalAlignment="Top"/>
 
         <Button Content="Belépés" Width="100" Height="30" Margin="10,140,0,0" VerticalAlignment="Top" Click="LoginButton_Click"/>
         <TextBlock Name="ErrorMessage" Foreground="Red" Margin="10,180,0,0" TextWrapping="Wrap"/>

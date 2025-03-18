@@ -10,6 +10,8 @@ using YourNamespace; // Az UserSession és Termek osztály helye
 using admin_felület.classok;
 using System.ComponentModel;
 using System.Windows.Input;
+using System.Threading;
+using System.Runtime.Remoting.Contexts;
 
 namespace admin_felület
 {
@@ -319,19 +321,129 @@ namespace admin_felület
         }
         private void EditUserButton_Click(object sender, RoutedEventArgs e)
         {
+            if (_selectedFelhasznalo == null)
+            {
+                MessageBox.Show("Kérjük, válasszon ki egy terméket a szerkesztéshez!");
+                return;
+            }
+            Hide();
+            FelhasznaloHozzaadasPanel.Visibility = Visibility.Visible;
 
+            // A kiválasztott termék adatainak kitöltése
+            LastNameTextBox.Text = _selectedFelhasznalo.LastName;
+            FirstNameTextBox.Text = _selectedFelhasznalo.FirstName;
+            PhoneNumberTextBox.Text = _selectedFelhasznalo.PhoneNumber.ToString();
+            LoginNameTextBox.Text = _selectedFelhasznalo.LoginName;
+            EmailTextBox.Text = _selectedFelhasznalo.Email;
+            SzamlazasiCimIdTextBox.Text = _selectedFelhasznalo.SzamlazasiCimId.ToString();
+            SaltTextBox.Text = _selectedFelhasznalo.Salt;
+            HashTextBox.Text = _selectedFelhasznalo.Hash;
+            ActiveTextBox.Text = _selectedFelhasznalo.Active.ToString();
+            RegistrationDateTextBox.Text = _selectedFelhasznalo.RegistrationDate.ToString();
+            PermissionLevelTextBox.Text = _selectedFelhasznalo.PermissionLevel.ToString();
+            SzamlazasiCimTextBox.Text = _selectedFelhasznalo.SzamlazasiCim;
+
+            // A mentés gombot láthatóvá tesszük
+            SaveUserButton.Visibility = Visibility.Visible;
         }
-        private void DeleteUserButton_Click(object sender, RoutedEventArgs e)
+        private async void DeleteUserButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (_selectedFelhasznalo == null)
+            {
+                MessageBox.Show("Kérjük, válasszon ki egy felhasználót a törléshez!");
+                return;
+            }
+            string token = UserSession.Token;
+            await _userService.DeleteUser(_selectedFelhasznalo.Id);
+            
+            LoadUsers();
         }
         private void HozzaadUserButton_Click(object sender, RoutedEventArgs e)
         {
 
         }
-        private void SaveUserButton_Click(object sender, RoutedEventArgs e)
+        private async void SaveUserButton_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                if (_selectedFelhasznalo == null)
+                {
+                    MessageBox.Show("Kérjük, válasszon ki egy felhasználót a szerkesztéshez!");
+                    return;
+                }
+                
+                // A frissített termék adatainak előkészítése
+                var updatedUser = new
+                {
+                id = _selectedFelhasznalo.Id,
+                lastName = _selectedFelhasznalo.LastName,
+                firstName = _selectedFelhasznalo.FirstName,
+                phoneNumber = _selectedFelhasznalo.PhoneNumber,
+                loginName = _selectedFelhasznalo.LoginName,
+                email = _selectedFelhasznalo.Email,
+                szamlazasiCimId = _selectedFelhasznalo.SzamlazasiCimId,
+                salt = _selectedFelhasznalo.Salt,
+                hash = _selectedFelhasznalo.Hash,
+                active = _selectedFelhasznalo.Active,
+                registrationDate = _selectedFelhasznalo.RegistrationDate,
+                permissionLevel = _selectedFelhasznalo.PermissionLevel,
+                szamlazasiCim = _selectedFelhasznalo.SzamlazasiCim,
+            };
 
+                // A JSON adat formázása
+                string jsonData = JsonSerializer.Serialize(updatedUser);
+                HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+                string id = _selectedFelhasznalo.Id.ToString();
+                // Token megszerzése a session-ből
+                string token = UserSession.Token;
+                if (string.IsNullOrEmpty(token))
+                {
+                    MessageBox.Show("Hiba: Token hiányzik!", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                // API végpont URL-je
+                string requestUrl = $"https://localhost:7117/api/User/Admin/UpdateUser?token={token}&userId={id}"; // Token paraméterként
+
+                // A PUT kérés elküldése
+                HttpResponseMessage response = await _httpClient.PutAsync(requestUrl, content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    MessageBox.Show("Sikeres módosítás!", "Információ", MessageBoxButton.OK, MessageBoxImage.Information);
+                    await LoadUsers(); // A termékek újratöltése
+                }
+                else
+                {
+                    string errorMsg = await response.Content.ReadAsStringAsync();
+                    MessageBox.Show($"Hiba történt: {response.StatusCode}\n{errorMsg}", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
+                // A nézet visszaállítása a termékek listájára
+                Hide();
+
+                LastNameTextBox.Text = "";
+                FirstNameTextBox.Text = "";
+                PhoneNumberTextBox.Text = "";
+                LoginNameTextBox.Text = "";
+                EmailTextBox.Text = "";
+                SzamlazasiCimIdTextBox.Text = "";
+                SaltTextBox.Text = "";
+                HashTextBox.Text = "";
+                ActiveTextBox.Text = "";
+                RegistrationDateTextBox.Text = "";
+                PermissionLevelTextBox.Text = "";
+                SzamlazasiCimTextBox.Text = "";
+
+                FelhasznalokMegjelenitese.Visibility = Visibility.Visible;
+                HozzaadUserButton.Visibility = Visibility.Visible;
+                FelhasznalokDataGrid.Visibility = Visibility.Visible;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Hiba történt: {ex.Message}", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void LoadUsersMenuItem_Click(object sender, RoutedEventArgs e)
