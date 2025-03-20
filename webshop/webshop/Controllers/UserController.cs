@@ -248,9 +248,9 @@ namespace webshop.Controllers
             }
         }
 
-        [HttpPut("RequestChangePassword")]
+        [HttpPut("ChangePassword")]
         
-        public IActionResult RequestChangePassword(string token)
+        public async Task<IActionResult> ChangePassword(string token, [FromBody] ChangePasswordDTO changepass)
         {
             if(Manager.CheckIfUserLoggedIn(token))
             {
@@ -259,28 +259,29 @@ namespace webshop.Controllers
                     try
                     {
                         User user = null;
-
                         if(Manager.LoggedInUsers.TryGetValue(token, out User tempUser))
                         {
                             user = tempUser;
                         }
+
+                        if(Manager.CreateSHA256(changepass.OldPasswordHash) == user.Hash)
+                        {
+                            user.Hash = Manager.CreateSHA256(changepass.NewPasswordHash);
+                            user.Salt = changepass.NewSalt;
+
+                            context.Users.Update(user);
+                            await context.SaveChangesAsync();
+                            return Ok("Jelszó sikeresen módosítva!");
+                        }
                         else
                         {
-                            return NotFound("A felhasználó nem található!");
+                            return BadRequest("A jelszó nem egyezik!");
                         }
-
-                        if (context.Users.FirstOrDefault(u => u.LoginName == tempUser.LoginName) is not null)
-                        {
-                            return BadRequest("Ez a felhasználónév már foglalt!");
-                        }
-
-                        Manager.PasswordChangeSalts.Add(user, Manager.GenerateSalt());
-
-                        return Ok(Manager.PasswordChangeSalts.TryGetValue(user, out string newSalt) ? newSalt : "");
+                        
                     }
                     catch (Exception ex)
                     {
-                        return BadRequest("Nem sikerült elküldeni a jelszóváltási kérelmet! " + ex.Message);
+                        return BadRequest("Nem sikerült módosítani a jelszót! " + ex.Message);
                     }
                 }
             }
