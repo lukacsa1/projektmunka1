@@ -83,12 +83,18 @@ namespace admin_felület
             EditUserButton.Visibility = Visibility.Collapsed;
             FelhasznaloHozzaadasPanel.Visibility = Visibility.Collapsed;
             FelhasznalokMegjelenitese.Visibility = Visibility.Collapsed;
+
             TermekHozzaadasPanel.Visibility = Visibility.Collapsed;
             TermekekMegjelenitese.Visibility = Visibility.Collapsed;
             EditProductButton.Visibility = Visibility.Collapsed;
             DeleteProductButton.Visibility = Visibility.Collapsed;
             HozzaadButton.Visibility = Visibility.Collapsed;
             SaveButton.Visibility = Visibility.Collapsed;
+
+            RendelesekMegjelenitese.Visibility = Visibility.Collapsed;
+            EditOrderButton.Visibility = Visibility.Collapsed;
+            DeleteOrderButton.Visibility = Visibility.Collapsed;
+            SaveOrderButton.Visibility = Visibility.Collapsed;
         }
 
         // Kiválasztott termék kezelése
@@ -289,7 +295,7 @@ namespace admin_felület
                 if (!response.IsSuccessStatusCode)
                 {
                     string errorMsg = await response.Content.ReadAsStringAsync();
-                    MessageBox.Show($"Hiba a termékek lekérdezésekor: {response.StatusCode}\n{errorMsg}");
+                    MessageBox.Show($"Hiba a felhasználók lekérdezésekor: {response.StatusCode}\n{errorMsg}");
                     return;
                 }
 
@@ -297,12 +303,14 @@ namespace admin_felület
                 _felhasznalok = JsonSerializer.Deserialize<List<Felhasznalo>>(jsonData, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
                 FelhasznalokDataGrid.ItemsSource = _felhasznalok ?? new List<Felhasznalo>();
+                
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Hiba történt: {ex.Message}");
             }
         }
+
         private void FelhasznalokDataGrid_SelectionChanged(object sender, RoutedEventArgs e)
         {
             _selectedFelhasznalo = FelhasznalokDataGrid.SelectedItem as Felhasznalo;
@@ -336,12 +344,8 @@ namespace admin_felület
             LoginNameTextBox.Text = _selectedFelhasznalo.LoginName;
             EmailTextBox.Text = _selectedFelhasznalo.Email;
             SzamlazasiCimIdTextBox.Text = _selectedFelhasznalo.SzamlazasiCimId.ToString();
-            SaltTextBox.Text = _selectedFelhasznalo.Salt;
-            HashTextBox.Text = _selectedFelhasznalo.Hash;
             ActiveTextBox.Text = _selectedFelhasznalo.Active.ToString();
-            RegistrationDateTextBox.Text = _selectedFelhasznalo.RegistrationDate.ToString();
             PermissionLevelTextBox.Text = _selectedFelhasznalo.PermissionLevel.ToString();
-            SzamlazasiCimTextBox.Text = _selectedFelhasznalo.SzamlazasiCim;
 
             // A mentés gombot láthatóvá tesszük
             SaveUserButton.Visibility = Visibility.Visible;
@@ -382,12 +386,9 @@ namespace admin_felület
                 loginName = _selectedFelhasznalo.LoginName,
                 email = _selectedFelhasznalo.Email,
                 szamlazasiCimId = _selectedFelhasznalo.SzamlazasiCimId,
-                salt = _selectedFelhasznalo.Salt,
-                hash = _selectedFelhasznalo.Hash,
                 active = _selectedFelhasznalo.Active,
-                registrationDate = _selectedFelhasznalo.RegistrationDate,
                 permissionLevel = _selectedFelhasznalo.PermissionLevel,
-                szamlazasiCim = _selectedFelhasznalo.SzamlazasiCim,
+                szamlazasiCim = _selectedFelhasznalo.szamlazasiCim,
             };
 
                 // A JSON adat formázása
@@ -429,10 +430,7 @@ namespace admin_felület
                 LoginNameTextBox.Text = "";
                 EmailTextBox.Text = "";
                 SzamlazasiCimIdTextBox.Text = "";
-                SaltTextBox.Text = "";
-                HashTextBox.Text = "";
                 ActiveTextBox.Text = "";
-                RegistrationDateTextBox.Text = "";
                 PermissionLevelTextBox.Text = "";
                 SzamlazasiCimTextBox.Text = "";
 
@@ -459,12 +457,73 @@ namespace admin_felület
             HozzaadUserButton.Visibility = Visibility.Visible;
         }
 
+        // Termékek betöltése az API-ból
+        private async Task LoadOrders()
+        {
+            try
+            {
+                HttpResponseMessage response = await _httpClient.GetAsync("https://localhost:7117/api/Products/GetProducts");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    string errorMsg = await response.Content.ReadAsStringAsync();
+                    MessageBox.Show($"Hiba a termékek lekérdezésekor: {response.StatusCode}\n{errorMsg}");
+                    return;
+                }
+
+                string jsonData = await response.Content.ReadAsStringAsync();
+                _termekek = JsonSerializer.Deserialize<List<Termek>>(jsonData, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                RendelesekDataGrid.ItemsSource = _termekek ?? new List<Termek>();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Hiba történt: {ex.Message}");
+            }
+        }
+
+        private async void SaveOrderButton_Click(object sender, RoutedEventArgs e)
+        { 
+        
+        }
+
+        private async void DeleteOrderButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void EditOrderButton_Click(object sender, RoutedEventArgs e)
+        { 
+        
+        }
+
+        private void RendelesekDataGrid_SelectionChanged(object sender, RoutedEventArgs e)
+        { 
+        
+        }
+        private void LoadOrdersMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Hide();
+            RendelesekMegjelenitese.Visibility = Visibility.Visible;
+            LoadOrders();
+        }
+
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MenuItem_Click_3(object sender, RoutedEventArgs e)
         {
 
         }

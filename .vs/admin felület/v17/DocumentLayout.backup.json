@@ -3,16 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|c:\\users\\lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\adminpanel.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|solutionrelative:admin fel\u00FClet\\adminpanel.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\adminpanel.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|solutionrelative:admin fel\u00FClet\\adminpanel.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|solutionrelative:admin fel\u00FClet\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|c:\\users\\lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\adminpanel.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|solutionrelative:admin fel\u00FClet\\adminpanel.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\classok\\felhasznalo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -23,16 +19,24 @@
       "RelativeMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|solutionrelative:admin fel\u00FClet\\classok\\productservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\classok\\termek.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|solutionrelative:admin fel\u00FClet\\classok\\termek.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|solutionrelative:admin fel\u00FClet\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|solutionrelative:admin fel\u00FClet\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\classok\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|solutionrelative:admin fel\u00FClet\\classok\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|solutionrelative:admin fel\u00FClet\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\classok\\rendeles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|solutionrelative:admin fel\u00FClet\\classok\\rendeles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\classok\\termek.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|solutionrelative:admin fel\u00FClet\\classok\\termek.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7A6B71C4-6DAF-422E-9925-2157B1C180C4}|admin fel\u00FClet\\admin fel\u00FClet.csproj|C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
@@ -87,40 +91,51 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "adminpanel.xaml",
-              "DocumentMoniker": "C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\adminpanel.xaml",
-              "RelativeDocumentMoniker": "admin fel\u00FClet\\adminpanel.xaml",
-              "ToolTip": "C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\adminpanel.xaml",
-              "RelativeToolTip": "admin fel\u00FClet\\adminpanel.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-03-04T07:44:23.637Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
               "Title": "adminpanel.xaml.cs",
               "DocumentMoniker": "C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\adminpanel.xaml.cs",
               "RelativeDocumentMoniker": "admin fel\u00FClet\\adminpanel.xaml.cs",
-              "ToolTip": "C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\adminpanel.xaml.cs*",
-              "RelativeToolTip": "admin fel\u00FClet\\adminpanel.xaml.cs*",
-              "ViewState": "AgIAAH0BAAAAAAAAAAAwwJUBAABjAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\adminpanel.xaml.cs",
+              "RelativeToolTip": "admin fel\u00FClet\\adminpanel.xaml.cs",
+              "ViewState": "AgIAAEcAAAAAAAAAAAAMwFoAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-04T07:43:16.217Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 0,
+              "Title": "adminpanel.xaml",
+              "DocumentMoniker": "C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\adminpanel.xaml",
+              "RelativeDocumentMoniker": "admin fel\u00FClet\\adminpanel.xaml",
+              "ToolTip": "C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\adminpanel.xaml",
+              "RelativeToolTip": "admin fel\u00FClet\\adminpanel.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-03-24T11:02:37.268Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Felhasznalo.cs",
+              "DocumentMoniker": "C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\classok\\Felhasznalo.cs",
+              "RelativeDocumentMoniker": "admin fel\u00FClet\\classok\\Felhasznalo.cs",
+              "ToolTip": "C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\classok\\Felhasznalo.cs",
+              "RelativeToolTip": "admin fel\u00FClet\\classok\\Felhasznalo.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABAAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-05T07:21:58.93Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "MainWindow.xaml.cs",
               "DocumentMoniker": "C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "admin fel\u00FClet\\MainWindow.xaml.cs",
               "ToolTip": "C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\MainWindow.xaml.cs",
               "RelativeToolTip": "admin fel\u00FClet\\MainWindow.xaml.cs",
-              "ViewState": "AgIAAEwAAAAAAAAAAAAAAEgAAAA3AAAAAAAAAA==",
+              "ViewState": "AgIAADcAAAAAAAAAAAAAAEsAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-04T07:42:56.31Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-04T07:42:56.31Z"
             },
             {
               "$type": "Document",
@@ -130,39 +145,48 @@
               "RelativeDocumentMoniker": "admin fel\u00FClet\\classok\\UserService.cs",
               "ToolTip": "C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\classok\\UserService.cs",
               "RelativeToolTip": "admin fel\u00FClet\\classok\\UserService.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABkAAAB9AAAAAAAAAA==",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAqwBkAAAB9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-05T07:21:21.074Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-05T07:21:21.074Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Felhasznalo.cs",
-              "DocumentMoniker": "C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\classok\\Felhasznalo.cs",
-              "RelativeDocumentMoniker": "admin fel\u00FClet\\classok\\Felhasznalo.cs",
-              "ToolTip": "C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\classok\\Felhasznalo.cs",
-              "RelativeToolTip": "admin fel\u00FClet\\classok\\Felhasznalo.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABAAAAAxAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-05T07:21:58.93Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\MainWindow.xaml",
               "RelativeDocumentMoniker": "admin fel\u00FClet\\MainWindow.xaml",
               "ToolTip": "C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\MainWindow.xaml",
               "RelativeToolTip": "admin fel\u00FClet\\MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-03-04T07:44:03.899Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-04T07:44:03.899Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
+              "Title": "Rendeles.cs",
+              "DocumentMoniker": "C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\classok\\Rendeles.cs",
+              "RelativeDocumentMoniker": "admin fel\u00FClet\\classok\\Rendeles.cs",
+              "ToolTip": "C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\classok\\Rendeles.cs",
+              "RelativeToolTip": "admin fel\u00FClet\\classok\\Rendeles.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-24T09:41:33.419Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ProductService.cs",
+              "DocumentMoniker": "C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\classok\\ProductService.cs",
+              "RelativeDocumentMoniker": "admin fel\u00FClet\\classok\\ProductService.cs",
+              "ToolTip": "C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\classok\\ProductService.cs",
+              "RelativeToolTip": "admin fel\u00FClet\\classok\\ProductService.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAAAQwCwAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-04T12:15:44.041Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "Termek.cs",
               "DocumentMoniker": "C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\classok\\Termek.cs",
               "RelativeDocumentMoniker": "admin fel\u00FClet\\classok\\Termek.cs",
@@ -170,25 +194,11 @@
               "RelativeToolTip": "admin fel\u00FClet\\classok\\Termek.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-04T11:39:11.961Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-04T11:39:11.961Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ProductService.cs",
-              "DocumentMoniker": "C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\classok\\ProductService.cs",
-              "RelativeDocumentMoniker": "admin fel\u00FClet\\classok\\ProductService.cs",
-              "ToolTip": "C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\classok\\ProductService.cs",
-              "RelativeToolTip": "admin fel\u00FClet\\classok\\ProductService.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAACwAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-04T12:15:44.041Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "packages.config",
               "DocumentMoniker": "C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\packages.config",
               "RelativeDocumentMoniker": "admin fel\u00FClet\\packages.config",
@@ -200,7 +210,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "App.xaml",
               "DocumentMoniker": "C:\\Users\\Lukacsa\\source\\repos\\projektmunka1\\admin fel\u00FClet\\App.xaml",
               "RelativeDocumentMoniker": "admin fel\u00FClet\\App.xaml",

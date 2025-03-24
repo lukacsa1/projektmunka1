@@ -73,6 +73,7 @@ namespace YourNamespace
                 UserSession.Token = responseData.token;
 
                 // Bejelentkezés sikeres -> adminpanel megnyitása
+                MessageBox.Show(UserSession.Token);
                 adminpanel adminpanel = new adminpanel();
                 adminpanel.Show();
                 this.Close();

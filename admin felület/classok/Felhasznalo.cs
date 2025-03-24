@@ -15,12 +15,21 @@ namespace admin_felület.classok
         public string LoginName { get; set; }
         public string Email { get; set; }
         public int? SzamlazasiCimId { get; set; }
-        public string Salt { get; set; }
-        public string Hash { get; set; }
         public int? Active { get; set; }
-        public DateTime RegistrationDate { get; set; }
         public int PermissionLevel { get; set; }
-        public string SzamlazasiCim { get; set; }
+        // Összetett típus a szállítási címre
+        public SzamlazasiCim szamlazasiCim { get; set; }
+
+        // Belső osztály a szállítási cím mezőhöz
+        public class SzamlazasiCim
+        {
+            public int Id { get; set; }
+            public string Orszag { get; set; }
+            public string Varos { get; set; }
+            public string Utca { get; set; }
+            public int Hazszam { get; set; }
+            public int Iranyitoszam { get; set; }
+        }
 
     }
 }
