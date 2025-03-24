@@ -123,8 +123,8 @@
   },
   {
     "ContainingType": "webshop.Controllers.OrderController",
-    "Method": "GetOrderByUser",
-    "RelativePath": "api/Order/GetOrderByUser",
+    "Method": "GetOrdersByOrderNumber",
+    "RelativePath": "api/Order/GetOrdersByOrderNumber",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -133,20 +133,25 @@
         "Name": "token",
         "Type": "System.String",
         "IsRequired": false
+      },
+      {
+        "Name": "orderNumber",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
   },
   {
     "ContainingType": "webshop.Controllers.OrderController",
-    "Method": "GetOrdersByOrderNumber",
-    "RelativePath": "api/Order/GetOrdersByOrderNumber",
+    "Method": "GetOrdersByUser",
+    "RelativePath": "api/Order/GetOrdersByUser",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "orderNumber",
+        "Name": "token",
         "Type": "System.String",
         "IsRequired": false
       }
@@ -162,8 +167,13 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "orderDetails",
-        "Type": "webshop.DTOs.OrderDetailsDTO",
+        "Name": "token",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "orderProducts",
+        "Type": "System.Collections.Generic.List\u00601[[webshop.DTOs.OrderProductDTO, webshop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "IsRequired": true
       }
     ],

@@ -158,6 +158,13 @@
         ],
         "parameters": [
           {
+            "name": "token",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "orderNumber",
             "in": "query",
             "schema": {
@@ -172,7 +179,7 @@
         }
       }
     },
-    "/api/Order/GetOrderByUser": {
+    "/api/Order/GetOrdersByUser": {
       "get": {
         "tags": [
           "Order"
@@ -198,21 +205,39 @@
         "tags": [
           "Order"
         ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/OrderDetailsDTO"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/OrderProductDTO"
+                }
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/OrderDetailsDTO"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/OrderProductDTO"
+                }
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/OrderDetailsDTO"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/OrderProductDTO"
+                }
               }
             }
           }
@@ -848,23 +873,6 @@
           },
           "tmpHash": {
             "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "OrderDetailsDTO": {
-        "type": "object",
-        "properties": {
-          "token": {
-            "type": "string",
-            "nullable": true
-          },
-          "product": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/OrderProductDTO"
-            },
             "nullable": true
           }
         },

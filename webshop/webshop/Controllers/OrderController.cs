@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+using System.Linq;
 using webshop.DTOs;
 using webshop.Models;
 
@@ -11,32 +12,75 @@ namespace webshop.Controllers
     public class OrderController : ControllerBase
     {
         [HttpGet("GetOrdersByOrderNumber")]
-        public async Task<IActionResult> GetOrdersByOrderNumber(string orderNumber)
+        public async Task<IActionResult> GetOrdersByOrderNumber(string token, string orderNumber)
         {
-            using (var context = new WebshopContext())
+            if (Manager.CheckIfUserLoggedIn(token))
             {
-                try
+                using (var context = new WebshopContext())
                 {
-                    Order order = await context.Orders.Include(o => o.Orderitems).FirstOrDefaultAsync(o => o.OrderNumber == orderNumber);
-
-                    if (order is null)
+                    try
                     {
-                        return NotFound("Rendelés nem található ilyen rendelés számmal!");
-                    }
+                        User user = null;
 
-                    return Ok(order);
+                        if (Manager.LoggedInUsers.TryGetValue(token, out User tempUser))
+                        {
+                            user = tempUser;
+                        }
+
+                        if (user == null)
+                        {
+                            return NotFound("A felhasználó nem található!");
+                        }
+
+                        Order order = context.Orders.Include(o => o.Orderitems).FirstOrDefault(o => o.OrderNumber == orderNumber);
+
+                        var orderOut = await context.Orders
+                        .Where(o => o.OrderNumber == orderNumber)
+                        .Include(o => o.Orderitems)
+                        .Select(o => new OrderDTO
+                        {
+                            Id = o.Id,
+                            OrderNumber = o.OrderNumber,
+                            Datum = o.Datum,
+                            Status = o.Status,
+                            Orderitems = o.Orderitems.Select(oi => new OrderItemsDTO
+                            {
+                                Id = oi.Id,
+                                TermekId = oi.TermekId,
+                                Meret = oi.Meret,
+                                Darabszam = oi.Darabszam
+                            }).ToList()
+                        })
+                        .FirstOrDefaultAsync();
+
+                        if (order is null)
+                        {
+                            return NotFound("Rendelés nem található ilyen rendelés számmal!");
+                        }
+
+                        if (order.FelhasznaloId != user.Id)
+                        {
+                            return Unauthorized("A rendelés nem ehhez a felhasználóhoz tartozik!");
+                        }
+
+                        return Ok(orderOut);
+                    }
+                    catch (Exception ex)
+                    {
+                        return BadRequest("Nem sikerült lekérni a rendelést! " + ex.Message);
+                    }
                 }
-                catch (Exception ex)
-                {
-                    return BadRequest("Nem sikerült lekérni a rendelést! " + ex.Message);
-                }
+            }
+            else
+            {
+                return Unauthorized(Manager.UserNotExistingMessage);
             }
         }
 
-        [HttpGet("GetOrderByUser")]
-        public async Task<IActionResult> GetOrderByUser(string token)
+        [HttpGet("GetOrdersByUser")]
+        public async Task<IActionResult> GetOrdersByUser(string token)
         {
-            if (Manager.CheckPermission(token, 1))
+            if (Manager.CheckIfUserLoggedIn(token))
             {
                 using (var context = new WebshopContext())
                 {
@@ -55,7 +99,7 @@ namespace webshop.Controllers
 
                         List<Order> orders = await context.Orders.Where(o => o.FelhasznaloId == user.Id).Include(o => o.Orderitems).ToListAsync();
 
-                        if(orders.Count == 0)
+                        if (orders.Count == 0)
                         {
                             return NotFound("A felhasználónak nincsenek rendelései!");
                         }
@@ -75,9 +119,9 @@ namespace webshop.Controllers
         }
 
         [HttpPost("NewOrder")]
-        public async Task<IActionResult> NewOrder(OrderDetailsDTO orderDetails)
+        public async Task<IActionResult> NewOrder(string token, [FromBody] List<OrderProductDTO> orderProducts)
         {
-            if (Manager.CheckPermission(orderDetails.token, 1))
+            if (Manager.CheckIfUserLoggedIn(token))
             {
                 using (var context = new WebshopContext())
                 {
@@ -88,7 +132,7 @@ namespace webshop.Controllers
                         string orderNumber = Manager.GenerateOrderNumber();
 
 
-                        if (Manager.LoggedInUsers.TryGetValue(orderDetails.token, out User tempUser))
+                        if (Manager.LoggedInUsers.TryGetValue(token, out User tempUser))
                         {
                             user = tempUser;
                         }
@@ -112,7 +156,7 @@ namespace webshop.Controllers
                         int orderId = context.Orders.FirstOrDefault(o => o.OrderNumber == orderNumber).Id;
 
 
-                        foreach (var products in orderDetails.product)
+                        foreach (var products in orderProducts)
                         {
 
                             Termekek product = context.Termekeks.FirstOrDefault(p => p.Id == products.Id)!;
@@ -163,7 +207,7 @@ namespace webshop.Controllers
         [HttpDelete("DeleteOrder")]
         public async Task<IActionResult> DeleteOrder(string token, string orderNumber)
         {
-            if (Manager.CheckPermission(token, 1))
+            if (Manager.CheckIfUserLoggedIn(token))
             {
                 using (var context = new WebshopContext())
                 {
@@ -188,12 +232,12 @@ namespace webshop.Controllers
                             return NotFound("Megrendelés nem található!");
                         }
 
-                        List<Orderitem> orderitems = context.Orderitems.Where(o => o.RendelésId == order.Id).ToList();
+                        if (order.FelhasznaloId != user.Id)
+                        {
+                            return Unauthorized("A rendelés nem ehhez a felhasználóhoz tartozik!");
+                        }
 
-                        //if(orderitems.Count == 0)
-                        //{
-                        //    return NotFound("A megrendelés tárgyai nem találhatóak!");
-                        //}
+                        List<Orderitem> orderitems = context.Orderitems.Where(o => o.RendelésId == order.Id).ToList();
 
                         foreach (var item in orderitems)
                         {
