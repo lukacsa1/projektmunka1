@@ -123,6 +123,22 @@
   },
   {
     "ContainingType": "webshop.Controllers.OrderController",
+    "Method": "GetAll",
+    "RelativePath": "api/Order/GetAllOrders",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "token",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "webshop.Controllers.OrderController",
     "Method": "GetOrdersByOrderNumber",
     "RelativePath": "api/Order/GetOrdersByOrderNumber",
     "HttpMethod": "GET",

@@ -151,6 +151,27 @@
         }
       }
     },
+    "/api/Order/GetAllOrders": {
+      "get": {
+        "tags": [
+          "Order"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Order/GetOrdersByOrderNumber": {
       "get": {
         "tags": [
@@ -957,11 +978,7 @@
             "nullable": true
           },
           "rendelesszamlazas": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Rendelesszamlazas"
-            },
-            "nullable": true
+            "$ref": "#/components/schemas/Rendelesszamlazas"
           }
         },
         "additionalProperties": false

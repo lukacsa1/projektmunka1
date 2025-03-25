@@ -9,5 +9,6 @@ namespace webshop.DTOs
         public int Status { get; set; }
         public string OrderNumber { get; set; }
         public List<OrderItemsDTO> Orderitems { get; set; }
+        public RendelesSzamlazasDTO? Szamlazas { get; set; }
     }
 }

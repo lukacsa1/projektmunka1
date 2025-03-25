@@ -19,5 +19,7 @@ public partial class Order
 
     public virtual ICollection<Orderitem> Orderitems { get; set; } = new List<Orderitem>();
 
-    public virtual ICollection<Rendelesszamlazas> Rendelesszamlazas { get; set; } = new List<Rendelesszamlazas>();
+    public virtual Rendelesszamlazas Rendelesszamlazas { get; set; }
+
+    //public virtual ICollection<Rendelesszamlazas> Rendelesszamlazas { get; set; } = new List<Rendelesszamlazas>();
 }

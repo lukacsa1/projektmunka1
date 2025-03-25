@@ -11,6 +11,61 @@ namespace webshop.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
+        [HttpGet("GetAllOrders")]
+        public async Task<IActionResult> GetAll(string token)
+        {
+            if (Manager.CheckPermission(token, 9))
+            {
+                using (var context = new WebshopContext())
+                {
+                    try
+                    {
+                        var orders = await context.Orders
+                        .Include(o => o.Orderitems)
+                        .Include(o => o.Rendelesszamlazas) // Kapcsolat a számlázási adatokkal
+                        .Select(o => new OrderDTO
+                        {
+                            Id = o.Id,
+                            Datum = o.Datum,
+                            Status = o.Status,
+                            OrderNumber = o.OrderNumber,
+                            Orderitems = o.Orderitems.Select(oi => new OrderItemsDTO
+                            {
+                                Id = oi.Id,
+                                TermekId = oi.TermekId,
+                                Meret = oi.Meret,
+                                Darabszam = oi.Darabszam
+                            }).ToList(),
+                            Szamlazas = o.Rendelesszamlazas != null ? new RendelesSzamlazasDTO
+                            {
+                                Nev = o.Rendelesszamlazas.Nev,
+                                Email = o.Rendelesszamlazas.Email,
+                                Telefonszam = o.Rendelesszamlazas.Telefonszam,
+                                Orszag = o.Rendelesszamlazas.Orszag,
+                                Varos = o.Rendelesszamlazas.Varos,
+                                Utca = o.Rendelesszamlazas.Utca,
+                                Hazszam = o.Rendelesszamlazas.Hazszam,
+                                Iranyitoszam = o.Rendelesszamlazas.Iranyitoszam
+                            } : null!
+                        })
+                        .ToListAsync();
+
+                        return Ok(orders);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        return BadRequest("Nem sikerült lekérni a rendeléseket! " + ex.Message);
+                    }
+                }
+            }
+            else
+            {
+                return Unauthorized(Manager.UserNotEligableMessage);
+            }
+        }
+
+
         [HttpGet("GetOrdersByOrderNumber")]
         public async Task<IActionResult> GetOrdersByOrderNumber(string token, string orderNumber)
         {

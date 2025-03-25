@@ -98,9 +98,10 @@ public partial class WebshopContext : DbContext
             entity.Property(e => e.Utca).HasMaxLength(64);
             entity.Property(e => e.Varos).HasMaxLength(64);
 
-            entity.HasOne(d => d.Rendeles).WithMany(p => p.Rendelesszamlazas)
-                .HasForeignKey(d => d.RendelesId)
-                .HasConstraintName("rendelesszamlazas_ibfk_1");
+            entity.HasOne(d => d.Rendeles)  // Egy számlázási adat egy rendeléshez tartozik
+            .WithOne(p => p.Rendelesszamlazas)  // Egy rendeléshez egy számlázási adat tartozik
+            .HasForeignKey<Rendelesszamlazas>(d => d.RendelesId)
+            .HasConstraintName("rendelesszamlazas_ibfk_1");
         });
 
         modelBuilder.Entity<Szamlazasicimek>(entity =>
