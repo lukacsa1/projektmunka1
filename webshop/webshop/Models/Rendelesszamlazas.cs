@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace webshop.Models;
 
-public partial class Rendelesszamlaza
+public partial class Rendelesszamlazas
 {
     public int Id { get; set; }
 
@@ -22,4 +22,8 @@ public partial class Rendelesszamlaza
     public string Hazszam { get; set; } = null!;
 
     public int Iranyitoszam { get; set; }
+
+    public int RendelesId { get; set; }
+
+    public virtual Order Rendeles { get; set; } = null!;
 }

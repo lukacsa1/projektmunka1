@@ -172,8 +172,8 @@
         "IsRequired": false
       },
       {
-        "Name": "orderProducts",
-        "Type": "System.Collections.Generic.List\u00601[[webshop.DTOs.OrderProductDTO, webshop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Name": "newOrder",
+        "Type": "webshop.DTOs.NewOrderDTO",
         "IsRequired": true
       }
     ],

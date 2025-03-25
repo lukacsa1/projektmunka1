@@ -19,7 +19,7 @@ public partial class WebshopContext : DbContext
 
     public virtual DbSet<Orderitem> Orderitems { get; set; }
 
-    public virtual DbSet<Rendelesszamlaza> Rendelesszamlazas { get; set; }
+    public virtual DbSet<Rendelesszamlazas> Rendelesszamlazas { get; set; }
 
     public virtual DbSet<Szamlazasicimek> Szamlazasicimeks { get; set; }
 
@@ -41,8 +41,6 @@ public partial class WebshopContext : DbContext
 
             entity.HasIndex(e => e.FelhasznaloId, "FelhasznaloId");
 
-            entity.HasIndex(e => e.SzamlazasId, "SzamlazasId");
-
             entity.Property(e => e.Id).HasColumnType("int(11)");
             entity.Property(e => e.Datum)
                 .HasDefaultValueSql("'current_timestamp()'")
@@ -50,7 +48,6 @@ public partial class WebshopContext : DbContext
             entity.Property(e => e.FelhasznaloId).HasColumnType("int(11)");
             entity.Property(e => e.OrderNumber).HasMaxLength(8);
             entity.Property(e => e.Status).HasColumnType("int(1)");
-            entity.Property(e => e.SzamlazasId).HasColumnType("int(11)");
 
             entity.HasOne(d => d.Felhasznalo).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.FelhasznaloId)
@@ -82,11 +79,13 @@ public partial class WebshopContext : DbContext
                 .HasConstraintName("orderitems_ibfk_2");
         });
 
-        modelBuilder.Entity<Rendelesszamlaza>(entity =>
+        modelBuilder.Entity<Rendelesszamlazas>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PRIMARY");
 
             entity.ToTable("rendelesszamlazas");
+
+            entity.HasIndex(e => e.RendelesId, "RendelesId");
 
             entity.Property(e => e.Id).HasColumnType("int(64)");
             entity.Property(e => e.Email).HasMaxLength(64);
@@ -94,9 +93,14 @@ public partial class WebshopContext : DbContext
             entity.Property(e => e.Iranyitoszam).HasColumnType("int(10)");
             entity.Property(e => e.Nev).HasMaxLength(64);
             entity.Property(e => e.Orszag).HasMaxLength(64);
+            entity.Property(e => e.RendelesId).HasColumnType("int(11)");
             entity.Property(e => e.Telefonszam).HasMaxLength(64);
             entity.Property(e => e.Utca).HasMaxLength(64);
             entity.Property(e => e.Varos).HasMaxLength(64);
+
+            entity.HasOne(d => d.Rendeles).WithMany(p => p.Rendelesszamlazas)
+                .HasForeignKey(d => d.RendelesId)
+                .HasConstraintName("rendelesszamlazas_ibfk_1");
         });
 
         modelBuilder.Entity<Szamlazasicimek>(entity =>

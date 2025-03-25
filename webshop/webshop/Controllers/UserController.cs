@@ -154,6 +154,7 @@ namespace webshop.Controllers
                         user.LastName = tempUpdateUser.LastName;
                         user.LoginName = tempUpdateUser.LoginName;
                         user.PhoneNumber = tempUpdateUser.PhoneNumber;
+                        user.PermissionLevel = tempUpdateUser.PermissionLevel;
                         user.RegistarionDate = tempUpdateUser.RegistarionDate;
                         
                         context.Users.Update(user);

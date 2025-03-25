@@ -119,7 +119,7 @@ namespace webshop.Controllers
         }
 
         [HttpPost("NewOrder")]
-        public async Task<IActionResult> NewOrder(string token, [FromBody] List<OrderProductDTO> orderProducts)
+        public async Task<IActionResult> NewOrder(string token, [FromBody] NewOrderDTO newOrder)
         {
             if (Manager.CheckIfUserLoggedIn(token))
             {
@@ -156,7 +156,7 @@ namespace webshop.Controllers
                         int orderId = context.Orders.FirstOrDefault(o => o.OrderNumber == orderNumber).Id;
 
 
-                        foreach (var products in orderProducts)
+                        foreach (var products in newOrder.orderProducts)
                         {
 
                             Termekek product = context.Termekeks.FirstOrDefault(p => p.Id == products.Id)!;
@@ -185,9 +185,26 @@ namespace webshop.Controllers
                                 Darabszam = products.amount,
                             };
 
+
                             await context.Orderitems.AddAsync(orderitem);
+                            await context.SaveChangesAsync();
                         }
 
+
+                        Rendelesszamlazas szamlazas = new Rendelesszamlazas
+                        {
+                            Nev = newOrder.billing.Name,
+                            Email = newOrder.billing.Email,
+                            Telefonszam = newOrder.billing.PhoneNumber,
+                            Iranyitoszam = newOrder.billing.PostalCode,
+                            Orszag = newOrder.billing.Country,
+                            Varos = newOrder.billing.City,
+                            Utca = newOrder.billing.Street,
+                            Hazszam = newOrder.billing.HouseNumber,
+                            RendelesId = orderId
+                        };
+
+                        await context.Rendelesszamlazas.AddAsync(szamlazas);
                         await context.SaveChangesAsync();
 
                         return Ok("Sikeres mentés! Rendelés szám: " + orderNumber);
@@ -203,6 +220,8 @@ namespace webshop.Controllers
                 return Unauthorized(Manager.UserNotExistingMessage);
             }
         }
+
+
 
         [HttpDelete("DeleteOrder")]
         public async Task<IActionResult> DeleteOrder(string token, string orderNumber)
