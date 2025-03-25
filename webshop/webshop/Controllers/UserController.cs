@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Primitives;
 using webshop.DTOs;
 using webshop.Models;
@@ -19,7 +20,7 @@ namespace webshop.Controllers
                 {
                     try
                     {
-                        List<User> users = context.Users.ToList();
+                        List<User> users = context.Users.Include(u => u.SzamlazasiCim).ToList();
                         return Ok(users);
                     }
                     catch (Exception ex)
