@@ -414,7 +414,7 @@
       },
       {
         "Name": "updateUser",
-        "Type": "webshop.Models.User",
+        "Type": "webshop.DTOs.UpdateUserDTO",
         "IsRequired": true
       }
     ],

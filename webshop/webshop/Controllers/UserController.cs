@@ -122,7 +122,7 @@ namespace webshop.Controllers
             }
         }
         [HttpPut("Admin/UpdateUser")]
-        public async Task<IActionResult> UpdateUser(string token,int userId, User updateUser)
+        public async Task<IActionResult> UpdateUser(string token, int userId, UpdateUserDTO updateUser)
         {
             if(Manager.CheckPermission(token, 9))
             {
@@ -136,7 +136,26 @@ namespace webshop.Controllers
                             return NotFound("Nem található felhasználó ilyen azonosítóval!");
                         }
 
-                        user = updateUser;
+                        User tempUpdateUser = new User
+                        {
+                            Active = (int)(updateUser.Active == null ? user.Active : updateUser.Active),
+                            Email = updateUser.Email == null ? user.Email : updateUser.Email,
+                            FirstName = updateUser.FirstName == null ? user.FirstName : updateUser.FirstName,
+                            LastName = updateUser.LastName == null ? user.LastName : updateUser.LastName,
+                            LoginName = updateUser.LoginName == null ? user.LoginName : updateUser.LoginName,
+                            PermissionLevel = (int)(updateUser.PermissionLevel == null ? user.PermissionLevel : updateUser.PermissionLevel),
+                            PhoneNumber = updateUser.PhoneNumber == null ? user.PhoneNumber : updateUser.PhoneNumber,
+                            RegistarionDate = (DateTime)(updateUser.RegistrationDate == null ? user.RegistarionDate : updateUser.RegistrationDate)
+                        };
+
+                        user.Active = tempUpdateUser.Active;
+                        user.Email = tempUpdateUser.Email;
+                        user.FirstName = tempUpdateUser.FirstName;
+                        user.LastName = tempUpdateUser.LastName;
+                        user.LoginName = tempUpdateUser.LoginName;
+                        user.PhoneNumber = tempUpdateUser.PhoneNumber;
+                        user.RegistarionDate = tempUpdateUser.RegistarionDate;
+                        
                         context.Users.Update(user);
                         await context.SaveChangesAsync();
 
