@@ -74,11 +74,10 @@ namespace admin_felület
             HozzaadButton.Visibility = Visibility.Visible;
         }
 
-        // Törlés és szerkesztés gombok elrejtése
+        // Minden elrejtése
         private void Hide()
         {
             SaveUserButton.Visibility = Visibility.Collapsed;
-            HozzaadUserButton.Visibility = Visibility.Collapsed;
             DeleteUserButton.Visibility = Visibility.Collapsed;
             EditUserButton.Visibility = Visibility.Collapsed;
             FelhasznaloHozzaadasPanel.Visibility = Visibility.Collapsed;
@@ -171,7 +170,6 @@ namespace admin_felület
             KategoriaTextBox.Text = "";
         }
 
-        // Szerkesztés
         // Szerkesztés (a "Mentés" gomb láthatóvá tétele)
         private void EditProductButton_Click(object sender, RoutedEventArgs e)
         {
@@ -271,7 +269,6 @@ namespace admin_felület
             }
         }
 
-
         // Törlés
         private async void DeleteProductButton_Click(object sender, RoutedEventArgs e)
         {
@@ -303,7 +300,7 @@ namespace admin_felület
                 _felhasznalok = JsonSerializer.Deserialize<List<Felhasznalo>>(jsonData, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
                 FelhasznalokDataGrid.ItemsSource = _felhasznalok ?? new List<Felhasznalo>();
-                
+
             }
             catch (Exception ex)
             {
@@ -311,11 +308,12 @@ namespace admin_felület
             }
         }
 
+        // Felhasználó kiválasztás
         private void FelhasznalokDataGrid_SelectionChanged(object sender, RoutedEventArgs e)
         {
             _selectedFelhasznalo = FelhasznalokDataGrid.SelectedItem as Felhasznalo;
 
-            // Ha nincs kiválasztott termék, akkor elrejtjük a szerkesztés és törlés gombokat
+            // Ha nincs kiválasztott felhasználó, akkor elrejtjük a szerkesztés és törlés gombokat
             if (_selectedFelhasznalo != null)
             {
                 EditUserButton.Visibility = Visibility.Visible;
@@ -327,6 +325,8 @@ namespace admin_felület
                 FelhasznalokMegjelenitese.Visibility = Visibility.Visible;
             }
         }
+
+        // Felhasználó módosítása
         private void EditUserButton_Click(object sender, RoutedEventArgs e)
         {
             if (_selectedFelhasznalo == null)
@@ -337,19 +337,20 @@ namespace admin_felület
             Hide();
             FelhasznaloHozzaadasPanel.Visibility = Visibility.Visible;
 
-            // A kiválasztott termék adatainak kitöltése
+            // A kiválasztott felhasználó adatainak kitöltése
             LastNameTextBox.Text = _selectedFelhasznalo.LastName;
             FirstNameTextBox.Text = _selectedFelhasznalo.FirstName;
             PhoneNumberTextBox.Text = _selectedFelhasznalo.PhoneNumber.ToString();
             LoginNameTextBox.Text = _selectedFelhasznalo.LoginName;
             EmailTextBox.Text = _selectedFelhasznalo.Email;
-            SzamlazasiCimIdTextBox.Text = _selectedFelhasznalo.SzamlazasiCimId.ToString();
             ActiveTextBox.Text = _selectedFelhasznalo.Active.ToString();
             PermissionLevelTextBox.Text = _selectedFelhasznalo.PermissionLevel.ToString();
 
             // A mentés gombot láthatóvá tesszük
             SaveUserButton.Visibility = Visibility.Visible;
         }
+
+        // Felhasználó törlése
         private async void DeleteUserButton_Click(object sender, RoutedEventArgs e)
         {
             if (_selectedFelhasznalo == null)
@@ -362,10 +363,6 @@ namespace admin_felület
             
             LoadUsers();
         }
-        private void HozzaadUserButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
         private async void SaveUserButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -375,28 +372,21 @@ namespace admin_felület
                     MessageBox.Show("Kérjük, válasszon ki egy felhasználót a szerkesztéshez!");
                     return;
                 }
-                
-                // A frissített termék adatainak előkészítése
-                var updatedUser = new
-                {
-                id = _selectedFelhasznalo.Id,
-                lastName = _selectedFelhasznalo.LastName,
-                firstName = _selectedFelhasznalo.FirstName,
-                phoneNumber = _selectedFelhasznalo.PhoneNumber,
-                loginName = _selectedFelhasznalo.LoginName,
-                email = _selectedFelhasznalo.Email,
-                szamlazasiCimId = _selectedFelhasznalo.SzamlazasiCimId,
-                active = _selectedFelhasznalo.Active,
-                permissionLevel = _selectedFelhasznalo.PermissionLevel,
-                szamlazasiCim = _selectedFelhasznalo.szamlazasiCim,
-            };
 
-                // A JSON adat formázása
-                string jsonData = JsonSerializer.Serialize(updatedUser);
+                // Frissítsük a _selectedFelhasznalo objektumot a TextBox-értékek alapján
+                _selectedFelhasznalo.LastName = LastNameTextBox.Text;
+                _selectedFelhasznalo.FirstName = FirstNameTextBox.Text;
+                _selectedFelhasznalo.PhoneNumber = PhoneNumberTextBox.Text;
+                _selectedFelhasznalo.LoginName = LoginNameTextBox.Text;
+                _selectedFelhasznalo.Email = EmailTextBox.Text;
+                _selectedFelhasznalo.Active = int.TryParse(ActiveTextBox.Text, out int activeStatus) ? (int?)activeStatus : null;
+                _selectedFelhasznalo.PermissionLevel = int.TryParse(PermissionLevelTextBox.Text, out int permission) ? permission : _selectedFelhasznalo.PermissionLevel;
+
+                // JSON-adatok serializálása
+                string jsonData = JsonSerializer.Serialize(_selectedFelhasznalo);
                 HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-                string id = _selectedFelhasznalo.Id.ToString();
-                // Token megszerzése a session-ből
+                // Token megszerzése a session-ből és Authorization fejléc beállítása
                 string token = UserSession.Token;
                 if (string.IsNullOrEmpty(token))
                 {
@@ -404,16 +394,18 @@ namespace admin_felület
                     return;
                 }
 
-                // API végpont URL-je
-                string requestUrl = $"https://localhost:7117/api/User/Admin/UpdateUser?token={token}&userId={id}"; // Token paraméterként
+                // API végpont és token hozzáadása az Authorization fejlécbe
+                string id = Convert.ToString(_selectedFelhasznalo.Id);  // Id lekérdezése
+                string requestUrl = $"https://localhost:7117/api/User/Admin/UpdateUser?token={token}&userId={id}";  // String interpolációval helyes URL
+                _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
-                // A PUT kérés elküldése
+                // PUT kérés elküldése
                 HttpResponseMessage response = await _httpClient.PutAsync(requestUrl, content);
 
                 if (response.IsSuccessStatusCode)
                 {
                     MessageBox.Show("Sikeres módosítás!", "Információ", MessageBoxButton.OK, MessageBoxImage.Information);
-                    await LoadUsers(); // A termékek újratöltése
+                    await LoadUsers();  // Felhasználók újratöltése
                 }
                 else
                 {
@@ -421,21 +413,19 @@ namespace admin_felület
                     MessageBox.Show($"Hiba történt: {response.StatusCode}\n{errorMsg}", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
-                // A nézet visszaállítása a termékek listájára
+                // Nézet visszaállítása
                 Hide();
 
+                // TextBox-ok kiürítése
                 LastNameTextBox.Text = "";
                 FirstNameTextBox.Text = "";
                 PhoneNumberTextBox.Text = "";
                 LoginNameTextBox.Text = "";
                 EmailTextBox.Text = "";
-                SzamlazasiCimIdTextBox.Text = "";
                 ActiveTextBox.Text = "";
                 PermissionLevelTextBox.Text = "";
-                SzamlazasiCimTextBox.Text = "";
 
                 FelhasznalokMegjelenitese.Visibility = Visibility.Visible;
-                HozzaadUserButton.Visibility = Visibility.Visible;
                 FelhasznalokDataGrid.Visibility = Visibility.Visible;
             }
             catch (Exception ex)
@@ -444,20 +434,17 @@ namespace admin_felület
             }
         }
 
+        // Menüpontok
         private void LoadUsersMenuItem_Click(object sender, RoutedEventArgs e)
         {
+            // Nézet visszaállítása
             Hide();
+            // Felhasználók betöltése
             FelhasznalokMegjelenitese.Visibility = Visibility.Visible;
             LoadUsers();
         }
-        private void AddUsersMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            Hide();
-            FelhasznaloHozzaadasPanel.Visibility = Visibility.Visible;
-            HozzaadUserButton.Visibility = Visibility.Visible;
-        }
 
-        // Termékek betöltése az API-ból
+        // Rendelések betöltése az API-ból
         private async Task LoadOrders()
         {
             try
@@ -506,16 +493,6 @@ namespace admin_felület
             Hide();
             RendelesekMegjelenitese.Visibility = Visibility.Visible;
             LoadOrders();
-        }
-
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void MenuItem_Click_2(object sender, RoutedEventArgs e)
