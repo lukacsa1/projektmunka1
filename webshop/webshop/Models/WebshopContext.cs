@@ -19,6 +19,8 @@ public partial class WebshopContext : DbContext
 
     public virtual DbSet<Orderitem> Orderitems { get; set; }
 
+    public virtual DbSet<Rendelesszamlaza> Rendelesszamlazas { get; set; }
+
     public virtual DbSet<Szamlazasicimek> Szamlazasicimeks { get; set; }
 
     public virtual DbSet<Termekek> Termekeks { get; set; }
@@ -39,6 +41,8 @@ public partial class WebshopContext : DbContext
 
             entity.HasIndex(e => e.FelhasznaloId, "FelhasznaloId");
 
+            entity.HasIndex(e => e.SzamlazasId, "SzamlazasId");
+
             entity.Property(e => e.Id).HasColumnType("int(11)");
             entity.Property(e => e.Datum)
                 .HasDefaultValueSql("'current_timestamp()'")
@@ -46,6 +50,7 @@ public partial class WebshopContext : DbContext
             entity.Property(e => e.FelhasznaloId).HasColumnType("int(11)");
             entity.Property(e => e.OrderNumber).HasMaxLength(8);
             entity.Property(e => e.Status).HasColumnType("int(1)");
+            entity.Property(e => e.SzamlazasId).HasColumnType("int(11)");
 
             entity.HasOne(d => d.Felhasznalo).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.FelhasznaloId)
@@ -75,6 +80,23 @@ public partial class WebshopContext : DbContext
             entity.HasOne(d => d.Termek).WithMany(p => p.Orderitems)
                 .HasForeignKey(d => d.TermekId)
                 .HasConstraintName("orderitems_ibfk_2");
+        });
+
+        modelBuilder.Entity<Rendelesszamlaza>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("rendelesszamlazas");
+
+            entity.Property(e => e.Id).HasColumnType("int(64)");
+            entity.Property(e => e.Email).HasMaxLength(64);
+            entity.Property(e => e.Hazszam).HasMaxLength(64);
+            entity.Property(e => e.Iranyitoszam).HasColumnType("int(10)");
+            entity.Property(e => e.Nev).HasMaxLength(64);
+            entity.Property(e => e.Orszag).HasMaxLength(64);
+            entity.Property(e => e.Telefonszam).HasMaxLength(64);
+            entity.Property(e => e.Utca).HasMaxLength(64);
+            entity.Property(e => e.Varos).HasMaxLength(64);
         });
 
         modelBuilder.Entity<Szamlazasicimek>(entity =>
@@ -139,7 +161,9 @@ public partial class WebshopContext : DbContext
             entity.Property(e => e.LastName).HasMaxLength(32);
             entity.Property(e => e.LoginName).HasMaxLength(32);
             entity.Property(e => e.PermissionLevel).HasColumnType("int(11)");
-            entity.Property(e => e.PhoneNumber).HasMaxLength(32);
+            entity.Property(e => e.PhoneNumber)
+                .HasMaxLength(20)
+                .HasDefaultValueSql("'NULL'");
             entity.Property(e => e.RegistarionDate)
                 .ValueGeneratedOnAddOrUpdate()
                 .HasDefaultValueSql("'current_timestamp()'")

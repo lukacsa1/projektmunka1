@@ -15,7 +15,7 @@ public partial class Orderitem
 
     public int Darabszam { get; set; }
 
-    public virtual Order? Rendelés { get; set; } = null!;
+    public virtual Order Rendelés { get; set; } = null!;
 
-    public virtual Termekek? Termek { get; set; } = null!;
+    public virtual Termekek Termek { get; set; } = null!;
 }

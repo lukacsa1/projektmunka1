@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 namespace webshop.Models;
 
@@ -12,7 +11,7 @@ public partial class User
 
     public string FirstName { get; set; } = null!;
 
-    public string? PhoneNumber { get; set; } = null!;
+    public string? PhoneNumber { get; set; }
 
     public string LoginName { get; set; } = null!;
 
@@ -29,8 +28,8 @@ public partial class User
     public DateTime RegistarionDate { get; set; }
 
     public int PermissionLevel { get; set; }
-    [JsonIgnore]
-    public virtual ICollection<Order>? Orders { get; set; } = new List<Order>();
+
+    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 
     public virtual Szamlazasicimek? SzamlazasiCim { get; set; }
 }
