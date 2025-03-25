@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Már 04. 10:02
+-- Létrehozás ideje: 2025. Már 25. 12:43
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -41,7 +41,13 @@ CREATE TABLE `orderitems` (
 
 INSERT INTO `orderitems` (`Id`, `RendelésId`, `TermekId`, `Meret`, `Darabszam`) VALUES
 (7, 5, 3, 'S', 3),
-(8, 5, 5, 'M', 1);
+(8, 5, 5, 'M', 1),
+(11, 8, 1, 'S', 2),
+(12, 8, 5, 'S', 1),
+(17, 11, 5, 'S', 2),
+(18, 12, 3, 'S', 2),
+(19, 13, 3, 'S', 2),
+(20, 14, 3, 'S', 2);
 
 -- --------------------------------------------------------
 
@@ -62,7 +68,39 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`Id`, `FelhasznaloId`, `Datum`, `Status`, `OrderNumber`) VALUES
-(5, 1, '2025-02-20 10:53:36', 0, 'ZLF0PAM0');
+(5, 9, '2025-02-20 10:53:36', 0, 'ZLF0PAM0'),
+(8, 9, '2025-03-20 09:34:49', 0, 'Z45U23CP'),
+(10, 9, '2025-03-25 11:19:50', 0, 'X7UJ290Y'),
+(11, 9, '2025-03-25 11:24:10', 0, 'YN64L3UN'),
+(12, 9, '2025-03-25 11:26:41', 0, 'BSCAG0DJ'),
+(13, 9, '2025-03-25 11:28:04', 0, 'WQOPCMCX'),
+(14, 9, '2025-03-25 11:39:31', 0, 'IQHDHZ57');
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `rendelesszamlazas`
+--
+
+CREATE TABLE `rendelesszamlazas` (
+  `Id` int(64) NOT NULL,
+  `Nev` varchar(64) NOT NULL,
+  `Email` varchar(64) NOT NULL,
+  `Telefonszam` varchar(64) NOT NULL,
+  `Orszag` varchar(64) NOT NULL,
+  `Varos` varchar(64) NOT NULL,
+  `Utca` varchar(64) NOT NULL,
+  `Hazszam` varchar(64) NOT NULL,
+  `Iranyitoszam` int(10) NOT NULL,
+  `RendelesId` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+--
+-- A tábla adatainak kiíratása `rendelesszamlazas`
+--
+
+INSERT INTO `rendelesszamlazas` (`Id`, `Nev`, `Email`, `Telefonszam`, `Orszag`, `Varos`, `Utca`, `Hazszam`, `Iranyitoszam`, `RendelesId`) VALUES
+(1, 'fas', 'afa', 'fafaf', 'afafafaf', 'string', 'string', 'string', 3, 14);
 
 -- --------------------------------------------------------
 
@@ -160,7 +198,7 @@ CREATE TABLE `user` (
   `Id` int(32) NOT NULL,
   `LastName` varchar(32) NOT NULL,
   `FirstName` varchar(32) NOT NULL,
-  `PhoneNumber` varchar(32) NOT NULL,
+  `PhoneNumber` varchar(20) DEFAULT NULL,
   `LoginName` varchar(32) NOT NULL,
   `Email` varchar(64) NOT NULL,
   `szamlazasiCimId` int(32) DEFAULT NULL,
@@ -176,12 +214,12 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`Id`, `LastName`, `FirstName`, `PhoneNumber`, `LoginName`, `Email`, `szamlazasiCimId`, `SALT`, `HASH`, `Active`, `RegistarionDate`, `PermissionLevel`) VALUES
-(1, 'Benedek', 'Kiss', '+36704322123', 'user1', 'user1@example.com', NULL, 'sp8i4p6c5m0WwrtVD6xz3LqUIwLlGAdk8ZD73OUaVCGE4zZzBCd16c7J0nMam3Do', 'e518622febbb65115dd1ad163ffaa7e333ac002db2537a37aaad4293081e9384', 0, '2025-03-04 08:57:35', 1),
 (2, 'Kristof', 'Edelényi', '+36308583123', 'user2', 'user2@example.com', NULL, 'sp8i4p6c5m0WwrtVD6xz3LqUIwLlGAdk8ZD73OUaVCGE4zZzBCd16c7J0nMam3Do', 'e518622febbb65115dd1ad163ffaa7e333ac002db2537a37aaad4293081e9384', 0, '2025-03-04 08:57:58', 0),
 (3, 'Ákos', 'Zábonyi', '+361233112', 'admin', 'admin@example.com', NULL, 'sp8i4p6c5m0WwrtVD6xz3LqUIwLlGAdk8ZD73OUaVCGE4zZzBCd16c7J0nMam3Do', 'e518622febbb65115dd1ad163ffaa7e333ac002db2537a37aaad4293081e9384', 0, '2025-03-04 08:58:21', 0),
-(4, 'Brendon', 'Lakatos', '+36201111934', 'user1', 'user1@example.com', 1, 'sp8i4p6c5m0WwrtVD6xz3LqUIwLlGAdk8ZD73OUaVCGE4zZzBCd16c7J0nMam3Do', 'e518622febbb65115dd1ad163ffaa7e333ac002db2537a37aaad4293081e9384', 0, '2025-03-04 08:58:43', 0),
 (5, 'Ali', 'Abdul-Aziz', '+42872322222', 'user2', 'user2@example.com', 2, 'sp8i4p6c5m0WwrtVD6xz3LqUIwLlGAdk8ZD73OUaVCGE4zZzBCd16c7J0nMam3Do', 'e518622febbb65115dd1ad163ffaa7e333ac002db2537a37aaad4293081e9384', 0, '2025-03-04 08:59:14', 0),
-(6, 'István', 'Köröskéni', '+365501221', 'user3', 'user3@example.com', 3, 'sp8i4p6c5m0WwrtVD6xz3LqUIwLlGAdk8ZD73OUaVCGE4zZzBCd16c7J0nMam3Do', 'e518622febbb65115dd1ad163ffaa7e333ac002db2537a37aaad4293081e9384', 0, '2025-03-04 08:59:53', 0);
+(9, 'Benedek', 'Kiss', '+36704322123', 'user1', 'user1@example.com', NULL, 'sp8i4p6c5m0WwrtVD6xz3LqUIwLlGAdk8ZD73OUaVCGE4zZzBCd16c7J0nMam3Do', 'e518622febbb65115dd1ad163ffaa7e333ac002db2537a37aaad4293081e9384', 0, '2025-03-25 09:27:00', 9),
+(15, 'asdasd', 'asdasd', NULL, 'asdasd', 'vargabalint051@gmail.com', NULL, 'string', '473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8', 0, '2025-03-04 10:37:34', 0),
+(16, 'string', 'string', NULL, 'string', 'string', NULL, 'string', '473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8', 0, '2025-03-04 10:44:08', 0);
 
 --
 -- Indexek a kiírt táblákhoz
@@ -201,6 +239,13 @@ ALTER TABLE `orderitems`
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`Id`),
   ADD KEY `FelhasznaloId` (`FelhasznaloId`);
+
+--
+-- A tábla indexei `rendelesszamlazas`
+--
+ALTER TABLE `rendelesszamlazas`
+  ADD PRIMARY KEY (`Id`),
+  ADD KEY `RendelesId` (`RendelesId`);
 
 --
 -- A tábla indexei `szamlazasicimek`
@@ -230,13 +275,19 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT a táblához `orderitems`
 --
 ALTER TABLE `orderitems`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT a táblához `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT a táblához `rendelesszamlazas`
+--
+ALTER TABLE `rendelesszamlazas`
+  MODIFY `Id` int(64) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT a táblához `szamlazasicimek`
@@ -254,7 +305,7 @@ ALTER TABLE `termekek`
 -- AUTO_INCREMENT a táblához `user`
 --
 ALTER TABLE `user`
-  MODIFY `Id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `Id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Megkötések a kiírt táblákhoz
@@ -272,6 +323,12 @@ ALTER TABLE `orderitems`
 --
 ALTER TABLE `orders`
   ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`FelhasznaloId`) REFERENCES `user` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Megkötések a táblához `rendelesszamlazas`
+--
+ALTER TABLE `rendelesszamlazas`
+  ADD CONSTRAINT `rendelesszamlazas_ibfk_1` FOREIGN KEY (`RendelesId`) REFERENCES `orders` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Megkötések a táblához `user`
