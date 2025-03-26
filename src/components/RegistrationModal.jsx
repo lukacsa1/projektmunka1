@@ -77,7 +77,10 @@ const hashPassword = async (password, salt) => {
                     
                     
                 }),
+                
             });
+            console.log(salt);
+                console.log(tmpHash);
 
             const registerTextData = await registerResponse.text();
 

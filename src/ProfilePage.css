@@ -199,4 +199,9 @@ h4
   .password-change-button:focus {
     outline: none;
   }
+  .section {
+    max-height: 400px; /* Meghatározhatod a maximális magasságot */
+    overflow-y: auto; /* Engedélyezi a függőleges görgetést */
+  }
+
   

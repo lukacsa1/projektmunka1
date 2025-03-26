@@ -1,34 +1,29 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
+
 
 const Cart = ({ cart, removeFromCart, setShowCart }) => {
   const [checkout, setCheckout] = useState(false);
-  const [billingInfo, setBillingInfo] = useState({ name: "", email: "", phone: "", address: "" });
-  const [useSavedBilling, setUseSavedBilling] = useState(false);
-  const [showSavePrompt, setShowSavePrompt] = useState(false);
-
-  useEffect(() => {
-    // Ha a checkbox be van pipálva, lekérjük a mentett számlázási adatokat
-    if (useSavedBilling) {
-      axios.get("http://localhost:3000/api/user/billing-info")
-        .then(response => {
-          // A válaszban kapott adatokat beállítjuk
-          setBillingInfo(response.data);
-        })
-        .catch(error => {
-          console.error("Hiba a mentett számlázási adatok betöltésekor:", error);
-        });
-    } else {
-      // Ha nincs bepipálva, töröljük a számlázási adatokat
-      setBillingInfo({ name: "", email: "", phone: "", address: "" });
-    }
-  }, [useSavedBilling]);
+  const [billingInfo, setBillingInfo] = useState({
+    name: "",
+    email: "",
+    phoneNumber: "",
+    postalCode: "",
+    country: "",
+    city: "",
+    street: "",
+    houseNumber: ""
+  });
 
   const formatPrice = (price) => `${price.toLocaleString()} Ft`;
   const totalAmount = cart.reduce((sum, item) => sum + item.product.ar * item.quantity, 0);
 
   const handleChange = (e) => {
-    setBillingInfo({ ...billingInfo, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    if (name === "postalCode" && !/^[0-9]*$/.test(value)) {
+      return;
+    }
+    setBillingInfo({ ...billingInfo, [name]: value });
   };
 
   const handleCheckout = () => {
@@ -37,36 +32,32 @@ const Cart = ({ cart, removeFromCart, setShowCart }) => {
 
   const handleConfirmOrder = async () => {
     const orderData = {
-      customer: billingInfo,
-      items: cart.map(item => ({
-        productId: item.product.id,
-        productName: item.product.termekNeve,
+      billing: { ...billingInfo },
+      orderProducts: cart.map(item => ({
+        id: item.product.id,
         size: item.size,
-        quantity: item.quantity,
-        price: item.product.ar,
-      })),
-      total: totalAmount,
+        amount: item.quantity
+      }))
     };
 
     try {
-      await axios.post("http://localhost:3000/api/orders", orderData);
+      const token = localStorage.getItem("token")?.replace(/"/g, "");
+      const response = await axios.post(`https://localhost:7117/api/Order/NewOrder?token=${token}`, orderData);
       alert("Rendelés sikeresen elküldve!");
-      setShowSavePrompt(true);
-    } catch (error) {
-      console.error("Hiba történt a rendelés leadásakor:", error);
-      alert("Hiba történt a rendelés elküldése közben.");
-    }
-  };
-
-  const handleSaveBillingInfo = async () => {
-    try {
-      await axios.post("http://localhost:3000/api/user/save-billing-info", billingInfo);
-      alert("Számlázási adatok sikeresen mentve!");
-      setShowSavePrompt(false);
       setShowCart(false);
     } catch (error) {
-      console.error("Hiba történt a számlázási adatok mentésekor:", error);
-      alert("Hiba történt a számlázási adatok mentése közben.");
+      if (error.response && error.response.status === 400) {
+        const errorMessage = error.response.data;
+        if (errorMessage === "Túl sok megrendelt termék!") {
+          alert("A rendelésedben túl sok termék van. Kérlek csökkentsd a mennyiséget.");
+        } else {
+          alert("Hiba történt a rendelés elküldése közben.");
+        }
+      } else {
+      
+        console.error("Hiba történt a rendelés leadásakor:", error);
+        alert("Hiba történt a rendelés elküldése közben.");
+      }
     }
   };
 
@@ -103,14 +94,23 @@ const Cart = ({ cart, removeFromCart, setShowCart }) => {
               <input type="email" name="email" value={billingInfo.email} onChange={handleChange} required />
 
               <label>Telefon:</label>
-              <input type="tel" name="phone" value={billingInfo.phone} onChange={handleChange} required />
+              <input type="tel" name="phoneNumber" value={billingInfo.phoneNumber} onChange={handleChange} required />
 
-              <label>Cím:</label>
-              <input type="text" name="address" value={billingInfo.address} onChange={handleChange} required />
-              <label>
-              <input className="szamlazasicheckbox" type="checkbox" checked={useSavedBilling} onChange={() => setUseSavedBilling(!useSavedBilling)}  /> Mentett számlázási adatok használata 
-             
-              </label>
+              <label>Irányítószám:</label>
+              <input type="text" name="postalCode" value={billingInfo.postalCode} onChange={handleChange} required />
+
+              <label>Ország:</label>
+              <input type="text" name="country" value={billingInfo.country} onChange={handleChange} required />
+
+              <label>Város:</label>
+              <input type="text" name="city" value={billingInfo.city} onChange={handleChange} required />
+
+              <label>Utca:</label>
+              <input type="text" name="street" value={billingInfo.street} onChange={handleChange} required />
+
+              <label>Házszám:</label>
+              <input type="text" name="houseNumber" value={billingInfo.houseNumber} onChange={handleChange} required />
+
               <button className="confirm-btn" onClick={handleConfirmOrder}>Rendelés leadása</button>
             </div>
           </div>
@@ -135,14 +135,6 @@ const Cart = ({ cart, removeFromCart, setShowCart }) => {
               <button className="checkout-btn" onClick={handleCheckout}>Pénztárhoz</button>
             </div>
           </>
-        )}
-
-        {showSavePrompt && (
-          <div className="save-prompt">
-            <p>Szeretné menteni a számlázási adatait?</p>
-            <button onClick={handleSaveBillingInfo}>Igen</button>
-            <button onClick={() => setShowSavePrompt(false)}>Nem</button>
-          </div>
         )}
       </div>
     </div>
