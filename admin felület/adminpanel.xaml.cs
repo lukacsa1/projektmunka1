@@ -27,6 +27,11 @@ namespace admin_felület
         private List<Felhasznalo> _felhasznalok;
         private Felhasznalo _selectedFelhasznalo;
         private UserService _userService; // Az új szolgáltatás példánya
+
+        //Rendelések
+        private List<Rendeles> _rendelesek;
+        private Rendeles _selectedRendeles;
+        public bool rendeltTermekek = false;
         public adminpanel()
         {
             InitializeComponent();
@@ -70,8 +75,14 @@ namespace admin_felület
         private void AddProductsMenuItem_Click(object sender, RoutedEventArgs e)
         {
             Hide();
+            TermekNeveTextBox.Text = "";
+            MeretTextBox.Text = "";
+            ArTextBox.Text = "";
+            KepTextBox.Text = "";
+            KategoriaTextBox.Text = "";
             TermekHozzaadasPanel.Visibility = Visibility.Visible;
             HozzaadButton.Visibility = Visibility.Visible;
+            
         }
 
         // Minden elrejtése
@@ -94,6 +105,8 @@ namespace admin_felület
             EditOrderButton.Visibility = Visibility.Collapsed;
             DeleteOrderButton.Visibility = Visibility.Collapsed;
             SaveOrderButton.Visibility = Visibility.Collapsed;
+            ShowOrderItemsButton.Visibility = Visibility.Collapsed;
+            VisszaButton.Visibility = Visibility.Collapsed;
         }
 
         // Kiválasztott termék kezelése
@@ -301,10 +314,21 @@ namespace admin_felület
 
                 FelhasznalokDataGrid.ItemsSource = _felhasznalok ?? new List<Felhasznalo>();
 
+                // Itt regisztráljuk az oszlopok generálása közbeni eseményt
+                FelhasznalokDataGrid.AutoGeneratingColumn += FelhasznalokDataGrid_AutoGeneratingColumn;
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Hiba történt: {ex.Message}");
+            }
+        }
+
+        private void FelhasznalokDataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            // Ne jelenjen meg a Hash és a Salt oszlop
+            if (e.PropertyName == "Hash" || e.PropertyName == "Salt")
+            {
+                e.Cancel = true;  // Az oszlop generálása megszakad
             }
         }
 
@@ -447,26 +471,43 @@ namespace admin_felület
         // Rendelések betöltése az API-ból
         private async Task LoadOrders()
         {
+            
             try
             {
-                HttpResponseMessage response = await _httpClient.GetAsync("https://localhost:7117/api/Products/GetProducts");
+                string token = UserSession.Token;
+                HttpResponseMessage response = await _httpClient.GetAsync($"https://localhost:7117/api/Order/GetAllOrders?token={token}");
 
                 if (!response.IsSuccessStatusCode)
                 {
                     string errorMsg = await response.Content.ReadAsStringAsync();
-                    MessageBox.Show($"Hiba a termékek lekérdezésekor: {response.StatusCode}\n{errorMsg}");
+                    MessageBox.Show($"Hiba a rendelések lekérdezésekor: {response.StatusCode}\n{errorMsg}");
                     return;
                 }
 
                 string jsonData = await response.Content.ReadAsStringAsync();
-                _termekek = JsonSerializer.Deserialize<List<Termek>>(jsonData, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                _rendelesek = JsonSerializer.Deserialize<List<Rendeles>>(jsonData, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-                RendelesekDataGrid.ItemsSource = _termekek ?? new List<Termek>();
+                RendelesekDataGrid.ItemsSource = _rendelesek ?? new List<Rendeles>();
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Hiba történt: {ex.Message}");
             }
+        }
+
+        private async void ShowOrderItemsButton_Click(object sender, RoutedEventArgs e)
+        {
+            RendelesekDataGrid.ItemsSource = _selectedRendeles.OrderItems ?? new List<OrderItem>();
+            ShowOrderItemsButton.Visibility = Visibility.Collapsed;
+            VisszaButton.Visibility = Visibility.Visible;
+            rendeltTermekek = true;
+        }
+
+        private async void VisszaButton_Click(object sender, RoutedEventArgs e)
+        {
+            RendelesekDataGrid.ItemsSource = _rendelesek ?? new List<Rendeles>();
+            VisszaButton.Visibility = Visibility.Collapsed;
+            rendeltTermekek = false;
         }
 
         private async void SaveOrderButton_Click(object sender, RoutedEventArgs e)
@@ -485,8 +526,24 @@ namespace admin_felület
         }
 
         private void RendelesekDataGrid_SelectionChanged(object sender, RoutedEventArgs e)
-        { 
-        
+        {
+            if (rendeltTermekek == false)
+            {
+                _selectedRendeles = RendelesekDataGrid.SelectedItem as Rendeles;
+
+                // Ha nincs kiválasztott termék, akkor elrejtjük a szerkesztés és törlés gombokat
+                if (_selectedRendeles != null)
+                {
+                    EditOrderButton.Visibility = Visibility.Visible;
+                    DeleteOrderButton.Visibility = Visibility.Visible;
+                    ShowOrderItemsButton.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    Hide();
+                    RendelesekMegjelenitese.Visibility = Visibility.Visible;
+                }
+            }
         }
         private void LoadOrdersMenuItem_Click(object sender, RoutedEventArgs e)
         {

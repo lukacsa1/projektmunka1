@@ -14,5 +14,8 @@ namespace admin_felület.classok
         public int Ar { get; set; }
         public string Kep { get; set; }
         public string Kategoria { get; set; }
+       
     }
+
+     
 }
