@@ -102,6 +102,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="classok\Felhasznalo.cs" />
+    <Compile Include="classok\OrderService.cs" />
     <Compile Include="classok\ProductService.cs" />
     <Compile Include="classok\Rendeles.cs" />
     <Compile Include="classok\Termek.cs" />

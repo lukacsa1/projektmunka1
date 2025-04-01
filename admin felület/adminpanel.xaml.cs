@@ -31,12 +31,14 @@ namespace admin_felület
         //Rendelések
         private List<Rendeles> _rendelesek;
         private Rendeles _selectedRendeles;
+        private OrderService _orderService;
         public bool rendeltTermekek = false;
         public adminpanel()
         {
             InitializeComponent();
             _productService = new ProductService(); // Szolgáltatás példányosítása
             _userService = new UserService();
+            _orderService = new OrderService();
         }
 
         // Termékek betöltése az API-ból
@@ -101,6 +103,7 @@ namespace admin_felület
             HozzaadButton.Visibility = Visibility.Collapsed;
             SaveButton.Visibility = Visibility.Collapsed;
 
+            RendelesHozzaadasPanel.Visibility = Visibility.Collapsed;
             RendelesekMegjelenitese.Visibility = Visibility.Collapsed;
             EditOrderButton.Visibility = Visibility.Collapsed;
             DeleteOrderButton.Visibility = Visibility.Collapsed;
@@ -139,11 +142,19 @@ namespace admin_felület
                     return;
                 }
 
+                if (TermekNeveTextBox.Text == "" || MeretTextBox.Text == "" || ArTextBox.Text == "" || KepTextBox.Text == "" || KategoriaTextBox.Text == "")
+                {
+                    MessageBox.Show("Minden mezőt töltsön ki!");
+                    return;
+                }
+
                 if (!int.TryParse(ArTextBox.Text, out int ar))
                 {
                     MessageBox.Show("Kérem, adjon meg érvényes számot az ár mezőbe!");
                     return;
                 }
+
+                
 
                 var newProduct = new
                 {
@@ -511,18 +522,92 @@ namespace admin_felület
         }
 
         private async void SaveOrderButton_Click(object sender, RoutedEventArgs e)
-        { 
-        
+        {
+            try
+            {
+                if (_selectedRendeles == null)
+                {
+                    MessageBox.Show("Kérjük, válasszon ki egy rendelést a szerkesztéshez!");
+                    return;
+                }
+
+                // Frissítsük a _selectedRendelés objektumot a TextBox-értékek alapján
+                _selectedRendeles.Status = int.TryParse(StatusTextBox.Text, out int status) ? status : _selectedRendeles.Status;
+
+                // JSON-adatok serializálása
+                string jsonData = JsonSerializer.Serialize(_selectedRendeles);
+                HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+                // Token megszerzése a session-ből és Authorization fejléc beállítása
+                string token = UserSession.Token;
+                if (string.IsNullOrEmpty(token))
+                {
+                    MessageBox.Show("Hiba: Token hiányzik!", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                // API végpont és token hozzáadása az Authorization fejlécbe
+                string id = Convert.ToString(_selectedRendeles.Id);  // Id lekérdezése
+                string requestUrl = $"https://localhost:7117/api/Order/Admin/UpdateOrder?token={token}&id={id}";  // String interpolációval helyes URL
+                _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+                // PUT kérés elküldése
+                HttpResponseMessage response = await _httpClient.PutAsync(requestUrl, content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    MessageBox.Show("Sikeres módosítás!", "Információ", MessageBoxButton.OK, MessageBoxImage.Information);
+                    await LoadUsers();  // Felhasználók újratöltése
+                }
+                else
+                {
+                    string errorMsg = await response.Content.ReadAsStringAsync();
+                    MessageBox.Show($"Hiba történt: {response.StatusCode}\n{errorMsg}", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
+                // Nézet visszaállítása
+                Hide();
+
+                // TextBox-ok kiürítése
+                StatusTextBox.Text = "";
+
+                RendelesekMegjelenitese.Visibility = Visibility.Visible;
+                RendelesekDataGrid.Visibility = Visibility.Visible;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Hiba történt: {ex.Message}", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private async void DeleteOrderButton_Click(object sender, RoutedEventArgs e)
         {
+            if (_selectedRendeles == null)
+            {
+                MessageBox.Show("Kérjük, válasszon ki egy rendelést a törléshez!");
+                return;
+            }
+            string token = UserSession.Token;
+            await _orderService.DeleteOrder(_selectedRendeles.Id);
 
+            LoadOrders();
         }
 
         private void EditOrderButton_Click(object sender, RoutedEventArgs e)
-        { 
-        
+        {
+            if (_selectedRendeles == null)
+            {
+                MessageBox.Show("Kérjük, válasszon ki egy rendelést a szerkesztéshez!");
+                return;
+            }
+            Hide();
+            RendelesHozzaadasPanel.Visibility = Visibility.Visible;
+
+            // A kiválasztott rendelés adatainak kitöltése
+            StatusTextBox.Text = _selectedRendeles.Status.ToString();
+
+            // A mentés gombot láthatóvá tesszük
+            SaveOrderButton.Visibility = Visibility.Visible;
         }
 
         private void RendelesekDataGrid_SelectionChanged(object sender, RoutedEventArgs e)
