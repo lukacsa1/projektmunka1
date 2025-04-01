@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "y/cNSymvmdM=",
+  "dgSpecHash": "Peb4pWs5HIE=",
   "success": true,
-  "projectFilePath": "C:\\Users\\vargab\\Source\\Repos\\projektmunka1\\webshop\\webshop\\webshop.csproj",
+  "projectFilePath": "C:\\Users\\vargab\\Source\\Repos\\vizsga\\webshop\\webshop\\webshop.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\vargab\\.nuget\\packages\\bouncycastle.cryptography\\2.3.1\\bouncycastle.cryptography.2.3.1.nupkg.sha512",
     "C:\\Users\\vargab\\.nuget\\packages\\google.protobuf\\3.26.1\\google.protobuf.3.26.1.nupkg.sha512",

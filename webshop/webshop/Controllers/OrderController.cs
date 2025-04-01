@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Primitives;
 using System.Linq;
 using webshop.DTOs;
 using webshop.Models;
@@ -333,6 +334,88 @@ namespace webshop.Controllers
             else
             {
                 return Unauthorized(Manager.UserNotExistingMessage);
+            }
+        }
+
+        [HttpDelete("Admin/DeleteOrder")]
+        public async Task<IActionResult> AdminDeleteOrder(string token, int id)
+        {
+            if(Manager.CheckPermission(token, 9))
+            {
+                using(var context = new WebshopContext())
+                {
+                    try
+                    {
+                        User user = null;
+
+                        if (Manager.LoggedInUsers.TryGetValue(token, out User tempUser))
+                        {
+                            user = tempUser;
+                        }
+
+                        if (user is null)
+                        {
+                            return NotFound(Manager.UserNotExistingMessage);
+                        }
+
+                        Order order = context.Orders.FirstOrDefault(o => o.Id == id);
+
+                        if (order is null)
+                        {
+                            return NotFound("Megrendelés nem található!");
+                        }
+
+                        List<Orderitem> orderitems = context.Orderitems.Where(o => o.RendelésId == order.Id).ToList();
+
+                        foreach (var item in orderitems)
+                        {
+                            context.Orderitems.Remove(item);
+                        }
+
+                        context.Orders.Remove(order);
+
+                        await context.SaveChangesAsync();
+                        return Ok("Rendelés sikeresen törölve!");
+                    }
+                    catch (Exception ex)
+                    {
+                        return BadRequest("Nem sikerült törölni a rendelést! " + ex.Message);
+                    }
+                }
+            } 
+            else
+            {
+                return Unauthorized(Manager.UserNotEligableMessage);
+            }
+        }
+        [HttpPut("Admin/UpdateOrder")]
+        public async Task<IActionResult> UpdateOrder(string token, int id, UpdateOrderDTO updateDetails)
+        {
+            if(Manager.CheckPermission(token, 9))
+            {
+                using (var context = new WebshopContext())
+                {
+                    try
+                    {
+                        Order order = context.Orders.FirstOrDefault(o => o.Id == id);
+                        if (order is null) return NotFound("Nem található rendelés ilyen azonosítóval!");
+
+                        order.Status = updateDetails.Status;
+
+                        context.Orders.Update(order);
+
+                        await context.SaveChangesAsync();
+                        return Ok("Rendelés sikeresen módosítva!");
+                    }
+                    catch (Exception ex)
+                    {
+                        return BadRequest("Nem sikerült módosítani a rendelést! " + ex.Message);
+                    }
+                }
+            }
+            else
+            {
+                return Unauthorized(Manager.UserNotEligableMessage);
             }
         }
     }
