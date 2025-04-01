@@ -85,6 +85,7 @@ const LoginModal = ({ setShowLogin, setShowRegistration, onLoginSuccess, token }
         <form onSubmit={handleSubmit}>
           <label>Felhasználónév:</label>
           <input
+            className="username"
             type="text"
             placeholder="Felhasználónév"
             required
@@ -94,6 +95,7 @@ const LoginModal = ({ setShowLogin, setShowRegistration, onLoginSuccess, token }
 
           <label>Jelszó:</label>
           <input
+            className="password"
             type="password"
             placeholder="Jelszó"
             required
